@@ -1,0 +1,24 @@
+{
+  "name": "Amaluna Resorts",
+  "short_name": "Amaluna",
+  "description": "Easy luxury by the lagoon in Negombo, Sri Lanka",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#E6B800",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/WhatsApp Image 2025-03-28 at 10.28.44 AM.jpeg",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/WhatsApp Image 2025-03-28 at 10.28.44 AM.jpeg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
