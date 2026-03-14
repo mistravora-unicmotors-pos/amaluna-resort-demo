@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, Gift, Star, Check, AlertCircle } from 'lucide-react';
+import ScrollReveal from '../components/ScrollReveal';
+import OptimizedImage from '../components/OptimizedImage';
 
 const OfferDetail = () => {
   const { offerId } = useParams();
@@ -125,9 +127,9 @@ const OfferDetail = () => {
 
   if (!offer) {
     return (
-      <div className="py-20 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Offer not found</h1>
-        <Link to="/offers" className="text-amber-600 hover:text-amber-700">
+      <div className="py-20 text-center container-luxury">
+        <h1 className="text-2xl font-heading font-bold text-gray-900 mb-4">Offer not found</h1>
+        <Link to="/offers" className="text-amber-600 hover:text-amber-700 font-medium">
           ← Back to Offers
         </Link>
       </div>
@@ -135,12 +137,12 @@ const OfferDetail = () => {
   }
 
   return (
-    <div className="py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div>
+      <div className="container-luxury section-padding">
         {/* Back button */}
         <Link 
           to="/offers" 
-          className="inline-flex items-center text-amber-600 hover:text-amber-700 mb-6 transition-colors duration-200"
+          className="inline-flex items-center text-amber-600 hover:text-amber-700 mb-6 transition-colors duration-200 font-medium"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Offers
@@ -149,10 +151,10 @@ const OfferDetail = () => {
         {/* Offer Header */}
         <div className="mb-8">
           <div className="flex items-center mb-4">
-            <div className="text-amber-600 mr-3">
-              {offer.icon}
+            <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mr-3">
+              <div className="text-amber-600">{offer.icon}</div>
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-gray-900">
               {offer.name}
             </h1>
           </div>
@@ -162,10 +164,12 @@ const OfferDetail = () => {
 
         {/* Hero Image */}
         <div className="mb-12">
-          <img
+          <OptimizedImage
             src={offer.image}
             alt={offer.name}
-            className="w-full h-96 md:h-[500px] object-cover rounded-lg"
+            className="w-full h-96 md:h-[500px] object-cover rounded-2xl shadow-luxury"
+            width={1200}
+            height={500}
           />
         </div>
 
@@ -173,8 +177,9 @@ const OfferDetail = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             {/* Detailed Description */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">About This Offer</h2>
+            <ScrollReveal>
+            <div className="mb-10">
+              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">About This Offer</h2>
               <div className="prose prose-gray max-w-none">
                 {offer.longDescription.split('\n\n').map((paragraph: string, index: number) => (
                   <p key={index} className="text-gray-600 mb-4 leading-relaxed">
@@ -183,37 +188,43 @@ const OfferDetail = () => {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Package Inclusions */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">What's Included</h2>
+            <ScrollReveal>
+            <div className="mb-10">
+              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">What's Included</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {offer.inclusions.map((inclusion: string, index: number) => (
-                  <div key={index} className="flex items-start">
+                  <div key={index} className="flex items-start bg-green-50/50 rounded-xl px-4 py-3">
                     <Check className="h-5 w-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-600">{inclusion}</span>
                   </div>
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Suitable For */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Perfect For</h2>
+            <ScrollReveal>
+            <div className="mb-10">
+              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">Perfect For</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {offer.suitableFor.map((item: string, index: number) => (
-                  <div key={index} className="flex items-center">
-                    <div className="w-2 h-2 bg-amber-600 rounded-full mr-3"></div>
+                  <div key={index} className="flex items-center bg-amber-50/50 rounded-xl px-4 py-3">
+                    <div className="w-2 h-2 bg-amber-500 rounded-full mr-3 flex-shrink-0"></div>
                     <span className="text-gray-600">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Terms & Conditions */}
+            <ScrollReveal>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Terms & Conditions</h2>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">Terms & Conditions</h2>
+              <div className="bg-gradient-to-br from-gray-50 to-stone-50 rounded-2xl p-6">
                 <ul className="space-y-2">
                   {offer.terms.map((term: string, index: number) => (
                     <li key={index} className="flex items-start">
@@ -224,14 +235,15 @@ const OfferDetail = () => {
                 </ul>
               </div>
             </div>
+            </ScrollReveal>
           </div>
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24">
               {/* Offer Summary */}
-              <div className="bg-amber-50 rounded-lg p-6 mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Offer Summary</h3>
+              <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 mb-6 border border-amber-100 shadow-luxury">
+                <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Offer Summary</h3>
                 
                 <div className="space-y-4">
                   <div className="flex items-start">
@@ -254,7 +266,7 @@ const OfferDetail = () => {
                 <div className="mt-6 space-y-3">
                   <a 
                     href="tel:+94770557257"
-                    className="block w-full bg-amber-600 hover:bg-amber-700 text-white py-3 px-4 rounded-lg font-semibold text-center transition-colors duration-200"
+                    className="block w-full btn-primary text-center"
                   >
                     Call to Book
                   </a>
@@ -262,13 +274,13 @@ const OfferDetail = () => {
                     href={`https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20enquire%20about%20the%20${encodeURIComponent(offer.name)}%20offer`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-semibold text-center transition-colors duration-200"
+                    className="block w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-full font-semibold text-center transition-colors duration-200"
                   >
                     WhatsApp
                   </a>
                   <button 
                     onClick={() => document.querySelector('#enquiry-btn')?.click()}
-                    className="block w-full border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white py-3 px-4 rounded-lg font-semibold transition-colors duration-200"
+                    className="block w-full btn-outline text-center"
                   >
                     Send Enquiry
                   </button>
@@ -276,8 +288,8 @@ const OfferDetail = () => {
               </div>
 
               {/* Contact Info */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Have Questions?</h3>
+              <div className="bg-white rounded-2xl shadow-luxury p-6">
+                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-4">Have Questions?</h3>
                 <div className="space-y-3 text-sm">
                   <div>
                     <span className="font-medium text-gray-900">Phone:</span>

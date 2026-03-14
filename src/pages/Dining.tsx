@@ -1,5 +1,8 @@
 import React from 'react';
-import { Download, Clock, Utensils, Coffee } from 'lucide-react';
+import { Download, Clock, Utensils, Coffee, Leaf, AlertCircle } from 'lucide-react';
+import ScrollReveal from '../components/ScrollReveal';
+import SectionHeader from '../components/SectionHeader';
+import OptimizedImage from '../components/OptimizedImage';
 
 const Dining = () => {
   const menuItems = {
@@ -31,86 +34,104 @@ const Dining = () => {
   ];
 
   return (
-    <div className="py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Dining at Amaluna
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience authentic Sri Lankan flavors alongside international favorites, 
-            prepared with fresh local ingredients and served in our relaxed lagoon-side setting.
+    <div>
+      {/* Hero Banner */}
+      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+        <OptimizedImage
+          src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg"
+          alt="Amaluna Dining"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={600}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40" />
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4">Dining at Amaluna</h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-body">
+            Authentic Sri Lankan flavors and international favorites
           </p>
         </div>
+      </section>
+
+      <div className="container-luxury section-padding">
 
         {/* Restaurant & Bar Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* Restaurant */}
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg"
-              alt="Amaluna Restaurant"
-              className="w-full h-64 object-cover"
-            />
+          <ScrollReveal direction="left">
+          <div className="bg-white rounded-2xl shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-all duration-300 group">
+            <div className="overflow-hidden">
+              <OptimizedImage
+                src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg"
+                alt="Amaluna Restaurant"
+                className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                width={600}
+                height={256}
+              />
+            </div>
             <div className="p-6">
               <div className="flex items-center mb-3">
-                <Utensils className="h-6 w-6 text-amber-600 mr-2" />
-                <h2 className="text-2xl font-bold text-gray-900">Restaurant</h2>
+                <div className="p-2 bg-amber-50 rounded-lg mr-3"><Utensils className="h-6 w-6 text-amber-600" /></div>
+                <h2 className="text-2xl font-heading font-bold text-gray-900">Restaurant</h2>
               </div>
               <p className="text-gray-600 mb-4">
                 Our main restaurant offers indoor and outdoor seating with beautiful lagoon views. 
                 Enjoy fresh seafood, traditional Sri Lankan curries, and international dishes 
                 prepared by our skilled chefs.
               </p>
-              <div className="flex items-center text-sm text-gray-500">
-                <Clock className="h-4 w-4 mr-1" />
+              <div className="flex items-center text-sm text-gray-500 bg-amber-50 rounded-lg px-3 py-2">
+                <Clock className="h-4 w-4 mr-1 text-amber-600" />
                 <span>Breakfast: 7:00 AM - 10:00 AM | Dinner: 6:00 PM - 10:00 PM</span>
               </div>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Bar */}
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg"
-              alt="Amaluna Bar"
-              className="w-full h-64 object-cover"
-            />
+          <ScrollReveal direction="right">
+          <div className="bg-white rounded-2xl shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-all duration-300 group">
+            <div className="overflow-hidden">
+              <OptimizedImage
+                src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg"
+                alt="Amaluna Bar"
+                className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                width={600}
+                height={256}
+              />
+            </div>
             <div className="p-6">
               <div className="flex items-center mb-3">
-                <Coffee className="h-6 w-6 text-amber-600 mr-2" />
-                <h2 className="text-2xl font-bold text-gray-900">Bar</h2>
+                <div className="p-2 bg-amber-50 rounded-lg mr-3"><Coffee className="h-6 w-6 text-amber-600" /></div>
+                <h2 className="text-2xl font-heading font-bold text-gray-900">Bar</h2>
               </div>
               <p className="text-gray-600 mb-4">
                 Unwind at our poolside bar with tropical cocktails, local beers, and fresh juices. 
                 The perfect spot to watch the sunset while enjoying a refreshing drink and light snacks.
               </p>
-              <div className="flex items-center text-sm text-gray-500">
-                <Clock className="h-4 w-4 mr-1" />
+              <div className="flex items-center text-sm text-gray-500 bg-amber-50 rounded-lg px-3 py-2">
+                <Clock className="h-4 w-4 mr-1 text-amber-600" />
                 <span>Open: 10:00 AM - 11:00 PM daily</span>
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
 
         {/* Sample Menu */}
-        <div className="bg-gray-50 rounded-2xl p-8 mb-12">
+        <ScrollReveal>
+        <div className="bg-gradient-to-br from-gray-50 to-amber-50/30 rounded-3xl p-8 md:p-10 mb-12 border border-gray-100">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Sample Menu</h2>
-              <p className="text-gray-600">A taste of what awaits you at Amaluna</p>
-            </div>
-            <button className="mt-4 sm:mt-0 flex items-center bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
-              <Download className="h-5 w-5 mr-2" />
-              Download Full Menu (PDF)
+            <SectionHeader title="Sample Menu" subtitle="A taste of what awaits you at Amaluna" align="left" />
+            <button className="mt-4 sm:mt-0 btn-primary flex items-center gap-2">
+              <Download className="h-5 w-5" />
+              Download Menu
             </button>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Starters */}
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-600">
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-400">
                 Starters
               </h3>
               <div className="space-y-4">
@@ -127,8 +148,8 @@ const Dining = () => {
             </div>
 
             {/* Mains */}
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-600">
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-400">
                 Main Courses
               </h3>
               <div className="space-y-4">
@@ -145,8 +166,8 @@ const Dining = () => {
             </div>
 
             {/* Desserts */}
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-600">
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-400">
                 Desserts
               </h3>
               <div className="space-y-4">
@@ -163,10 +184,12 @@ const Dining = () => {
             </div>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Beverages */}
-        <div className="bg-white rounded-lg shadow-sm p-8 mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Beverages</h2>
+        <ScrollReveal>
+        <div className="bg-white rounded-2xl shadow-luxury p-8 mb-12">
+          <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">Beverages</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {beverages.map((item, index) => (
               <div key={index} className="flex justify-between items-start py-2">
@@ -179,9 +202,11 @@ const Dining = () => {
             ))}
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Special Dietary Requirements */}
-        <div className="bg-amber-50 rounded-2xl p-8 mb-12">
+        <ScrollReveal>
+        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-8 md:p-10 mb-12 border border-amber-100">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Special Dietary Requirements</h2>
           <p className="text-gray-600 mb-6">
             We're happy to accommodate various dietary needs and preferences. Our chefs can prepare 
@@ -211,20 +236,22 @@ const Dining = () => {
             </div>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Call to Action */}
-        <div className="text-center bg-gray-900 rounded-2xl p-8 text-white">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+        <ScrollReveal>
+        <div className="text-center bg-gradient-dark rounded-3xl p-10 text-white">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">
             Ready to Taste Sri Lanka?
           </h2>
-          <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-white/85 mb-6 max-w-2xl mx-auto font-body">
             Reserve your table or enquire about our dining experiences. 
             We're happy to recommend dishes based on your preferences.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="tel:+94770557257"
-              className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="btn-primary"
             >
               Call to Reserve
             </a>
@@ -232,12 +259,13 @@ const Dining = () => {
               href="https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20enquire%20about%20dining%20reservations"
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="border-2 border-white/70 text-white hover:bg-white hover:text-gray-900 px-8 py-3 rounded-full font-semibold transition-all duration-300"
             >
               WhatsApp
             </a>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </div>
   );

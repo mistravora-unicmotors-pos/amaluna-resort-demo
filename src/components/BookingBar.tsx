@@ -23,6 +23,13 @@ const BookingBar: React.FC<BookingBarProps> = ({ className = '', prefilledRoom }
   };
 
   const handleBookingSubmit = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const checkInDate = new Date(bookingData.checkIn);
+    const checkOutDate = new Date(bookingData.checkOut);
+    if (!bookingData.checkIn || !bookingData.checkOut) return;
+    if (checkInDate < today) return;
+    if (checkOutDate <= checkInDate) return;
     setIsBookingOpen(true);
   };
 
@@ -139,7 +146,7 @@ const BookingBar: React.FC<BookingBarProps> = ({ className = '', prefilledRoom }
               className="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md font-semibold transition-all duration-200 flex items-center justify-center space-x-2 transform hover:scale-105"
             >
               <Search className="h-4 w-4" />
-              <span>Search</span>
+              <span>Check Availability</span>
             </button>
           </div>
         </div>

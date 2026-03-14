@@ -1,12 +1,30 @@
 import React, { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Camera, Heart } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import OptimizedImage from '../components/OptimizedImage';
+import SectionHeader from '../components/SectionHeader';
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [likes, setLikes] = useState<Record<number, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('gallery-likes');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const toggleLike = (id: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLikes(prev => {
+      const updated = { ...prev, [id]: !prev[id] };
+      localStorage.setItem('gallery-likes', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   const categories = [
     { id: 'all', name: 'All Photos' },
@@ -76,29 +94,37 @@ const Gallery = () => {
   };
 
   return (
-    <div className="py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Gallery
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover the beauty of Amaluna through our photo gallery. From comfortable accommodations 
-            to stunning lagoon views, get a glimpse of what awaits you.
+    <div>
+      {/* Hero Banner */}
+      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+        <OptimizedImage
+          src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg"
+          alt="Amaluna Resort Gallery"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={600}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40" />
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4">Gallery</h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-body">
+            Discover the beauty of Amaluna through our photo gallery
           </p>
         </div>
+      </section>
+
+      <div className="container-luxury section-padding">
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-colors duration-200 ${
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm ${
                 selectedCategory === category.id
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-amber-100 hover:text-amber-700'
+                  ? 'bg-amber-600 text-white shadow-gold'
+                  : 'bg-white text-gray-700 hover:bg-amber-50 hover:text-amber-700 border border-gray-200 shadow-sm'
               }`}
             >
               {category.name}
@@ -115,7 +141,7 @@ const Gallery = () => {
               direction="up"
             >
               <div 
-                className="aspect-square relative overflow-hidden rounded-lg cursor-pointer group transform hover:scale-105 transition-all duration-300"
+                className="aspect-square relative overflow-hidden rounded-2xl cursor-pointer group transform hover:scale-[1.02] transition-all duration-300 shadow-luxury"
                 onClick={() => openLightbox(index)}
               >
               <OptimizedImage
@@ -128,6 +154,17 @@ const Gallery = () => {
               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                 <Camera className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-8 w-8" />
               </div>
+              <button
+                onClick={(e) => toggleLike(image.id, e)}
+                className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-all duration-200"
+                aria-label={likes[image.id] ? 'Unlike photo' : 'Like photo'}
+              >
+                <Heart
+                  className={`h-5 w-5 transition-colors duration-200 ${
+                    likes[image.id] ? 'text-red-500 fill-red-500' : 'text-white'
+                  }`}
+                />
+              </button>
             </div>
             </ScrollReveal>
           ))}
@@ -139,18 +176,19 @@ const Gallery = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="mt-16 text-center bg-amber-50 rounded-2xl p-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+        <ScrollReveal>
+        <div className="mt-16 text-center bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-10 border border-amber-100">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-4">
             Ready to Experience This in Person?
           </h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-body">
             These photos are just the beginning. Come and create your own memories 
             at Amaluna Resorts in beautiful Negombo.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="tel:+94770557257"
-              className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="btn-primary"
             >
               Call to Book
             </a>
@@ -158,12 +196,13 @@ const Gallery = () => {
               href="https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20make%20a%20reservation"
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="btn-outline"
             >
               WhatsApp
             </a>
           </div>
         </div>
+        </ScrollReveal>
       </div>
 
       {/* Lightbox */}

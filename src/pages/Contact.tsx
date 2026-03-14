@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from 'lucide-react';
+import ScrollReveal from '../components/ScrollReveal';
+import SectionHeader from '../components/SectionHeader';
+import OptimizedImage from '../components/OptimizedImage';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -76,45 +79,55 @@ const Contact = () => {
   ];
 
   return (
-    <div className="py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Contact Us
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We're here to help make your Amaluna experience exceptional. 
-            Get in touch with any questions or to make a reservation.
+    <div>
+      {/* Hero Banner */}
+      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+        <OptimizedImage
+          src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg"
+          alt="Contact Amaluna Resorts"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={600}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40" />
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4">Contact Us</h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-body">
+            We're here to help make your Amaluna experience exceptional
           </p>
         </div>
+      </section>
+
+      <div className="container-luxury section-padding">
 
         {/* Quick Contact Methods */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {contactMethods.map((method, index) => (
-            <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow duration-300">
-              <div className="flex justify-center mb-4">
+            <ScrollReveal key={index} delay={index * 100} direction="up">
+            <div className="bg-white border border-gray-100 rounded-2xl p-8 text-center hover:shadow-luxury-lg transition-all duration-300 shadow-luxury hover:-translate-y-1">
+              <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-4">
                 {method.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{method.title}</h3>
-              <p className="text-gray-600 mb-3">{method.description}</p>
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">{method.title}</h3>
+              <p className="text-gray-600 mb-3 font-body">{method.description}</p>
               <p className="text-sm text-gray-800 font-medium mb-4">{method.details}</p>
               <a 
                 href={method.link}
                 target={method.link.startsWith('http') ? '_blank' : undefined}
                 rel={method.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="inline-block bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
+                className="btn-primary inline-block text-sm"
               >
                 {method.action}
               </a>
             </div>
+            </ScrollReveal>
           ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <div className="bg-white">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+          <div className="bg-white rounded-2xl shadow-luxury p-8">
+            <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">Send us a Message</h2>
             
             {submitted ? (
               <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
@@ -140,7 +153,7 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
                     />
                   </div>
 
@@ -155,7 +168,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
                     />
                   </div>
                 </div>
@@ -171,7 +184,7 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
                     />
                   </div>
 
@@ -185,7 +198,7 @@ const Contact = () => {
                       required
                       value={formData.subject}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
                     >
                       <option value="">Select a subject</option>
                       {subjectOptions.map((option, index) => (
@@ -206,7 +219,7 @@ const Contact = () => {
                     required
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
                     placeholder="Please provide details about your enquiry, including dates if relevant..."
                   />
                 </div>
@@ -229,7 +242,7 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 px-4 rounded-md font-semibold transition-colors duration-200 flex items-center justify-center"
+                  className="w-full btn-primary flex items-center justify-center"
                 >
                   <Send className="h-5 w-5 mr-2" />
                   Send Message
@@ -241,8 +254,8 @@ const Contact = () => {
           {/* Contact Information & Hours */}
           <div className="space-y-8">
             {/* Resort Information */}
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Resort Information</h3>
+            <div className="bg-white rounded-2xl shadow-luxury p-6">
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Resort Information</h3>
               <div className="space-y-4">
                 <div className="flex items-start">
                   <MapPin className="h-5 w-5 text-amber-600 mr-3 mt-0.5" />
@@ -279,8 +292,8 @@ const Contact = () => {
             </div>
 
             {/* Response Times */}
-            <div className="bg-amber-50 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 flex items-center">
                 <Clock className="h-6 w-6 text-amber-600 mr-2" />
                 Response Times
               </h3>
@@ -305,8 +318,8 @@ const Contact = () => {
             </div>
 
             {/* Office Hours */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Office Hours</h3>
+            <div className="bg-white border border-gray-100 rounded-2xl shadow-luxury p-6">
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Office Hours</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-700">Monday - Sunday:</span>
@@ -323,8 +336,8 @@ const Contact = () => {
             </div>
 
             {/* Getting Here */}
-            <div className="bg-blue-50 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Getting Here</h3>
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Getting Here</h3>
               <div className="space-y-3 text-sm text-gray-600">
                 <p>• 15 minutes from Bandaranaike International Airport</p>
                 <p>• 45 minutes from Colombo city center</p>

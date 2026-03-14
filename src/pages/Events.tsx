@@ -1,5 +1,9 @@
 import React from 'react';
 import { Users, Heart, Calendar, Camera, Music, Utensils } from 'lucide-react';
+import ScrollReveal from '../components/ScrollReveal';
+import SectionHeader from '../components/SectionHeader';
+import OptimizedImage from '../components/OptimizedImage';
+import FAQAccordion from '../components/FAQAccordion';
 
 const Events = () => {
   const eventTypes = [
@@ -90,42 +94,54 @@ const Events = () => {
   ];
 
   return (
-    <div className="py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Events & Functions
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Create lasting memories in our beautiful lagoon-side setting. From intimate celebrations 
-            to special occasions, we provide the perfect backdrop for your important moments.
+    <div>
+      {/* Hero Banner */}
+      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+        <OptimizedImage
+          src="https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg"
+          alt="Events at Amaluna"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={600}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40" />
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4">Events & Functions</h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-body">
+            Create lasting memories in our beautiful lagoon-side setting
           </p>
         </div>
+      </section>
+
+      <div className="container-luxury section-padding">
 
         {/* Event Types */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Event Venues</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="mb-20">
+          <SectionHeader title="Event Venues" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
             {eventTypes.map((event, index) => (
+              <ScrollReveal key={index} delay={index * 100} direction="up">
               <div 
-                key={index}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+                className="bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-1"
               >
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  className="w-full h-48 object-cover"
-                />
+                <div className="overflow-hidden">
+                  <OptimizedImage
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                    width={400}
+                    height={192}
+                  />
+                </div>
                 <div className="p-6">
                   <div className="flex items-center mb-3">
-                    <div className="text-amber-600 mr-2">
-                      {event.icon}
+                    <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-3">
+                      <div className="text-amber-600">{event.icon}</div>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900">{event.title}</h3>
+                    <h3 className="text-xl font-heading font-bold text-gray-900">{event.title}</h3>
                   </div>
                   
-                  <p className="text-gray-600 mb-4">{event.description}</p>
+                  <p className="text-gray-600 mb-4 font-body">{event.description}</p>
                   
                   <div className="flex items-center mb-4">
                     <Users className="h-4 w-4 text-amber-600 mr-2" />
@@ -143,41 +159,44 @@ const Events = () => {
                   </div>
                 </div>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
 
         {/* Services */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Our Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mb-20">
+          <SectionHeader title="Our Services" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
             {services.map((service, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-4">
+              <ScrollReveal key={index} delay={index * 100} direction="up">
+              <div className="text-center bg-white rounded-2xl shadow-luxury p-8 hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-16 h-16 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-4">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-heading font-semibold text-gray-900 mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 font-body">
                   {service.description}
                 </p>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
 
         {/* Event Packages */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Event Packages</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="mb-20">
+          <SectionHeader title="Event Packages" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
             {packages.map((package_, index) => (
+              <ScrollReveal key={index} delay={index * 100} direction="up">
               <div 
-                key={index}
-                className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="bg-white border border-gray-100 rounded-2xl p-8 shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{package_.name}</h3>
+                  <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">{package_.name}</h3>
                   <p className="text-amber-600 font-medium">{package_.guests}</p>
                 </div>
 
@@ -197,86 +216,80 @@ const Events = () => {
 
                 <button 
                   onClick={() => document.querySelector('#enquiry-btn')?.click()}
-                  className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors duration-200"
+                  className="w-full btn-primary"
                 >
                   Get Quote
                 </button>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
 
         {/* Planning Process */}
-        <div className="bg-gray-50 rounded-2xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Planning Your Event</h2>
+        <ScrollReveal>
+        <div className="bg-gradient-to-br from-gray-50 to-stone-50 rounded-3xl p-10 mb-20">
+          <h2 className="text-2xl font-heading font-bold text-gray-900 text-center mb-8">Planning Your Event</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="w-12 h-12 bg-amber-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-lg">
+              <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 1
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Initial Consultation</h3>
-              <p className="text-sm text-gray-600">Discuss your vision, requirements, and budget</p>
+              <h3 className="font-heading font-semibold text-gray-900 mb-2">Initial Consultation</h3>
+              <p className="text-sm text-gray-600 font-body">Discuss your vision, requirements, and budget</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-amber-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-lg">
+              <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 2
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Venue Selection</h3>
-              <p className="text-sm text-gray-600">Choose the perfect space and confirm availability</p>
+              <h3 className="font-heading font-semibold text-gray-900 mb-2">Venue Selection</h3>
+              <p className="text-sm text-gray-600 font-body">Choose the perfect space and confirm availability</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-amber-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-lg">
+              <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 3
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Custom Planning</h3>
-              <p className="text-sm text-gray-600">Design menu, décor, and all event details</p>
+              <h3 className="font-heading font-semibold text-gray-900 mb-2">Custom Planning</h3>
+              <p className="text-sm text-gray-600 font-body">Design menu, décor, and all event details</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-amber-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-lg">
+              <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 4
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Event Day</h3>
-              <p className="text-sm text-gray-600">Relax while we handle all the details</p>
+              <h3 className="font-heading font-semibold text-gray-900 mb-2">Event Day</h3>
+              <p className="text-sm text-gray-600 font-body">Relax while we handle all the details</p>
             </div>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* FAQ */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Frequently Asked Questions</h2>
-          <div className="max-w-3xl mx-auto space-y-6">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">How far in advance should I book?</h3>
-              <p className="text-gray-600">We recommend booking at least 6-8 weeks in advance for weekends and special dates. For larger events, 2-3 months advance booking ensures the best availability.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Can you accommodate dietary restrictions?</h3>
-              <p className="text-gray-600">Absolutely. Our chefs can prepare vegetarian, vegan, gluten-free, and other special dietary requirements with advance notice.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Do you provide decorations?</h3>
-              <p className="text-gray-600">Yes, we offer decoration services including tropical flowers, linens, lighting, and themed setups. We can also work with your preferred decorators.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Is there parking available for guests?</h3>
-              <p className="text-gray-600">Yes, we provide complimentary parking for event guests. Our parking area can accommodate cars and small buses.</p>
-            </div>
+        <div className="mb-20">
+          <SectionHeader title="Frequently Asked Questions" />
+          <div className="max-w-3xl mx-auto mt-10">
+            <FAQAccordion items={[
+              { question: 'How far in advance should I book?', answer: 'We recommend booking at least 6-8 weeks in advance for weekends and special dates. For larger events, 2-3 months advance booking ensures the best availability.' },
+              { question: 'Can you accommodate dietary restrictions?', answer: 'Absolutely. Our chefs can prepare vegetarian, vegan, gluten-free, and other special dietary requirements with advance notice.' },
+              { question: 'Do you provide decorations?', answer: 'Yes, we offer decoration services including tropical flowers, linens, lighting, and themed setups. We can also work with your preferred decorators.' },
+              { question: 'Is there parking available for guests?', answer: 'Yes, we provide complimentary parking for event guests. Our parking area can accommodate cars and small buses.' }
+            ]} />
           </div>
         </div>
 
         {/* Call to Action */}
-        <div className="text-center bg-amber-600 rounded-2xl p-8 text-white">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+        <ScrollReveal>
+        <div className="text-center gradient-dark rounded-3xl p-10 text-white">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">
             Ready to Plan Your Event?
           </h2>
-          <p className="text-lg text-amber-100 mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto font-body">
             Let us help you create an unforgettable celebration. Contact our events team 
             to discuss your requirements and receive a personalized quote.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="tel:+94770557257"
-              className="bg-white text-amber-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="btn-primary"
             >
               Call Events Team
             </a>
@@ -284,18 +297,19 @@ const Events = () => {
               href="https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20enquire%20about%20hosting%20an%20event"
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-white text-white hover:bg-white hover:text-amber-600 px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-3 rounded-full font-semibold transition-colors duration-200"
             >
               WhatsApp
             </a>
             <button 
               onClick={() => document.querySelector('#enquiry-btn')?.click()}
-              className="border-2 border-white text-white hover:bg-white hover:text-amber-600 px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-3 rounded-full font-semibold transition-colors duration-200"
             >
               Send Enquiry
             </button>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Gift, Users, Star } from 'lucide-react';
+import { Calendar, Gift, Users, Star, ArrowRight } from 'lucide-react';
+import ScrollReveal from '../components/ScrollReveal';
+import SectionHeader from '../components/SectionHeader';
+import OptimizedImage from '../components/OptimizedImage';
 
 const Offers = () => {
   const offers = [
@@ -74,26 +77,34 @@ const Offers = () => {
   ];
 
   return (
-    <div className="py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Special Offers
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover exceptional value with our carefully crafted packages. From romantic escapes 
-            to family adventures, find the perfect offer for your Amaluna experience.
+    <div>
+      {/* Hero Banner */}
+      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+        <OptimizedImage
+          src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg"
+          alt="Amaluna Special Offers"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={600}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40" />
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4">Special Offers</h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-body">
+            Discover exceptional value with our carefully crafted packages
           </p>
         </div>
+      </section>
+
+      <div className="container-luxury section-padding">
 
         {/* Offers Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
-          {offers.map((offer) => (
+          {offers.map((offer, index) => (
+            <ScrollReveal key={offer.id} delay={index * 100} direction="up">
             <div 
-              key={offer.id}
-              className={`bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden ${
-                offer.highlight ? 'ring-2 ring-amber-200' : ''
+              className={`bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-1 ${
+                offer.highlight ? 'ring-2 ring-amber-300' : ''
               } relative`}
             >
               {offer.highlight && (
@@ -105,19 +116,21 @@ const Offers = () => {
               )}
               
               <div className="aspect-w-16 aspect-h-10">
-                <img
+                <OptimizedImage
                   src={offer.image}
                   alt={offer.name}
                   className="w-full h-48 object-cover"
+                  width={400}
+                  height={192}
                 />
               </div>
               
               <div className="p-6">
                 <div className="flex items-center mb-3">
-                  <div className="text-amber-600 mr-2">
-                    {offer.icon}
+                  <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-3">
+                    <div className="text-amber-600">{offer.icon}</div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">
+                  <h3 className="text-xl font-heading font-bold text-gray-900">
                     {offer.name}
                   </h3>
                 </div>
@@ -157,25 +170,26 @@ const Offers = () => {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Link
                     to={`/offers/${offer.id}`}
-                    className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-lg font-semibold text-center transition-colors duration-200 text-sm"
+                    className="flex-1 btn-primary text-center text-sm"
                   >
                     View Details
                   </Link>
                   <button 
                     onClick={() => document.querySelector('#enquiry-btn')?.click()}
-                    className="flex-1 border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-200 text-sm"
+                    className="flex-1 btn-outline text-center text-sm"
                   >
                     Enquire
                   </button>
                 </div>
               </div>
             </div>
+            </ScrollReveal>
           ))}
         </div>
 
         {/* Terms & Conditions Note */}
-        <div className="bg-gray-50 rounded-lg p-6 mb-16">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Important Information</h2>
+        <div className="bg-gradient-to-br from-gray-50 to-stone-50 rounded-2xl p-6 mb-16">
+          <h2 className="text-lg font-heading font-semibold text-gray-900 mb-3">Important Information</h2>
           <div className="space-y-2 text-sm text-gray-600">
             <p>• All offers are subject to availability and may be withdrawn without prior notice</p>
             <p>• Room rates are per room per night unless otherwise specified</p>
@@ -186,11 +200,11 @@ const Offers = () => {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="bg-amber-600 rounded-2xl p-8 text-white text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+        <div className="gradient-dark rounded-3xl p-10 text-white text-center mb-16">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">
             Stay Updated on New Offers
           </h2>
-          <p className="text-lg text-amber-100 mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto font-body">
             Be the first to know about exclusive deals, seasonal packages, and special promotions 
             at Amaluna Resorts.
           </p>
@@ -199,31 +213,32 @@ const Offers = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-300"
+                className="flex-1 px-4 py-3 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
               />
-              <button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 whitespace-nowrap">
+              <button className="btn-primary whitespace-nowrap">
                 Subscribe
               </button>
             </div>
-            <p className="text-xs text-amber-100 mt-2">
+            <p className="text-xs text-gray-400 mt-2">
               We respect your privacy. No spam, just great deals.
             </p>
           </div>
         </div>
 
         {/* Call to Action */}
+        <ScrollReveal>
         <div className="text-center mt-16">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-4">
             Questions About Our Offers?
           </h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-body">
             Our team is here to help you choose the perfect package and answer any questions 
             about terms, availability, or special requirements.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="tel:+94770557257"
-              className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="btn-primary"
             >
               Call Now
             </a>
@@ -231,12 +246,13 @@ const Offers = () => {
               href="https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20enquire%20about%20your%20special%20offers"
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              className="btn-outline"
             >
               WhatsApp
             </a>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </div>
   );

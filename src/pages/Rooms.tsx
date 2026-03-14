@@ -1,63 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Wifi, Coffee, Tv, Wind, Bath } from 'lucide-react';
+import { Users, Wifi, Coffee, Tv, Wind, Bath, ArrowRight } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import OptimizedImage from '../components/OptimizedImage';
+import SectionHeader from '../components/SectionHeader';
+import BookingModal from '../components/BookingModal';
+import { rooms as allRooms } from '../services/bookingService';
 
 const Rooms = () => {
-  const rooms = [
-    {
-      id: 'lagoon-view-king',
-      name: 'Lagoon View King',
-      description: 'A bright king room with tranquil lagoon views and a private balcony.',
-      image: 'https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg',
-      amenities: ['King bed', 'AC', 'Ensuite', 'Balcony', 'Wi-Fi', 'Tea/Coffee', 'TV'],
-      occupancy: '2 adults',
-      icons: [<Users key="users" />, <Wind key="ac" />, <Bath key="bath" />, <Wifi key="wifi" />, <Coffee key="coffee" />, <Tv key="tv" />]
-    },
-    {
-      id: 'garden-twin',
-      name: 'Garden Twin',
-      description: 'Ground-floor twin room opening to leafy garden paths.',
-      image: 'https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg',
-      amenities: ['Twin beds', 'AC', 'Ensuite', 'Patio', 'Wi-Fi', 'TV'],
-      occupancy: '2 adults / 2+1 child',
-      icons: [<Users key="users" />, <Wind key="ac" />, <Bath key="bath" />, <Wifi key="wifi" />, <Tv key="tv" />]
-    },
-    {
-      id: 'family-suite',
-      name: 'Family Suite',
-      description: 'Two rooms and extra space—ideal for families.',
-      image: 'https://images.pexels.com/photos/237371/pexels-photo-237371.jpeg',
-      amenities: ['King + Twin', 'AC', 'Ensuite', 'Mini-fridge', 'Wi-Fi', 'TV'],
-      occupancy: '4 guests',
-      icons: [<Users key="users" />, <Wind key="ac" />, <Bath key="bath" />, <Wifi key="wifi" />, <Tv key="tv" />]
-    },
-    {
-      id: 'poolside-deluxe',
-      name: 'Poolside Deluxe',
-      description: 'A few steps from the resort\'s large pool and loungers.',
-      image: 'https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg',
-      amenities: ['King bed', 'AC', 'Ensuite', 'Patio', 'Wi-Fi', 'TV'],
-      occupancy: '2–3 guests',
-      icons: [<Users key="users" />, <Wind key="ac" />, <Bath key="bath" />, <Wifi key="wifi" />, <Tv key="tv" />]
-    }
-  ];
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingRoom, setBookingRoom] = useState('');
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const dayAfter = new Date();
+  dayAfter.setDate(dayAfter.getDate() + 2);
+  const defaultCheckIn = tomorrow.toISOString().split('T')[0];
+  const defaultCheckOut = dayAfter.toISOString().split('T')[0];
+
+  const iconMap: Record<string, React.ReactNode> = {
+    'King bed': <Users key="users" />,
+    'Twin beds': <Users key="users" />,
+    'King + Twin': <Users key="users" />,
+    'Air conditioning': <Wind key="ac" />,
+    'Private ensuite bathroom': <Bath key="bath" />,
+    'Complimentary Wi-Fi': <Wifi key="wifi" />,
+    'Tea & coffee making facilities': <Coffee key="coffee" />,
+    'Tea & coffee facilities': <Coffee key="coffee" />,
+    'Flat-screen TV': <Tv key="tv" />,
+  };
+
+  const rooms = allRooms.map(r => ({
+    ...r,
+    icons: r.amenities.filter(a => iconMap[a]).map(a => iconMap[a]),
+  }));
 
   return (
-    <div className="py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Our Rooms
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Choose from our selection of comfortable, well-appointed rooms, each designed 
-            to provide a peaceful retreat with modern amenities and beautiful views.
+    <div>
+      {/* Hero Banner */}
+      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+        <OptimizedImage
+          src="https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg"
+          alt="Amaluna Rooms"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={600}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40" />
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4">Our Rooms</h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-body">
+            Comfortable retreats with modern amenities and beautiful views
           </p>
         </div>
+      </section>
 
+      <div className="container-luxury section-padding">
         {/* Rooms Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {rooms.map((room) => (
@@ -66,63 +64,64 @@ const Rooms = () => {
               direction="up"
               delay={rooms.indexOf(room) * 100}
             >
-              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden transform hover:scale-105">
-              <div className="aspect-w-16 aspect-h-10">
+              <div className="bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden group hover:-translate-y-1">
+              <div className="relative overflow-hidden">
                 <OptimizedImage
                   src={room.image}
                   alt={room.name}
-                  className="w-full h-64 object-cover"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                   width={600}
                   height={256}
                 />
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-semibold text-amber-700 flex items-center gap-1">
+                  <Users className="h-3.5 w-3.5" /> {room.occupancy}
+                </div>
               </div>
               
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <h3 className="text-2xl font-heading font-bold text-gray-900 mb-2">
                   {room.name}
                 </h3>
                 
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 mb-4 font-body">
                   {room.description}
                 </p>
                 
                 <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2">Occupancy:</h4>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-amber-100 text-amber-800">
-                    <Users className="h-4 w-4 mr-1" />
-                    {room.occupancy}
-                  </span>
-                </div>
-                
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2">Amenities:</h4>
                   <div className="flex flex-wrap gap-2">
-                    {room.amenities.map((amenity, index) => (
+                    {room.amenities.slice(0, 7).map((amenity, index) => (
                       <span 
                         key={index}
-                        className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
+                        className="px-3 py-1 text-xs bg-amber-50 text-amber-700 rounded-full font-medium"
                       >
                         {amenity}
                       </span>
                     ))}
                   </div>
                 </div>
+
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <span className="text-xl font-bold text-gray-900">LKR {room.price.toLocaleString()}</span>
+                    <span className="text-sm text-gray-500 ml-1">/ night</span>
+                  </div>
+                </div>
                 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Link
                     to={`/rooms/${room.id}`}
-                    className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-3 px-4 rounded-lg font-semibold text-center transition-colors duration-200"
+                    className="flex-1 btn-outline text-center flex items-center justify-center gap-2"
                   >
-                    View Details
+                    View Details <ArrowRight className="h-4 w-4" />
                   </Link>
                   <button 
                     onClick={() => {
-                      const enquiryBtn = document.querySelector('#enquiry-btn') as HTMLButtonElement;
-                      if (enquiryBtn) enquiryBtn.click();
+                      setBookingRoom(room.id);
+                      setBookingOpen(true);
                     }}
-                    className="flex-1 border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white py-3 px-4 rounded-lg font-semibold transition-colors duration-200"
+                    className="flex-1 btn-primary text-center"
                   >
-                    Enquire
+                    Book Now
                   </button>
                 </div>
               </div>
@@ -132,32 +131,46 @@ const Rooms = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center bg-amber-50 rounded-2xl p-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Need Help Choosing?
-          </h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
-            Our team is happy to help you find the perfect room for your stay. 
-            Get in touch to discuss your requirements.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href="tel:+94770557257"
-              className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
-            >
-              Call Now
-            </a>
-            <a 
-              href="https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20enquire%20about%20rooms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
-            >
-              WhatsApp
-            </a>
+        <ScrollReveal>
+          <div className="text-center bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-10 border border-amber-100">
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-4">
+              Need Help Choosing?
+            </h2>
+            <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-body">
+              Our team is happy to help you find the perfect room for your stay.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="tel:+94770557257"
+                className="btn-primary"
+              >
+                Call Now
+              </a>
+              <a 
+                href="https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20enquire%20about%20rooms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline"
+              >
+                WhatsApp
+              </a>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
+
+      <BookingModal
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        bookingData={{
+          checkIn: defaultCheckIn,
+          checkOut: defaultCheckOut,
+          adults: 2,
+          children: 0,
+          promoCode: '',
+          selectedRoom: bookingRoom,
+        }}
+      />
     </div>
   );
 };
