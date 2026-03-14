@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, Wifi, Coffee, Car, MapPin, Users, Utensils, Waves, ChevronDown, Award, Shield, Clock, Play } from 'lucide-react';
+import { Star, Wifi, Coffee, Car, MapPin, Users, Utensils, Waves, ChevronDown, Award, Shield, Clock } from 'lucide-react';
 import BookingBar from '../components/BookingBar';
 import ScrollReveal from '../components/ScrollReveal';
 import OptimizedImage from '../components/OptimizedImage';
@@ -9,7 +9,6 @@ import AnimatedCounter from '../components/AnimatedCounter';
 import GoogleReviews from '../components/GoogleReviews';
 
 const Home = () => {
-  const [videoPlaying, setVideoPlaying] = useState(false);
   const testimonials = [
     {
       name: "Sarah & Mike",
@@ -271,36 +270,13 @@ const Home = () => {
             />
             <div className="mt-12 max-w-5xl mx-auto">
               <div className="relative rounded-2xl overflow-hidden shadow-luxury-xl aspect-video">
-                {videoPlaying ? (
-                  <iframe
-                    src="https://www.youtube.com/embed/1J5fGcvRBzI?autoplay=1&rel=0"
-                    title="Amaluna Resorts Video Tour"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full"
-                  />
-                ) : (
-                  <button
-                    onClick={() => setVideoPlaying(true)}
-                    className="group absolute inset-0 w-full h-full cursor-pointer"
-                    aria-label="Play resort video"
-                  >
-                    <img
-                      src="https://img.youtube.com/vi/1J5fGcvRBzI/maxresdefault.jpg"
-                      alt="Amaluna Resorts video thumbnail"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-20 h-20 md:w-24 md:h-24 bg-amber-600/90 group-hover:bg-amber-600 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-2xl">
-                        <Play className="h-8 w-8 md:h-10 md:w-10 text-white fill-white ml-1" />
-                      </div>
-                    </div>
-                    <div className="absolute bottom-6 left-6 right-6 text-left">
-                      <p className="text-white/90 text-sm md:text-base font-medium font-body">Watch our full resort video</p>
-                    </div>
-                  </button>
-                )}
+                <iframe
+                  src="https://www.youtube.com/embed/1J5fGcvRBzI?autoplay=1&mute=1&loop=1&playlist=1J5fGcvRBzI&controls=1&rel=0&playsinline=1"
+                  title="Amaluna Resorts Video Tour"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
               </div>
             </div>
           </div>

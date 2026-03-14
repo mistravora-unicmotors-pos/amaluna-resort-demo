@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ActionBar from './components/ActionBar';
@@ -73,7 +73,9 @@ function App() {
           <Routes>
             {/* Admin routes - no Header/Footer/ActionBar */}
             <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/*" element={<AdminLayout />}>
+              <Route index element={<Navigate to="dashboard" replace />} />
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="analytics" element={<AdminAnalytics />} />
               <Route path="reports" element={<AdminReports />} />
@@ -89,6 +91,7 @@ function App() {
               <Route path="pool-tickets" element={<AdminPoolTickets />} />
               <Route path="rewards" element={<AdminRewards />} />
               <Route path="menu" element={<AdminMenu />} />
+              <Route path="*" element={<Navigate to="dashboard" replace />} />
             </Route>
 
             {/* Main site routes */}
