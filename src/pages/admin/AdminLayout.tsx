@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Outlet, NavLink, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   MessageSquare,
@@ -44,16 +44,15 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const isAuthenticated = sessionStorage.getItem('admin_auth') === 'true';
 
-  useEffect(() => {
-    if (sessionStorage.getItem('admin_auth') !== 'true') {
-      navigate('/admin', { replace: true });
-    }
-  }, [navigate]);
+  if (!isAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
   const handleLogout = () => {
     sessionStorage.removeItem('admin_auth');
-    navigate('/admin');
+    navigate('/admin/login', { replace: true });
   };
 
   const currentPage = navItems.find(item => location.pathname === item.to)?.label || 'Admin';
