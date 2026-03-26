@@ -59,7 +59,7 @@ const Dining = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* Restaurant */}
           <ScrollReveal direction="left">
-          <div className="bg-white rounded-2xl shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-all duration-300 group">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-all duration-300 group">
             <div className="overflow-hidden">
               <OptimizedImage
                 src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg"
@@ -71,15 +71,15 @@ const Dining = () => {
             </div>
             <div className="p-6">
               <div className="flex items-center mb-3">
-                <div className="p-2 bg-amber-50 rounded-lg mr-3"><Utensils className="h-6 w-6 text-amber-600" /></div>
-                <h2 className="text-2xl font-heading font-bold text-gray-900">Restaurant</h2>
+                <div className="p-2 bg-amber-50 dark:bg-amber-900/30 rounded-lg mr-3"><Utensils className="h-6 w-6 text-amber-600" /></div>
+                <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Restaurant</h2>
               </div>
-              <p className="text-gray-600 mb-4">
-                Our main restaurant offers indoor and outdoor seating with beautiful lagoon views. 
-                Enjoy fresh seafood, traditional Sri Lankan curries, and international dishes 
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Our main restaurant offers indoor and outdoor seating with beautiful lagoon views.
+                Enjoy fresh seafood, traditional Sri Lankan curries, and international dishes
                 prepared by our skilled chefs.
               </p>
-              <div className="flex items-center text-sm text-gray-500 bg-amber-50 rounded-lg px-3 py-2">
+              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-amber-50 dark:bg-amber-900/30 rounded-lg px-3 py-2">
                 <Clock className="h-4 w-4 mr-1 text-amber-600" />
                 <span>Breakfast: 7:00 AM - 10:00 AM | Dinner: 6:00 PM - 10:00 PM</span>
               </div>
@@ -89,7 +89,7 @@ const Dining = () => {
 
           {/* Bar */}
           <ScrollReveal direction="right">
-          <div className="bg-white rounded-2xl shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-all duration-300 group">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-all duration-300 group">
             <div className="overflow-hidden">
               <OptimizedImage
                 src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg"
@@ -101,14 +101,14 @@ const Dining = () => {
             </div>
             <div className="p-6">
               <div className="flex items-center mb-3">
-                <div className="p-2 bg-amber-50 rounded-lg mr-3"><Coffee className="h-6 w-6 text-amber-600" /></div>
-                <h2 className="text-2xl font-heading font-bold text-gray-900">Bar</h2>
+                <div className="p-2 bg-amber-50 dark:bg-amber-900/30 rounded-lg mr-3"><Coffee className="h-6 w-6 text-amber-600" /></div>
+                <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Bar</h2>
               </div>
-              <p className="text-gray-600 mb-4">
-                Unwind at our poolside bar with tropical cocktails, local beers, and fresh juices. 
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Unwind at our poolside bar with tropical cocktails, local beers, and fresh juices.
                 The perfect spot to watch the sunset while enjoying a refreshing drink and light snacks.
               </p>
-              <div className="flex items-center text-sm text-gray-500 bg-amber-50 rounded-lg px-3 py-2">
+              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-amber-50 dark:bg-amber-900/30 rounded-lg px-3 py-2">
                 <Clock className="h-4 w-4 mr-1 text-amber-600" />
                 <span>Open: 10:00 AM - 11:00 PM daily</span>
               </div>
@@ -119,7 +119,7 @@ const Dining = () => {
 
         {/* Sample Menu */}
         <ScrollReveal>
-        <div className="bg-gradient-to-br from-gray-50 to-amber-50/30 rounded-3xl p-8 md:p-10 mb-12 border border-gray-100">
+        <div className="bg-gradient-to-br from-gray-50 to-amber-50/30 dark:from-gray-800 dark:to-gray-800 rounded-3xl p-8 md:p-10 mb-12 border border-gray-100 dark:border-gray-700">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
             <SectionHeader title="Sample Menu" subtitle="A taste of what awaits you at Amaluna" align="left" />
             <button className="mt-4 sm:mt-0 btn-primary flex items-center gap-2">
@@ -130,54 +130,54 @@ const Dining = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Starters */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-400">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4 pb-2 border-b-2 border-amber-400">
                 Starters
               </h3>
               <div className="space-y-4">
                 {menuItems.starters.map((item, index) => (
                   <div key={index}>
                     <div className="flex justify-between items-start">
-                      <h4 className="font-semibold text-gray-900">{item.name}</h4>
-                      <span className="text-amber-600 font-semibold ml-2">{item.price}</span>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">{item.name}</h4>
+                      <span className="text-amber-600 dark:text-amber-400 font-semibold ml-2">{item.price}</span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{item.description}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Mains */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-400">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4 pb-2 border-b-2 border-amber-400">
                 Main Courses
               </h3>
               <div className="space-y-4">
                 {menuItems.mains.map((item, index) => (
                   <div key={index}>
                     <div className="flex justify-between items-start">
-                      <h4 className="font-semibold text-gray-900">{item.name}</h4>
-                      <span className="text-amber-600 font-semibold ml-2">{item.price}</span>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">{item.name}</h4>
+                      <span className="text-amber-600 dark:text-amber-400 font-semibold ml-2">{item.price}</span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{item.description}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Desserts */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 pb-2 border-b-2 border-amber-400">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4 pb-2 border-b-2 border-amber-400">
                 Desserts
               </h3>
               <div className="space-y-4">
                 {menuItems.desserts.map((item, index) => (
                   <div key={index}>
                     <div className="flex justify-between items-start">
-                      <h4 className="font-semibold text-gray-900">{item.name}</h4>
-                      <span className="text-amber-600 font-semibold ml-2">{item.price}</span>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">{item.name}</h4>
+                      <span className="text-amber-600 dark:text-amber-400 font-semibold ml-2">{item.price}</span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{item.description}</p>
                   </div>
                 ))}
               </div>
@@ -188,16 +188,16 @@ const Dining = () => {
 
         {/* Beverages */}
         <ScrollReveal>
-        <div className="bg-white rounded-2xl shadow-luxury p-8 mb-12">
-          <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">Beverages</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-8 mb-12">
+          <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Beverages</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {beverages.map((item, index) => (
               <div key={index} className="flex justify-between items-start py-2">
                 <div className="flex-1">
-                  <h4 className="font-semibold text-gray-900">{item.name}</h4>
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">{item.name}</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{item.description}</p>
                 </div>
-                <span className="text-amber-600 font-semibold ml-4">{item.price}</span>
+                <span className="text-amber-600 dark:text-amber-400 font-semibold ml-4">{item.price}</span>
               </div>
             ))}
           </div>
@@ -206,33 +206,33 @@ const Dining = () => {
 
         {/* Special Dietary Requirements */}
         <ScrollReveal>
-        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-8 md:p-10 mb-12 border border-amber-100">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Special Dietary Requirements</h2>
-          <p className="text-gray-600 mb-6">
-            We're happy to accommodate various dietary needs and preferences. Our chefs can prepare 
+        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-gray-800 dark:to-gray-800 rounded-3xl p-8 md:p-10 mb-12 border border-amber-100 dark:border-gray-700">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Special Dietary Requirements</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            We're happy to accommodate various dietary needs and preferences. Our chefs can prepare
             vegetarian, vegan, and gluten-free options with advance notice.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Utensils className="h-8 w-8 text-green-600" />
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Utensils className="h-8 w-8 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="font-semibold text-gray-900">Vegetarian Friendly</h3>
-              <p className="text-sm text-gray-600">Fresh vegetables and plant-based options</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white">Vegetarian Friendly</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Fresh vegetables and plant-based options</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Utensils className="h-8 w-8 text-blue-600" />
+              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Utensils className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="font-semibold text-gray-900">Halal Available</h3>
-              <p className="text-sm text-gray-600">Prepared according to Islamic guidelines</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white">Halal Available</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Prepared according to Islamic guidelines</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Utensils className="h-8 w-8 text-purple-600" />
+              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Utensils className="h-8 w-8 text-purple-600 dark:text-purple-400" />
               </div>
-              <h3 className="font-semibold text-gray-900">Allergy Conscious</h3>
-              <p className="text-sm text-gray-600">Please inform us of any food allergies</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white">Allergy Conscious</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Please inform us of any food allergies</p>
             </div>
           </div>
         </div>

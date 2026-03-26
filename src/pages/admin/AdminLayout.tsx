@@ -20,7 +20,9 @@ import {
   Waves,
   Gift,
   UtensilsCrossed,
+  FileEdit,
 } from 'lucide-react';
+import ThemeToggle from '../../components/ThemeToggle';
 
 const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -35,6 +37,7 @@ const navItems = [
   { to: '/admin/pool-tickets', label: 'Pool & Tickets', icon: Waves },
   { to: '/admin/rewards', label: 'Points & Rewards', icon: Gift },
   { to: '/admin/menu', label: 'Menu', icon: UtensilsCrossed },
+  { to: '/admin/content', label: 'Site Content', icon: FileEdit },
   { to: '/admin/settings', label: 'Settings', icon: Settings },
   { to: '/admin/emails', label: 'Email Templates', icon: Mail },
   { to: '/admin/gallery', label: 'Gallery', icon: Image },
@@ -126,6 +129,7 @@ export default function AdminLayout() {
           </button>
           <h1 className="text-lg font-heading font-bold text-white">{currentPage}</h1>
           <div className="ml-auto flex items-center gap-3">
+            <ThemeToggle variant="admin" />
             <div className="h-8 w-8 bg-amber-600 rounded-full flex items-center justify-center text-white text-sm font-bold">A</div>
           </div>
         </header>

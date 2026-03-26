@@ -66,10 +66,10 @@ const PWAInstallPrompt = () => {
 
   return (
     <div className="fixed bottom-24 left-4 right-4 md:left-auto md:right-4 md:w-[380px] z-50 animate-slide-up">
-      <div className="bg-white rounded-2xl shadow-luxury-xl border border-gray-100 p-5">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury-xl border border-gray-100 dark:border-gray-700 p-5">
         <button
           onClick={handleDismiss}
-          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
         >
           <X className="h-4 w-4" />
         </button>
@@ -78,8 +78,8 @@ const PWAInstallPrompt = () => {
             <Smartphone className="h-6 w-6 text-white" />
           </div>
           <div className="flex-1">
-            <h4 className="font-heading font-bold text-gray-900 mb-1">Install Amaluna App</h4>
-            <p className="text-sm text-gray-500 mb-3">
+            <h4 className="font-heading font-bold text-gray-900 dark:text-white mb-1">Install Amaluna App</h4>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
               Add to your home screen for quick access, offline features, and push notifications.
             </p>
             <div className="flex items-center gap-2">
@@ -91,7 +91,7 @@ const PWAInstallPrompt = () => {
               </button>
               <button
                 onClick={handleDismiss}
-                className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
               >
                 Not now
               </button>

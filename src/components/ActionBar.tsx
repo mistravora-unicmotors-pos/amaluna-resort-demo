@@ -25,7 +25,7 @@ const ActionBar = () => {
 
   return (
     <>
-      <div className={`fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-gray-200/60 shadow-luxury z-50 transition-transform duration-500 ${visible ? 'translate-y-0' : 'translate-y-full'}`}>
+      <div className={`fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-t border-gray-200/60 dark:border-gray-700/60 shadow-luxury z-50 transition-transform duration-500 ${visible ? 'translate-y-0' : 'translate-y-full'}`}>
         <div className="container-luxury py-2 sm:py-3">
           <div className="flex gap-2">
             <button

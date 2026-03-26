@@ -118,7 +118,7 @@ const ChatBot = () => {
       {/* Chat Window */}
       {isOpen && (
         <div
-          className={`fixed bottom-40 right-4 z-50 w-[360px] max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-luxury-xl overflow-hidden transition-all duration-300 ${
+          className={`fixed bottom-40 right-4 z-50 w-[360px] max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-800 rounded-2xl shadow-luxury-xl overflow-hidden transition-all duration-300 ${
             isMinimized ? 'h-14' : 'h-[480px]'
           }`}
         >
@@ -142,18 +142,18 @@ const ChatBot = () => {
           {!isMinimized && (
             <>
               {/* Messages */}
-              <div className="h-[340px] overflow-y-auto p-4 space-y-4 bg-gray-50">
+              <div className="h-[340px] overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-gray-900">
                 {messages.map(msg => (
                   <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div
                       className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
                         msg.sender === 'user'
                           ? 'bg-gradient-to-r from-amber-600 to-yellow-500 text-white rounded-br-md'
-                          : 'bg-white text-gray-700 shadow-sm rounded-bl-md'
+                          : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 shadow-sm rounded-bl-md'
                       }`}
                     >
                       <p className="leading-relaxed">{msg.text}</p>
-                      <p className={`text-[10px] mt-1 ${msg.sender === 'user' ? 'text-amber-100' : 'text-gray-400'}`}>
+                      <p className={`text-[10px] mt-1 ${msg.sender === 'user' ? 'text-amber-100' : 'text-gray-400 dark:text-gray-500'}`}>
                         {msg.time}
                       </p>
                     </div>
@@ -162,11 +162,11 @@ const ChatBot = () => {
 
                 {isTyping && (
                   <div className="flex justify-start">
-                    <div className="bg-white rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
+                    <div className="bg-white dark:bg-gray-700 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
                       <div className="flex gap-1.5">
-                        <span className="h-2 w-2 bg-gray-300 rounded-full animate-typing-dot" style={{ animationDelay: '0ms' }} />
-                        <span className="h-2 w-2 bg-gray-300 rounded-full animate-typing-dot" style={{ animationDelay: '150ms' }} />
-                        <span className="h-2 w-2 bg-gray-300 rounded-full animate-typing-dot" style={{ animationDelay: '300ms' }} />
+                        <span className="h-2 w-2 bg-gray-300 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '0ms' }} />
+                        <span className="h-2 w-2 bg-gray-300 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '150ms' }} />
+                        <span className="h-2 w-2 bg-gray-300 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '300ms' }} />
                       </div>
                     </div>
                   </div>
@@ -179,7 +179,7 @@ const ChatBot = () => {
                       <button
                         key={reply}
                         onClick={() => sendMessage(reply)}
-                        className="px-3 py-1.5 bg-white border border-amber-200 rounded-full text-xs font-medium text-amber-700 hover:bg-amber-50 transition-colors"
+                        className="px-3 py-1.5 bg-white dark:bg-gray-700 border border-amber-200 dark:border-amber-700 rounded-full text-xs font-medium text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 transition-colors"
                       >
                         {reply}
                       </button>
@@ -191,14 +191,14 @@ const ChatBot = () => {
               </div>
 
               {/* Input */}
-              <form onSubmit={handleSubmit} className="p-3 bg-white border-t border-gray-100 flex items-center gap-2">
+              <form onSubmit={handleSubmit} className="p-3 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 flex items-center gap-2">
                 <input
                   ref={inputRef}
                   type="text"
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   placeholder="Type a message..."
-                  className="flex-1 px-4 py-2.5 bg-gray-50 rounded-full text-sm outline-none focus:bg-gray-100 transition-colors"
+                  className="flex-1 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 rounded-full text-sm outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition-colors text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                 />
                 <button
                   type="submit"

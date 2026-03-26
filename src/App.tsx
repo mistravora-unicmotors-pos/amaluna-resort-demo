@@ -10,6 +10,7 @@ import ChatBot from './components/ChatBot';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 import EmailCapture from './components/EmailCapture';
 import { usePageMeta } from './hooks/usePageMeta';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('./pages/Home'));
@@ -48,13 +49,14 @@ const AdminReports = lazy(() => import('./pages/admin/AdminReports'));
 const AdminPoolTickets = lazy(() => import('./pages/admin/AdminPoolTickets'));
 const AdminRewards = lazy(() => import('./pages/admin/AdminRewards'));
 const AdminMenu = lazy(() => import('./pages/admin/AdminMenu'));
+const AdminContent = lazy(() => import('./pages/admin/AdminContent'));
 
 // Page loading fallback
 const PageLoader = () => (
-  <div className="min-h-[60vh] flex items-center justify-center">
+  <div className="min-h-[60vh] flex items-center justify-center bg-white dark:bg-gray-900">
     <div className="text-center">
-      <div className="w-10 h-10 border-3 border-amber-200 border-t-amber-600 rounded-full animate-spin mx-auto mb-4" />
-      <p className="text-gray-500 text-sm font-body">Loading...</p>
+      <div className="w-10 h-10 border-3 border-amber-200 dark:border-amber-800 border-t-amber-600 rounded-full animate-spin mx-auto mb-4" />
+      <p className="text-gray-500 dark:text-gray-400 text-sm font-body">Loading...</p>
     </div>
   </div>
 );
@@ -67,73 +69,76 @@ const PageMetaProvider = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
-    <ErrorBoundary>
-      <Router>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            {/* Admin routes - no Header/Footer/ActionBar */}
-            <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/*" element={<AdminLayout />}>
-              <Route index element={<Navigate to="dashboard" replace />} />
-              <Route path="dashboard" element={<AdminDashboard />} />
-              <Route path="analytics" element={<AdminAnalytics />} />
-              <Route path="reports" element={<AdminReports />} />
-              <Route path="inquiries" element={<AdminInquiries />} />
-              <Route path="bookings" element={<AdminBookings />} />
-              <Route path="rooms" element={<AdminRooms />} />
-              <Route path="guests" element={<AdminGuests />} />
-              <Route path="offers" element={<AdminOffers />} />
-              <Route path="reviews" element={<AdminReviews />} />
-              <Route path="settings" element={<AdminSettings />} />
-              <Route path="emails" element={<AdminEmails />} />
-              <Route path="gallery" element={<AdminGallery />} />
-              <Route path="pool-tickets" element={<AdminPoolTickets />} />
-              <Route path="rewards" element={<AdminRewards />} />
-              <Route path="menu" element={<AdminMenu />} />
-              <Route path="*" element={<Navigate to="dashboard" replace />} />
-            </Route>
+    <ThemeProvider>
+      <ErrorBoundary>
+        <Router>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Admin routes - no Header/Footer/ActionBar */}
+              <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/*" element={<AdminLayout />}>
+                <Route index element={<Navigate to="dashboard" replace />} />
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="analytics" element={<AdminAnalytics />} />
+                <Route path="reports" element={<AdminReports />} />
+                <Route path="inquiries" element={<AdminInquiries />} />
+                <Route path="bookings" element={<AdminBookings />} />
+                <Route path="rooms" element={<AdminRooms />} />
+                <Route path="guests" element={<AdminGuests />} />
+                <Route path="offers" element={<AdminOffers />} />
+                <Route path="reviews" element={<AdminReviews />} />
+                <Route path="settings" element={<AdminSettings />} />
+                <Route path="emails" element={<AdminEmails />} />
+                <Route path="gallery" element={<AdminGallery />} />
+                <Route path="pool-tickets" element={<AdminPoolTickets />} />
+                <Route path="rewards" element={<AdminRewards />} />
+                <Route path="menu" element={<AdminMenu />} />
+                <Route path="content" element={<AdminContent />} />
+                <Route path="*" element={<Navigate to="dashboard" replace />} />
+              </Route>
 
-            {/* Main site routes */}
-            <Route path="*" element={
-              <PageMetaProvider>
-              <div className="min-h-screen bg-white">
-                <ScrollToTop />
-                <Header />
-                <main className="pb-20">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/rooms" element={<Rooms />} />
-                    <Route path="/rooms/:roomId" element={<RoomDetail />} />
-                    <Route path="/dining" element={<Dining />} />
-                    <Route path="/pool" element={<Pool />} />
-                    <Route path="/offers" element={<Offers />} />
-                    <Route path="/offers/:offerId" element={<OfferDetail />} />
-                    <Route path="/events" element={<Events />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/gallery" element={<Gallery />} />
-                    <Route path="/location" element={<Location />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="/terms" element={<Terms />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-                <Footer />
-                <ActionBar />
-                <ChatBot />
-                <CookieConsent />
-                <PWAInstallPrompt />
-                <EmailCapture />
-              </div>
-              </PageMetaProvider>
-            } />
-          </Routes>
-        </Suspense>
-      </Router>
-    </ErrorBoundary>
+              {/* Main site routes */}
+              <Route path="*" element={
+                <PageMetaProvider>
+                <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+                  <ScrollToTop />
+                  <Header />
+                  <main className="pb-20">
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/rooms" element={<Rooms />} />
+                      <Route path="/rooms/:roomId" element={<RoomDetail />} />
+                      <Route path="/dining" element={<Dining />} />
+                      <Route path="/pool" element={<Pool />} />
+                      <Route path="/offers" element={<Offers />} />
+                      <Route path="/offers/:offerId" element={<OfferDetail />} />
+                      <Route path="/events" element={<Events />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/gallery" element={<Gallery />} />
+                      <Route path="/location" element={<Location />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                      <Route path="/terms" element={<Terms />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </main>
+                  <Footer />
+                  <ActionBar />
+                  <ChatBot />
+                  <CookieConsent />
+                  <PWAInstallPrompt />
+                  <EmailCapture />
+                </div>
+                </PageMetaProvider>
+              } />
+            </Routes>
+          </Suspense>
+        </Router>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }
 

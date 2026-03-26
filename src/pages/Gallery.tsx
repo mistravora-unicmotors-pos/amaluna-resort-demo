@@ -124,7 +124,7 @@ const Gallery = () => {
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm ${
                 selectedCategory === category.id
                   ? 'bg-amber-600 text-white shadow-gold'
-                  : 'bg-white text-gray-700 hover:bg-amber-50 hover:text-amber-700 border border-gray-200 shadow-sm'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-700 hover:text-amber-700 dark:hover:text-amber-400 border border-gray-200 dark:border-gray-700 shadow-sm'
               }`}
             >
               {category.name}
@@ -171,18 +171,18 @@ const Gallery = () => {
         </div>
 
         {/* Photo Count */}
-        <div className="text-center text-gray-600">
+        <div className="text-center text-gray-600 dark:text-gray-400">
           <p>Showing {filteredImages.length} {filteredImages.length === 1 ? 'photo' : 'photos'}</p>
         </div>
 
         {/* Call to Action */}
         <ScrollReveal>
-        <div className="mt-16 text-center bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-10 border border-amber-100">
-          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-4">
+        <div className="mt-16 text-center bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-gray-800 dark:to-gray-800 rounded-3xl p-10 border border-amber-100 dark:border-gray-700">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white mb-4">
             Ready to Experience This in Person?
           </h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-body">
-            These photos are just the beginning. Come and create your own memories 
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto font-body">
+            These photos are just the beginning. Come and create your own memories
             at Amaluna Resorts in beautiful Negombo.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

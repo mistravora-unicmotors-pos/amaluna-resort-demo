@@ -121,8 +121,8 @@ const Events = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
             {eventTypes.map((event, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
-              <div 
-                className="bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-1"
+              <div
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-1"
               >
                 <div className="overflow-hidden">
                   <OptimizedImage
@@ -135,23 +135,23 @@ const Events = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-3">
+                    <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mr-3">
                       <div className="text-amber-600">{event.icon}</div>
                     </div>
-                    <h3 className="text-xl font-heading font-bold text-gray-900">{event.title}</h3>
+                    <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white">{event.title}</h3>
                   </div>
-                  
-                  <p className="text-gray-600 mb-4 font-body">{event.description}</p>
-                  
+
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 font-body">{event.description}</p>
+
                   <div className="flex items-center mb-4">
                     <Users className="h-4 w-4 text-amber-600 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">{event.capacity}</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{event.capacity}</span>
                   </div>
-                  
+
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-gray-900">Features:</h4>
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Features:</h4>
                     {event.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center text-sm text-gray-600">
+                      <div key={idx} className="flex items-center text-sm text-gray-600 dark:text-gray-400">
                         <div className="w-1.5 h-1.5 bg-amber-600 rounded-full mr-2"></div>
                         {feature}
                       </div>
@@ -170,14 +170,14 @@ const Events = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
             {services.map((service, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
-              <div className="text-center bg-white rounded-2xl shadow-luxury p-8 hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="w-16 h-16 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <div className="text-center bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-8 hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-16 h-16 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mx-auto mb-4">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-heading font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 font-body">
+                <p className="text-gray-600 dark:text-gray-400 font-body">
                   {service.description}
                 </p>
               </div>
@@ -192,29 +192,29 @@ const Events = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
             {packages.map((package_, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
-              <div 
-                className="bg-white border border-gray-100 rounded-2xl p-8 shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1"
+              <div
+                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-8 shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">{package_.name}</h3>
-                  <p className="text-amber-600 font-medium">{package_.guests}</p>
+                  <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">{package_.name}</h3>
+                  <p className="text-amber-600 dark:text-amber-400 font-medium">{package_.guests}</p>
                 </div>
 
                 <div className="space-y-3 mb-6">
-                  <h4 className="font-semibold text-gray-900">Package Includes:</h4>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">Package Includes:</h4>
                   {package_.includes.map((inclusion, idx) => (
                     <div key={idx} className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-amber-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-600 text-sm">{inclusion}</span>
+                      <span className="text-gray-600 dark:text-gray-400 text-sm">{inclusion}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="text-sm text-gray-500 italic mb-6">
+                <div className="text-sm text-gray-500 dark:text-gray-400 italic mb-6">
                   {package_.note}
                 </div>
 
-                <button 
+                <button
                   onClick={() => document.querySelector('#enquiry-btn')?.click()}
                   className="w-full btn-primary"
                 >
@@ -228,36 +228,36 @@ const Events = () => {
 
         {/* Planning Process */}
         <ScrollReveal>
-        <div className="bg-gradient-to-br from-gray-50 to-stone-50 rounded-3xl p-10 mb-20">
-          <h2 className="text-2xl font-heading font-bold text-gray-900 text-center mb-8">Planning Your Event</h2>
+        <div className="bg-gradient-to-br from-gray-50 to-stone-50 dark:from-gray-800 dark:to-gray-800 rounded-3xl p-10 mb-20">
+          <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white text-center mb-8">Planning Your Event</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 1
               </div>
-              <h3 className="font-heading font-semibold text-gray-900 mb-2">Initial Consultation</h3>
-              <p className="text-sm text-gray-600 font-body">Discuss your vision, requirements, and budget</p>
+              <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-2">Initial Consultation</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 font-body">Discuss your vision, requirements, and budget</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 2
               </div>
-              <h3 className="font-heading font-semibold text-gray-900 mb-2">Venue Selection</h3>
-              <p className="text-sm text-gray-600 font-body">Choose the perfect space and confirm availability</p>
+              <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-2">Venue Selection</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 font-body">Choose the perfect space and confirm availability</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 3
               </div>
-              <h3 className="font-heading font-semibold text-gray-900 mb-2">Custom Planning</h3>
-              <p className="text-sm text-gray-600 font-body">Design menu, décor, and all event details</p>
+              <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-2">Custom Planning</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 font-body">Design menu, décor, and all event details</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-lg shadow-gold">
                 4
               </div>
-              <h3 className="font-heading font-semibold text-gray-900 mb-2">Event Day</h3>
-              <p className="text-sm text-gray-600 font-body">Relax while we handle all the details</p>
+              <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-2">Event Day</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 font-body">Relax while we handle all the details</p>
             </div>
           </div>
         </div>

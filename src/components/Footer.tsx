@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail, Phone, Facebook, Instagram, Send, Shield, Award, Download } from 'lucide-react';
+import { MapPin, Mail, Phone, Send, Shield, Award, Download } from 'lucide-react';
+import SocialIcons from './SocialIcons';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -33,7 +34,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white pb-24">
       {/* Newsletter Section */}
       <div className="border-b border-gray-800">
         <div className="container-luxury py-10">
@@ -53,7 +54,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-gold flex items-center justify-center gap-2 whitespace-nowrap"
+                className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-gold flex items-center justify-center gap-2 whitespace-nowrap hover:scale-105"
               >
                 <Send className="h-4 w-4" />
                 {subscribed ? 'Subscribed!' : 'Subscribe'}
@@ -67,13 +68,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Logo and Description */}
           <div className="lg:col-span-1">
-            <img 
-              src="/android-chrome-192x192.png" 
-              alt="Amaluna Resorts" 
+            <img
+              src="/android-chrome-192x192.png"
+              alt="Amaluna Resorts"
               className="h-12 w-auto mb-4"
             />
             <p className="text-gray-400 mb-6 max-w-md font-body text-sm leading-relaxed">
-              Experience easy luxury by the lagoon with spacious rooms, a signature pool, 
+              Experience easy luxury by the lagoon with spacious rooms, a signature pool,
               and warm Sri Lankan hospitality in the heart of Negombo.
             </p>
             {/* Trust Badges */}
@@ -103,7 +104,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center">
                 <Phone className="h-5 w-5 text-amber-500 mr-3" />
-                <a 
+                <a
                   href="tel:+94770557257"
                   className="text-gray-400 hover:text-amber-500 transition-colors duration-200 text-sm font-body"
                 >
@@ -112,7 +113,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center">
                 <Mail className="h-5 w-5 text-amber-500 mr-3" />
-                <a 
+                <a
                   href="mailto:reservations@amalunaresorts.com"
                   className="text-gray-400 hover:text-amber-500 transition-colors duration-200 text-sm font-body"
                 >
@@ -130,7 +131,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-gray-400 hover:text-amber-500 transition-colors duration-200 text-sm font-body"
+                    className="text-gray-400 hover:text-amber-500 transition-colors duration-200 text-sm font-body hover:translate-x-1 inline-block"
                   >
                     {link.name}
                   </Link>
@@ -163,15 +164,14 @@ const Footer = () => {
                   if (outcome === 'accepted') window.__pwaPrompt = null;
                 } else {
                   window.dispatchEvent(new Event('show-pwa-install'));
-                  // Fallback for browsers that don't support beforeinstallprompt
                   setTimeout(() => {
                     if (!window.__pwaPrompt) {
-                      alert('To install: tap your browser menu (⋮ or share icon) and select "Add to Home Screen" or "Install App".');
+                      alert('To install: tap your browser menu or share icon and select "Add to Home Screen" or "Install App".');
                     }
                   }, 300);
                 }
               }}
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-amber-500 transition-colors duration-200 border border-gray-700 rounded-xl px-4 py-2 hover:border-amber-500/50"
+              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-amber-500 transition-all duration-200 border border-gray-700 rounded-xl px-4 py-2 hover:border-amber-500/50 hover:scale-105"
             >
               <Download className="h-4 w-4" />
               Install App
@@ -181,31 +181,14 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm mb-4 sm:mb-0 font-body">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
+            <p className="text-gray-500 text-sm font-body order-2 sm:order-1">
               © {currentYear} Amaluna Resorts. All rights reserved.
             </p>
-            
+
             {/* Social Links */}
-            <div className="flex space-x-3">
-              <a 
-                href="https://facebook.com/amalunares"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 text-gray-400 hover:bg-amber-600 hover:text-white transition-all duration-200"
-                aria-label="Follow us on Facebook"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a 
-                href="https://instagram.com/amalunaresorts"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 text-gray-400 hover:bg-amber-600 hover:text-white transition-all duration-200"
-                aria-label="Follow us on Instagram"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
+            <div className="order-1 sm:order-2">
+              <SocialIcons variant="footer" iconSize="sm" />
             </div>
           </div>
         </div>

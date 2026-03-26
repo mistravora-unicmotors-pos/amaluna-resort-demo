@@ -7,6 +7,7 @@ import OptimizedImage from '../components/OptimizedImage';
 import SectionHeader from '../components/SectionHeader';
 import AnimatedCounter from '../components/AnimatedCounter';
 import GoogleReviews from '../components/GoogleReviews';
+import VideoPlayer from '../components/VideoPlayer';
 
 const Home = () => {
   const testimonials = [
@@ -89,14 +90,15 @@ const Home = () => {
       {/* Hero Section with Parallax */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0" style={{ transform: 'translateZ(0)' }}>
-          <OptimizedImage
-            src="https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg"
-            alt="Amaluna Resorts lagoon view"
-            className="w-full h-full object-cover scale-110"
-            priority={true}
-            width={1920}
-            height={1080}
-          />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute w-full h-full object-cover"
+          >
+            <source src="/Header Video.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
         </div>
         
@@ -155,7 +157,7 @@ const Home = () => {
 
       {/* USPs Section */}
       <ScrollReveal>
-        <section className="py-20 bg-gray-50 mt-16">
+        <section className="py-20 bg-gray-50 dark:bg-gray-800/50 mt-16">
         <div className="container-luxury">
           <SectionHeader
             title="Why Choose Amaluna"
@@ -169,16 +171,16 @@ const Home = () => {
                 delay={index * 100}
                 direction="up"
               >
-                <div className="text-center p-8 bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1 group">
+                <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1 group">
                 <div className="flex justify-center mb-5">
-                  <div className="p-3 bg-amber-50 rounded-xl group-hover:bg-amber-100 transition-colors">
+                  <div className="p-3 bg-amber-50 dark:bg-amber-900/30 rounded-xl group-hover:bg-amber-100 dark:group-hover:bg-amber-900/50 transition-colors">
                     {usp.icon}
                   </div>
                 </div>
-                <h3 className="text-xl font-heading font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-3">
                   {usp.title}
                 </h3>
-                <p className="text-gray-600 font-body">
+                <p className="text-gray-600 dark:text-gray-400 font-body">
                   {usp.description}
                 </p>
               </div>
@@ -190,19 +192,19 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
             <div className="text-center">
               <AnimatedCounter end={5000} suffix="+" className="text-3xl md:text-4xl font-bold text-amber-600" />
-              <p className="text-gray-600 text-sm mt-1 font-body">Happy Guests</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">Happy Guests</p>
             </div>
             <div className="text-center">
               <AnimatedCounter end={4} suffix="" className="text-3xl md:text-4xl font-bold text-amber-600" />
-              <p className="text-gray-600 text-sm mt-1 font-body">Room Categories</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">Room Categories</p>
             </div>
             <div className="text-center">
               <AnimatedCounter end={4.8} suffix="/5" className="text-3xl md:text-4xl font-bold text-amber-600" />
-              <p className="text-gray-600 text-sm mt-1 font-body">Guest Rating</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">Guest Rating</p>
             </div>
             <div className="text-center">
               <AnimatedCounter end={15} suffix=" min" className="text-3xl md:text-4xl font-bold text-amber-600" />
-              <p className="text-gray-600 text-sm mt-1 font-body">From Airport</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">From Airport</p>
             </div>
           </div>
         </div>
@@ -225,9 +227,9 @@ const Home = () => {
                 delay={index * 150}
                 direction="up"
               >
-                <Link 
+                <Link
                   to={highlight.link}
-                  className="group block bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-2"
+                  className="group block bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-2"
                 >
                 <div className="aspect-w-16 aspect-h-12 relative overflow-hidden">
                   <OptimizedImage
@@ -244,10 +246,10 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-heading font-semibold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">
+                  <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                     {highlight.title}
                   </h3>
-                  <p className="text-gray-600 font-body">
+                  <p className="text-gray-600 dark:text-gray-400 font-body">
                     {highlight.description}
                   </p>
                 </div>
@@ -269,15 +271,11 @@ const Home = () => {
               light
             />
             <div className="mt-12 max-w-5xl mx-auto">
-              <div className="relative rounded-2xl overflow-hidden shadow-luxury-xl aspect-video">
-                <iframe
-                  src="https://www.youtube.com/embed/1J5fGcvRBzI?autoplay=1&mute=1&loop=1&playlist=1J5fGcvRBzI&controls=1&rel=0&playsinline=1"
-                  title="Amaluna Resorts Video Tour"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
+              <VideoPlayer
+                videoId="1J5fGcvRBzI"
+                thumbnailUrl="https://img.youtube.com/vi/1J5fGcvRBzI/maxresdefault.jpg"
+                title="Amaluna Resorts Video Tour"
+              />
             </div>
           </div>
         </section>
@@ -285,7 +283,7 @@ const Home = () => {
 
       {/* Google Reviews Section */}
       <ScrollReveal>
-        <section className="py-20 bg-amber-50/50">
+        <section className="py-20 bg-amber-50/50 dark:bg-gray-800/50">
         <div className="container-luxury">
           <SectionHeader
             title="Guest Stories"
@@ -298,7 +296,7 @@ const Home = () => {
 
       {/* Trust Badges */}
       <ScrollReveal>
-        <section className="py-12 bg-white border-t border-b border-gray-100">
+        <section className="py-12 bg-white dark:bg-gray-900 border-t border-b border-gray-100 dark:border-gray-800">
           <div className="container-luxury">
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
               {[
@@ -307,7 +305,7 @@ const Home = () => {
                 { icon: Clock, label: '24/7 Support' },
                 { icon: Star, label: 'Best Price' },
               ].map((badge, i) => (
-                <div key={i} className="flex items-center gap-2 text-gray-500">
+                <div key={i} className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
                   <badge.icon className="h-5 w-5 text-amber-500" />
                   <span className="text-sm font-medium">{badge.label}</span>
                 </div>

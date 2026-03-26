@@ -66,8 +66,8 @@ const RoomDetail = () => {
   if (!room) {
     return (
       <div className="py-20 text-center container-luxury">
-        <h1 className="text-2xl font-heading font-bold text-gray-900 mb-4">Room not found</h1>
-        <Link to="/rooms" className="text-amber-600 hover:text-amber-700 font-medium">
+        <h1 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-4">Room not found</h1>
+        <Link to="/rooms" className="text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 font-medium">
           ← Back to Rooms
         </Link>
       </div>
@@ -96,19 +96,19 @@ const RoomDetail = () => {
 
         {/* Room Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-gray-900 dark:text-white mb-4">
             {room.name}
           </h1>
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center mr-3">
+              <div className="w-8 h-8 bg-amber-50 dark:bg-amber-900/30 rounded-lg flex items-center justify-center mr-3">
                 <Users className="h-4 w-4 text-amber-600" />
               </div>
-              <span className="text-lg text-gray-600 font-body">{room.occupancy}</span>
+              <span className="text-lg text-gray-600 dark:text-gray-400 font-body">{room.occupancy}</span>
             </div>
             <div className="text-lg font-body">
-              <span className="font-bold text-gray-900">LKR {room.price.toLocaleString()}</span>
-              <span className="text-gray-500 ml-1">/ night</span>
+              <span className="font-bold text-gray-900 dark:text-white">LKR {room.price.toLocaleString()}</span>
+              <span className="text-gray-500 dark:text-gray-400 ml-1">/ night</span>
             </div>
           </div>
         </div>
@@ -179,8 +179,8 @@ const RoomDetail = () => {
             {/* Description */}
             <ScrollReveal>
             <div className="mb-10">
-              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">About This Room</h2>
-              <p className="text-gray-600 text-lg leading-relaxed font-body">
+              <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-4">About This Room</h2>
+              <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed font-body">
                 {room.description}
               </p>
             </div>
@@ -189,12 +189,12 @@ const RoomDetail = () => {
             {/* Amenities */}
             <ScrollReveal>
             <div className="mb-10">
-              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">Amenities</h2>
+              <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-4">Amenities</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {room.amenities.map((amenity: string, index: number) => (
-                  <div key={index} className="flex items-center bg-amber-50/50 rounded-xl px-4 py-3">
+                  <div key={index} className="flex items-center bg-amber-50/50 dark:bg-amber-900/20 rounded-xl px-4 py-3">
                     <div className="w-2 h-2 bg-amber-500 rounded-full mr-3 flex-shrink-0"></div>
-                    <span className="text-gray-700 font-body">{amenity}</span>
+                    <span className="text-gray-700 dark:text-gray-300 font-body">{amenity}</span>
                   </div>
                 ))}
               </div>
@@ -204,7 +204,7 @@ const RoomDetail = () => {
             {/* FAQs */}
             <ScrollReveal>
             <div className="mb-10">
-              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+              <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
               <FAQAccordion items={room.faqs.map((faq: any) => ({ question: faq.question, answer: faq.answer }))} />
             </div>
             </ScrollReveal>
@@ -212,12 +212,12 @@ const RoomDetail = () => {
             {/* Policies */}
             <ScrollReveal>
             <div>
-              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-4">Room Policies</h2>
+              <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-4">Room Policies</h2>
               <ul className="space-y-2">
                 {room.policies.map((policy: string, index: number) => (
                   <li key={index} className="flex items-start">
                     <div className="w-2 h-2 bg-amber-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                    <span className="text-gray-600 font-body">{policy}</span>
+                    <span className="text-gray-600 dark:text-gray-400 font-body">{policy}</span>
                   </li>
                 ))}
               </ul>
@@ -228,16 +228,16 @@ const RoomDetail = () => {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24">
-              <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 mb-6 border border-amber-100 shadow-luxury">
+              <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl p-6 mb-6 border border-amber-100 dark:border-gray-700 shadow-luxury">
                 <div className="mb-4">
-                  <span className="text-2xl font-bold text-gray-900">LKR {room.price.toLocaleString()}</span>
-                  <span className="text-gray-500 ml-1">/ night</span>
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">LKR {room.price.toLocaleString()}</span>
+                  <span className="text-gray-500 dark:text-gray-400 ml-1">/ night</span>
                 </div>
-                <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Ready to Book?</h3>
-                <p className="text-gray-600 mb-6 font-body">
+                <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4">Ready to Book?</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6 font-body">
                   Select your dates above or contact us directly to make your reservation.
                 </p>
-                
+
                 <div className="space-y-3">
                   <button
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -245,7 +245,7 @@ const RoomDetail = () => {
                   >
                     Book Now
                   </button>
-                  <a 
+                  <a
                     href={`https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20book%20the%20${encodeURIComponent(room.name)}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -253,7 +253,7 @@ const RoomDetail = () => {
                   >
                     WhatsApp
                   </a>
-                  <a 
+                  <a
                     href="tel:+94770557257"
                     className="block w-full btn-outline text-center"
                   >
@@ -263,20 +263,20 @@ const RoomDetail = () => {
               </div>
 
               {/* Contact Info */}
-              <div className="bg-white rounded-2xl shadow-luxury p-6">
-                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-4">Need Help?</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-6">
+                <h3 className="text-lg font-heading font-semibold text-gray-900 dark:text-white mb-4">Need Help?</h3>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <span className="font-medium text-gray-900">Phone:</span>
-                    <p className="text-gray-600">077 055 7257</p>
+                    <span className="font-medium text-gray-900 dark:text-white">Phone:</span>
+                    <p className="text-gray-600 dark:text-gray-400">077 055 7257</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-900">Email:</span>
-                    <p className="text-gray-600">reservations@amalunaresorts.com</p>
+                    <span className="font-medium text-gray-900 dark:text-white">Email:</span>
+                    <p className="text-gray-600 dark:text-gray-400">reservations@amalunaresorts.com</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-900">Hours:</span>
-                    <p className="text-gray-600">24/7 WhatsApp support</p>
+                    <span className="font-medium text-gray-900 dark:text-white">Hours:</span>
+                    <p className="text-gray-600 dark:text-gray-400">24/7 WhatsApp support</p>
                   </div>
                 </div>
               </div>
@@ -325,7 +325,7 @@ const RoomDetail = () => {
       )}
 
       {/* Mobile Sticky Action Bar */}
-      <div className="lg:hidden fixed bottom-20 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-lg z-40">
+      <div className="lg:hidden fixed bottom-20 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 shadow-lg z-40">
         <div className="px-4 py-3">
           <div className="flex space-x-3">
             <a 

@@ -64,7 +64,7 @@ const Rooms = () => {
               direction="up"
               delay={rooms.indexOf(room) * 100}
             >
-              <div className="bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden group hover:-translate-y-1">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden group hover:-translate-y-1">
               <div className="relative overflow-hidden">
                 <OptimizedImage
                   src={room.image}
@@ -73,26 +73,26 @@ const Rooms = () => {
                   width={600}
                   height={256}
                 />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-semibold text-amber-700 flex items-center gap-1">
+                <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-semibold text-amber-700 dark:text-amber-400 flex items-center gap-1">
                   <Users className="h-3.5 w-3.5" /> {room.occupancy}
                 </div>
               </div>
-              
+
               <div className="p-6">
-                <h3 className="text-2xl font-heading font-bold text-gray-900 mb-2">
+                <h3 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-2">
                   {room.name}
                 </h3>
-                
-                <p className="text-gray-600 mb-4 font-body">
+
+                <p className="text-gray-600 dark:text-gray-400 mb-4 font-body">
                   {room.description}
                 </p>
-                
+
                 <div className="mb-4">
                   <div className="flex flex-wrap gap-2">
                     {room.amenities.slice(0, 7).map((amenity, index) => (
-                      <span 
+                      <span
                         key={index}
-                        className="px-3 py-1 text-xs bg-amber-50 text-amber-700 rounded-full font-medium"
+                        className="px-3 py-1 text-xs bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full font-medium"
                       >
                         {amenity}
                       </span>
@@ -102,8 +102,8 @@ const Rooms = () => {
 
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <span className="text-xl font-bold text-gray-900">LKR {room.price.toLocaleString()}</span>
-                    <span className="text-sm text-gray-500 ml-1">/ night</span>
+                    <span className="text-xl font-bold text-gray-900 dark:text-white">LKR {room.price.toLocaleString()}</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">/ night</span>
                   </div>
                 </div>
                 
@@ -132,11 +132,11 @@ const Rooms = () => {
 
         {/* Call to Action */}
         <ScrollReveal>
-          <div className="text-center bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-10 border border-amber-100">
-            <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-4">
+          <div className="text-center bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-gray-800 dark:to-gray-800 rounded-3xl p-10 border border-amber-100 dark:border-gray-700">
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white mb-4">
               Need Help Choosing?
             </h2>
-            <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-body">
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto font-body">
               Our team is happy to help you find the perfect room for your stay.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

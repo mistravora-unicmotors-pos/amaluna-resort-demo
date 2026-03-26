@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,10 +42,10 @@ const Header = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 bg-white ${
+    <header className={`sticky top-0 z-40 transition-all duration-300 bg-white dark:bg-gray-900 ${
       scrolled
-        ? 'shadow-luxury backdrop-blur-md'
-        : 'shadow-sm'
+        ? 'shadow-luxury backdrop-blur-md dark:shadow-gray-950/50'
+        : 'shadow-sm dark:shadow-gray-800/30'
     }`}>
       {/* Scroll Progress Bar */}
       <div
@@ -56,9 +57,9 @@ const Header = () => {
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
-            <img 
-              src="/android-chrome-192x192.png" 
-              alt="Amaluna Resorts" 
+            <img
+              src="/android-chrome-192x192.png"
+              alt="Amaluna Resorts"
               className="h-8 sm:h-12 w-auto"
             />
           </Link>
@@ -69,35 +70,39 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-medium font-body transition-colors duration-200 hover:text-amber-600 relative ${
+                className={`text-sm font-medium font-body transition-colors duration-200 hover:text-amber-600 dark:hover:text-amber-400 relative ${
                   isActive(item.href)
-                    ? 'text-amber-600'
-                    : 'text-gray-700'
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-gray-700 dark:text-gray-300'
                 }`}
               >
                 {item.name}
                 {isActive(item.href) && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-600 rounded-full" />
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-600 dark:bg-amber-400 rounded-full" />
                 )}
               </Link>
             ))}
+            <ThemeToggle />
             <Link
               to="/login"
-              className="ml-2 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 px-4 py-2 rounded-full transition-colors duration-200"
+              className="ml-2 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 hover:bg-amber-100 dark:hover:bg-amber-900/50 px-4 py-2 rounded-full transition-colors duration-200"
             >
               <LogIn className="h-4 w-4" />
               Login
             </Link>
           </nav>
 
-          {/* Mobile menu button */}
-          <button
-            className="lg:hidden p-2 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {/* Mobile: theme toggle + menu button */}
+          <div className="lg:hidden flex items-center gap-1">
+            <ThemeToggle />
+            <button
+              className="p-2 rounded-xl text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-800 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -109,14 +114,14 @@ const Header = () => {
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-black/30 dark:bg-black/50 transition-opacity duration-300 ${
             isMenuOpen ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={() => setIsMenuOpen(false)}
         />
         {/* Drawer */}
         <div
-          className={`absolute top-0 right-0 w-72 max-w-[80vw] h-full bg-white/95 backdrop-blur-lg shadow-xl transition-transform duration-300 ${
+          className={`absolute top-0 right-0 w-72 max-w-[80vw] h-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl transition-transform duration-300 ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -127,18 +132,18 @@ const Header = () => {
                 to={item.href}
                 className={`block px-4 py-3 rounded-xl text-base font-medium font-body transition-colors duration-200 ${
                   isActive(item.href)
-                    ? 'text-amber-600 bg-amber-50'
-                    : 'text-gray-700 hover:text-amber-600 hover:bg-gray-50'
+                    ? 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30'
+                    : 'text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="border-t border-gray-100 mt-3 pt-3">
+            <div className="border-t border-gray-100 dark:border-gray-700 mt-3 pt-3">
               <Link
                 to="/login"
-                className="flex items-center gap-2 px-4 py-3 rounded-xl text-base font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 transition-colors duration-200"
+                className="flex items-center gap-2 px-4 py-3 rounded-xl text-base font-medium text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 hover:bg-amber-100 dark:hover:bg-amber-900/50 transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <LogIn className="h-5 w-5" />

@@ -19,7 +19,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
     <div className={`${align === 'center' ? 'text-center' : 'text-left'} mb-12 md:mb-16 ${className}`}>
       <h2
         className={`text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 ${
-          light ? 'text-white' : 'text-gray-900'
+          light ? 'text-white' : 'text-gray-900 dark:text-white'
         }`}
       >
         {title}
@@ -28,7 +28,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       {subtitle && (
         <p className={`text-lg md:text-xl max-w-3xl font-body ${
           align === 'center' ? 'mx-auto' : ''
-        } ${light ? 'text-gray-300' : 'text-gray-600'}`}>
+        } ${light ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400'}`}>
           {subtitle}
         </p>
       )}

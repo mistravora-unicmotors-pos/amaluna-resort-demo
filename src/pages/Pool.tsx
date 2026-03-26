@@ -91,30 +91,30 @@ const Pool = () => {
           <SectionHeader title="Pool Features" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
             <ScrollReveal delay={0} direction="up">
-            <div className="text-center p-6 bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
-              <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Droplets className="h-8 w-8 text-blue-600" />
+            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Droplets className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="text-xl font-heading font-semibold text-gray-900 mb-2">Crystal Clear Waters</h3>
-              <p className="text-gray-600 font-body">Large freshwater pool with modern filtration system for pristine swimming conditions</p>
+              <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-2">Crystal Clear Waters</h3>
+              <p className="text-gray-600 dark:text-gray-400 font-body">Large freshwater pool with modern filtration system for pristine swimming conditions</p>
             </div>
             </ScrollReveal>
             <ScrollReveal delay={100} direction="up">
-            <div className="text-center p-6 bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
-              <div className="w-16 h-16 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="w-16 h-16 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Umbrella className="h-8 w-8 text-amber-600" />
               </div>
-              <h3 className="text-xl font-heading font-semibold text-gray-900 mb-2">Shaded Lounging</h3>
-              <p className="text-gray-600 font-body">Plenty of comfortable loungers with umbrellas and shaded areas for all-day comfort</p>
+              <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-2">Shaded Lounging</h3>
+              <p className="text-gray-600 dark:text-gray-400 font-body">Plenty of comfortable loungers with umbrellas and shaded areas for all-day comfort</p>
             </div>
             </ScrollReveal>
             <ScrollReveal delay={200} direction="up">
-            <div className="text-center p-6 bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
-              <div className="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Utensils className="h-8 w-8 text-green-600" />
+            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="w-16 h-16 bg-green-50 dark:bg-green-900/30 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Utensils className="h-8 w-8 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="text-xl font-heading font-semibold text-gray-900 mb-2">Poolside Service</h3>
-              <p className="text-gray-600 font-body">Enjoy food and beverage service delivered right to your poolside lounger</p>
+              <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-2">Poolside Service</h3>
+              <p className="text-gray-600 dark:text-gray-400 font-body">Enjoy food and beverage service delivered right to your poolside lounger</p>
             </div>
             </ScrollReveal>
           </div>
@@ -130,12 +130,12 @@ const Pool = () => {
             <ScrollReveal direction="right">
               <div className="space-y-6">
                 {dayPassPackages.map((package_, index) => (
-                  <div 
+                  <div
                     key={index}
                     className={`rounded-2xl p-8 ${
-                      package_.highlight 
-                        ? 'bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 relative shadow-gold' 
-                        : 'bg-white border border-gray-200 shadow-luxury'
+                      package_.highlight
+                        ? 'bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-gray-800 dark:to-gray-800 border-2 border-amber-300 dark:border-amber-600 relative shadow-gold'
+                        : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-luxury'
                     } hover:shadow-luxury-lg transition-shadow duration-300`}
               >
                 {package_.highlight && (
@@ -147,23 +147,23 @@ const Pool = () => {
                 )}
                 
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{package_.name}</h3>
-                  <p className="text-gray-600">{package_.period}</p>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{package_.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-400">{package_.period}</p>
                 </div>
 
                 <div className="space-y-3 mb-8">
-                  <h4 className="font-semibold text-gray-900">Package Includes:</h4>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">Package Includes:</h4>
                   {package_.inclusions.map((inclusion, idx) => (
                     <div key={idx} className="flex items-start">
                       <div className="w-2 h-2 bg-amber-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-600">{inclusion}</span>
+                      <span className="text-gray-600 dark:text-gray-400">{inclusion}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="text-center mb-6">
-                  <div className="text-3xl font-bold text-gray-900 mb-2">
-                    {package_.price} <span className="text-lg font-normal text-gray-600">per person</span>
+                  <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    {package_.price} <span className="text-lg font-normal text-gray-600 dark:text-gray-400">per person</span>
                   </div>
                 </div>
 
@@ -190,42 +190,42 @@ const Pool = () => {
         {/* Pool Information */}
         <ScrollReveal>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          <div className="bg-white rounded-2xl shadow-luxury p-8">
-            <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">Pool Information</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-8">
+            <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Pool Information</h2>
             <div className="space-y-5">
               <div className="flex items-center">
-                <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
                   <Clock className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
-                  <span className="font-semibold text-gray-900">Pool Hours</span>
-                  <p className="text-gray-600 text-sm">6:00 AM - 10:00 PM daily</p>
+                  <span className="font-semibold text-gray-900 dark:text-white">Pool Hours</span>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">6:00 AM - 10:00 PM daily</p>
                 </div>
               </div>
               <div className="flex items-center">
-                <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
                   <Users className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
-                  <span className="font-semibold text-gray-900">Day-Pass Hours</span>
-                  <p className="text-gray-600 text-sm">Weekdays: 9:00 AM - 6:00 PM<br />Weekends: 9:00 AM - 7:00 PM</p>
+                  <span className="font-semibold text-gray-900 dark:text-white">Day-Pass Hours</span>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">Weekdays: 9:00 AM - 6:00 PM<br />Weekends: 9:00 AM - 7:00 PM</p>
                 </div>
               </div>
               <div className="flex items-center">
-                <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
                   <Car className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
-                  <span className="font-semibold text-gray-900">Parking</span>
-                  <p className="text-gray-600 text-sm">Complimentary parking for day-pass guests</p>
+                  <span className="font-semibold text-gray-900 dark:text-white">Parking</span>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">Complimentary parking for day-pass guests</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-luxury p-8">
-            <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">What's Nearby</h2>
-            <div className="space-y-4 text-gray-600">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-8">
+            <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">What's Nearby</h2>
+            <div className="space-y-4 text-gray-600 dark:text-gray-400">
               <div className="flex items-start">
                 <div className="w-2 h-2 bg-amber-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
                 <span>Amaluna Restaurant & Bar (on-site)</span>
@@ -257,11 +257,11 @@ const Pool = () => {
 
         {/* Call to Action */}
         <ScrollReveal>
-        <div className="text-center bg-gradient-to-r from-blue-50 to-cyan-50 rounded-3xl p-10 border border-blue-100">
-          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-4">
+        <div className="text-center bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 rounded-3xl p-10 border border-blue-100 dark:border-gray-700">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white mb-4">
             Ready for a Pool Day?
           </h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-body">
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto font-body">
             Book your day-pass or enquire about availability for your preferred date.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

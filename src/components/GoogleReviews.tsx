@@ -79,14 +79,14 @@ const GoogleReviews = () => {
         </svg>
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-gray-900">{overallRating}</span>
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">{overallRating}</span>
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`h-5 w-5 ${i < Math.round(Number(overallRating)) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`} />
+                <Star key={i} className={`h-5 w-5 ${i < Math.round(Number(overallRating)) ? 'text-amber-400 fill-amber-400' : 'text-gray-200 dark:text-gray-600'}`} />
               ))}
             </div>
           </div>
-          <p className="text-sm text-gray-500">{reviews.length} Google Reviews</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{reviews.length} Google Reviews</p>
         </div>
       </div>
 
@@ -106,25 +106,25 @@ const GoogleReviews = () => {
                 key={review.id}
                 className="w-full md:w-1/3 flex-shrink-0 px-3"
               >
-                <div className="bg-white rounded-2xl p-6 shadow-luxury hover:shadow-luxury-lg transition-shadow duration-300 h-full flex flex-col">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-luxury hover:shadow-luxury-lg dark:shadow-gray-900/50 transition-all duration-300 h-full flex flex-col hover:-translate-y-1">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 flex items-center justify-center text-white text-sm font-bold">
                         {review.avatar}
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-900 text-sm">{review.author}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white text-sm">{review.author}</p>
                         <p className="text-xs text-gray-400">{review.date}</p>
                       </div>
                     </div>
-                    <Quote className="h-5 w-5 text-amber-200" />
+                    <Quote className="h-5 w-5 text-amber-200 dark:text-amber-500/30" />
                   </div>
                   <div className="flex mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`} />
+                      <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200 dark:text-gray-600'}`} />
                     ))}
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed flex-1">{review.text}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex-1">{review.text}</p>
                 </div>
               </div>
             ))}
@@ -134,13 +134,13 @@ const GoogleReviews = () => {
         {/* Nav Buttons */}
         <button
           onClick={prev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 h-10 w-10 rounded-full bg-white shadow-luxury flex items-center justify-center text-gray-600 hover:text-amber-600 transition-colors"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 h-10 w-10 rounded-full bg-white dark:bg-gray-800 shadow-luxury dark:shadow-gray-900/50 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
         <button
           onClick={next}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 h-10 w-10 rounded-full bg-white shadow-luxury flex items-center justify-center text-gray-600 hover:text-amber-600 transition-colors"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 h-10 w-10 rounded-full bg-white dark:bg-gray-800 shadow-luxury dark:shadow-gray-900/50 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
         >
           <ChevronRight className="h-5 w-5" />
         </button>
@@ -153,7 +153,7 @@ const GoogleReviews = () => {
             key={i}
             onClick={() => setCurrentIndex(i)}
             className={`h-2 rounded-full transition-all duration-300 ${
-              i === currentIndex ? 'w-6 bg-amber-500' : 'w-2 bg-gray-300'
+              i === currentIndex ? 'w-6 bg-amber-500' : 'w-2 bg-gray-300 dark:bg-gray-600'
             }`}
           />
         ))}

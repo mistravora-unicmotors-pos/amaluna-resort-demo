@@ -34,7 +34,7 @@ export default function EmailCapture() {
 
   return (
     <div className="fixed bottom-24 left-4 z-50 animate-in slide-in-from-left duration-500">
-      <div className="bg-white rounded-xl shadow-2xl border border-gray-100 w-72 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-100 dark:border-gray-700 w-72 overflow-hidden">
         <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3">
           <button
             onClick={handleClose}
@@ -49,18 +49,18 @@ export default function EmailCapture() {
 
         <div className="p-4">
           {submitted ? (
-            <p className="text-emerald-600 text-sm text-center py-2 font-medium">Thank you! 🎉</p>
+            <p className="text-emerald-600 dark:text-emerald-400 text-sm text-center py-2 font-medium">Thank you! 🎉</p>
           ) : (
             <form onSubmit={handleSubmit} className="flex gap-2">
               <div className="relative flex-1">
-                <Mail className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                <Mail className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 dark:text-gray-500" />
                 <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="Your email"
                   required
-                  className="w-full border border-gray-200 rounded-lg pl-8 pr-3 py-2 text-sm text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                  className="w-full border border-gray-200 dark:border-gray-600 rounded-lg pl-8 pr-3 py-2 text-sm text-gray-800 dark:text-white bg-white dark:bg-gray-700 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
                 />
               </div>
               <button

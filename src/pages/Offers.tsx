@@ -102,9 +102,9 @@ const Offers = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
           {offers.map((offer, index) => (
             <ScrollReveal key={offer.id} delay={index * 100} direction="up">
-            <div 
-              className={`bg-white rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-1 ${
-                offer.highlight ? 'ring-2 ring-amber-300' : ''
+            <div
+              className={`bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-1 ${
+                offer.highlight ? 'ring-2 ring-amber-300 dark:ring-amber-600' : ''
               } relative`}
             >
               {offer.highlight && (
@@ -125,43 +125,43 @@ const Offers = () => {
                 />
               </div>
               
-              <div className="p-6">
+                <div className="p-6">
                 <div className="flex items-center mb-3">
-                  <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-3">
+                  <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mr-3">
                     <div className="text-amber-600">{offer.icon}</div>
                   </div>
-                  <h3 className="text-xl font-heading font-bold text-gray-900">
+                  <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white">
                     {offer.name}
                   </h3>
                 </div>
-                
-                <p className="text-amber-600 font-medium text-sm mb-3">
+
+                <p className="text-amber-600 dark:text-amber-400 font-medium text-sm mb-3">
                   {offer.tagline}
                 </p>
-                
-                <p className="text-gray-600 mb-4">
+
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
                   {offer.description}
                 </p>
-                
+
                 <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2">Package Includes:</h4>
+                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Package Includes:</h4>
                   <ul className="space-y-1">
                     {offer.inclusions.slice(0, 3).map((inclusion, index) => (
-                      <li key={index} className="text-sm text-gray-600 flex items-start">
+                      <li key={index} className="text-sm text-gray-600 dark:text-gray-400 flex items-start">
                         <div className="w-1.5 h-1.5 bg-amber-600 rounded-full mr-2 mt-2 flex-shrink-0"></div>
                         {inclusion}
                       </li>
                     ))}
                     {offer.inclusions.length > 3 && (
-                      <li className="text-sm text-amber-600 font-medium">
+                      <li className="text-sm text-amber-600 dark:text-amber-400 font-medium">
                         +{offer.inclusions.length - 3} more benefits
                       </li>
                     )}
                   </ul>
                 </div>
-                
+
                 <div className="mb-6">
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                     <Calendar className="h-4 w-4 mr-1" />
                     <span>Valid: {offer.validity}</span>
                   </div>
@@ -188,9 +188,9 @@ const Offers = () => {
         </div>
 
         {/* Terms & Conditions Note */}
-        <div className="bg-gradient-to-br from-gray-50 to-stone-50 rounded-2xl p-6 mb-16">
-          <h2 className="text-lg font-heading font-semibold text-gray-900 mb-3">Important Information</h2>
-          <div className="space-y-2 text-sm text-gray-600">
+        <div className="bg-gradient-to-br from-gray-50 to-stone-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl p-6 mb-16 border border-gray-100 dark:border-gray-700">
+          <h2 className="text-lg font-heading font-semibold text-gray-900 dark:text-white mb-3">Important Information</h2>
+          <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <p>• All offers are subject to availability and may be withdrawn without prior notice</p>
             <p>• Room rates are per room per night unless otherwise specified</p>
             <p>• Government taxes and service charges may apply</p>
@@ -228,11 +228,11 @@ const Offers = () => {
         {/* Call to Action */}
         <ScrollReveal>
         <div className="text-center mt-16">
-          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white mb-4">
             Questions About Our Offers?
           </h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-body">
-            Our team is here to help you choose the perfect package and answer any questions 
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto font-body">
+            Our team is here to help you choose the perfect package and answer any questions
             about terms, availability, or special requirements.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

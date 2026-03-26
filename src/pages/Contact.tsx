@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import SectionHeader from '../components/SectionHeader';
 import OptimizedImage from '../components/OptimizedImage';
+import SocialIcons from '../components/SocialIcons';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -104,14 +105,14 @@ const Contact = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {contactMethods.map((method, index) => (
             <ScrollReveal key={index} delay={index * 100} direction="up">
-            <div className="bg-white border border-gray-100 rounded-2xl p-8 text-center hover:shadow-luxury-lg transition-all duration-300 shadow-luxury hover:-translate-y-1">
-              <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-8 text-center hover:shadow-luxury-lg transition-all duration-300 shadow-luxury hover:-translate-y-1 group">
+              <div className="w-14 h-14 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 {method.icon}
               </div>
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">{method.title}</h3>
-              <p className="text-gray-600 mb-3 font-body">{method.description}</p>
-              <p className="text-sm text-gray-800 font-medium mb-4">{method.details}</p>
-              <a 
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">{method.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-3 font-body">{method.description}</p>
+              <p className="text-sm text-gray-800 dark:text-gray-200 font-medium mb-4">{method.details}</p>
+              <a
                 href={method.link}
                 target={method.link.startsWith('http') ? '_blank' : undefined}
                 rel={method.link.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -126,16 +127,16 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl shadow-luxury p-8">
-            <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">Send us a Message</h2>
-            
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-8">
+            <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Send us a Message</h2>
+
             {submitted ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-                <div className="text-green-600 mb-4">
-                  <Send className="h-16 w-16 mx-auto" />
+              <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-lg p-6 text-center">
+                <div className="text-green-600 dark:text-green-400 mb-4">
+                  <Send className="h-16 w-16 mx-auto animate-bounce" />
                 </div>
-                <h3 className="text-xl font-semibold text-green-800 mb-2">Message Sent!</h3>
-                <p className="text-green-700">
+                <h3 className="text-xl font-semibold text-green-800 dark:text-green-300 mb-2">Message Sent!</h3>
+                <p className="text-green-700 dark:text-green-400">
                   Thank you for contacting Amaluna Resorts. We'll get back to you within 4 hours.
                 </p>
               </div>
@@ -143,7 +144,7 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Name *
                     </label>
                     <input
@@ -153,12 +154,12 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Email *
                     </label>
                     <input
@@ -168,14 +169,14 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -184,12 +185,12 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Subject *
                     </label>
                     <select
@@ -198,7 +199,7 @@ const Contact = () => {
                       required
                       value={formData.subject}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     >
                       <option value="">Select a subject</option>
                       {subjectOptions.map((option, index) => (
@@ -209,7 +210,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -219,7 +220,7 @@ const Contact = () => {
                     required
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Please provide details about your enquiry, including dates if relevant..."
                   />
                 </div>
@@ -234,17 +235,17 @@ const Contact = () => {
                     onChange={handleChange}
                     className="mt-1 h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
                   />
-                  <label htmlFor="consent" className="ml-2 text-sm text-gray-700">
-                    I consent to Amaluna Resorts storing my details and contacting me regarding my enquiry. 
+                  <label htmlFor="consent" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                    I consent to Amaluna Resorts storing my details and contacting me regarding my enquiry.
                     We'll never share your information with third parties. *
                   </label>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full btn-primary flex items-center justify-center"
+                  className="w-full btn-primary flex items-center justify-center group"
                 >
-                  <Send className="h-5 w-5 mr-2" />
+                  <Send className="h-5 w-5 mr-2 group-hover:translate-x-1 transition-transform duration-200" />
                   Send Message
                 </button>
               </form>
@@ -254,14 +255,14 @@ const Contact = () => {
           {/* Contact Information & Hours */}
           <div className="space-y-8">
             {/* Resort Information */}
-            <div className="bg-white rounded-2xl shadow-luxury p-6">
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Resort Information</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-6">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4">Resort Information</h3>
               <div className="space-y-4">
                 <div className="flex items-start">
                   <MapPin className="h-5 w-5 text-amber-600 mr-3 mt-0.5" />
                   <div>
-                    <p className="font-medium text-gray-900">Address</p>
-                    <p className="text-gray-600 text-sm">
+                    <p className="font-medium text-gray-900 dark:text-white">Address</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">
                       276, Pamunugama Road<br />
                       Kepungoda, 11370<br />
                       Negombo, Sri Lanka
@@ -272,7 +273,7 @@ const Contact = () => {
                 <div className="flex items-start">
                   <Phone className="h-5 w-5 text-amber-600 mr-3 mt-0.5" />
                   <div>
-                    <p className="font-medium text-gray-900">Phone</p>
+                    <p className="font-medium text-gray-900 dark:text-white">Phone</p>
                     <a href="tel:+94770557257" className="text-amber-600 hover:text-amber-700 text-sm">
                       077 055 7257
                     </a>
@@ -282,7 +283,7 @@ const Contact = () => {
                 <div className="flex items-start">
                   <Mail className="h-5 w-5 text-amber-600 mr-3 mt-0.5" />
                   <div>
-                    <p className="font-medium text-gray-900">Email</p>
+                    <p className="font-medium text-gray-900 dark:text-white">Email</p>
                     <a href="mailto:reservations@amalunaresorts.com" className="text-amber-600 hover:text-amber-700 text-sm">
                       reservations@amalunaresorts.com
                     </a>
@@ -291,65 +292,75 @@ const Contact = () => {
               </div>
             </div>
 
+            {/* Social Media */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-6">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4">Follow Us</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                Stay connected for updates, special offers, and behind-the-scenes moments.
+              </p>
+              <SocialIcons iconSize="md" />
+            </div>
+
             {/* Response Times */}
-            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 flex items-center">
+            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-2xl p-6 border border-amber-100 dark:border-amber-800/30">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                 <Clock className="h-6 w-6 text-amber-600 mr-2" />
                 Response Times
               </h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-700">Phone calls:</span>
-                  <span className="font-medium text-gray-900">Immediate during office hours</span>
+                  <span className="text-gray-700 dark:text-gray-300">Phone calls:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">Immediate during office hours</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-700">WhatsApp:</span>
-                  <span className="font-medium text-gray-900">Within 1 hour (24/7)</span>
+                  <span className="text-gray-700 dark:text-gray-300">WhatsApp:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">Within 1 hour (24/7)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-700">Email:</span>
-                  <span className="font-medium text-gray-900">Within 4 hours</span>
+                  <span className="text-gray-700 dark:text-gray-300">Email:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">Within 4 hours</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-700">Contact form:</span>
-                  <span className="font-medium text-gray-900">Within 4 hours</span>
+                  <span className="text-gray-700 dark:text-gray-300">Contact form:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">Within 4 hours</span>
                 </div>
               </div>
             </div>
 
             {/* Office Hours */}
-            <div className="bg-white border border-gray-100 rounded-2xl shadow-luxury p-6">
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Office Hours</h3>
+            <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-luxury p-6">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4">Office Hours</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-700">Monday - Sunday:</span>
-                  <span className="font-medium text-gray-900">8:00 AM - 10:00 PM</span>
+                  <span className="text-gray-700 dark:text-gray-300">Monday - Sunday:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">8:00 AM - 10:00 PM</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-700">Emergency contact:</span>
-                  <span className="font-medium text-gray-900">24/7 via WhatsApp</span>
+                  <span className="text-gray-700 dark:text-gray-300">Emergency contact:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">24/7 via WhatsApp</span>
                 </div>
-                <p className="text-gray-600 mt-3 text-xs">
+                <p className="text-gray-600 dark:text-gray-400 mt-3 text-xs">
                   * Office hours are Sri Lanka Time (GMT+5:30)
                 </p>
               </div>
             </div>
 
             {/* Getting Here */}
-            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
-              <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">Getting Here</h3>
-              <div className="space-y-3 text-sm text-gray-600">
-                <p>• 15 minutes from Bandaranaike International Airport</p>
-                <p>• 45 minutes from Colombo city center</p>
-                <p>• 10 minutes to Negombo Beach</p>
-                <p>• Free parking available on-site</p>
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800/30">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4">Getting Here</h3>
+              <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                <p>15 minutes from Bandaranaike International Airport</p>
+                <p>45 minutes from Colombo city center</p>
+                <p>10 minutes to Negombo Beach</p>
+                <p>Free parking available on-site</p>
               </div>
               <div className="mt-4">
-                <a 
+                <a
                   href="/location"
-                  className="text-amber-600 hover:text-amber-700 font-medium text-sm"
+                  className="text-amber-600 hover:text-amber-700 font-medium text-sm inline-flex items-center group"
                 >
-                  View detailed directions →
+                  View detailed directions
+                  <span className="ml-1 group-hover:translate-x-1 transition-transform duration-200">→</span>
                 </a>
               </div>
             </div>
