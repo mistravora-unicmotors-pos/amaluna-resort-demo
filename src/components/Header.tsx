@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -92,6 +93,7 @@ const Header = () => {
                 }`} />
               </Link>
             ))}
+            <LanguageSwitcher />
             <ThemeToggle />
             <Link
               to="/login"
@@ -102,8 +104,9 @@ const Header = () => {
             </Link>
           </nav>
 
-          {/* Mobile: theme toggle + menu button */}
+          {/* Mobile: language switcher + theme toggle + menu button */}
           <div className="lg:hidden flex items-center gap-1">
+            <LanguageSwitcher />
             <ThemeToggle />
             <button
               className="p-2 rounded-xl text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200 active:scale-95"

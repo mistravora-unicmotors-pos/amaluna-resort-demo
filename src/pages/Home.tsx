@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, Wifi, Coffee, Car, MapPin, Users, Utensils, Waves, ChevronDown, Award, Shield, Clock } from 'lucide-react';
 import BookingBar from '../components/BookingBar';
@@ -8,8 +8,14 @@ import SectionHeader from '../components/SectionHeader';
 import AnimatedCounter from '../components/AnimatedCounter';
 import GoogleReviews from '../components/GoogleReviews';
 import VideoPlayer from '../components/VideoPlayer';
+import { getSiteSettings, SiteSettings } from '../services/siteSettingsService';
 
 const Home = () => {
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>(getSiteSettings());
+
+  useEffect(() => {
+    setSiteSettings(getSiteSettings());
+  }, []);
   const testimonials = [
     {
       name: "Sarah & Mike",
@@ -191,19 +197,19 @@ const Home = () => {
           {/* Animated Counters */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
             <div className="text-center">
-              <AnimatedCounter end={5000} suffix="+" className="text-3xl md:text-4xl font-bold text-amber-600" />
+              <AnimatedCounter end={siteSettings.homepageStats.happyGuests} suffix="+" className="text-3xl md:text-4xl font-bold text-amber-600" />
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">Happy Guests</p>
             </div>
             <div className="text-center">
-              <AnimatedCounter end={4} suffix="" className="text-3xl md:text-4xl font-bold text-amber-600" />
+              <AnimatedCounter end={siteSettings.homepageStats.roomCategories} suffix="" className="text-3xl md:text-4xl font-bold text-amber-600" />
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">Room Categories</p>
             </div>
             <div className="text-center">
-              <AnimatedCounter end={4.8} suffix="/5" className="text-3xl md:text-4xl font-bold text-amber-600" />
+              <AnimatedCounter end={siteSettings.homepageStats.guestRating} suffix="/5" className="text-3xl md:text-4xl font-bold text-amber-600" />
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">Guest Rating</p>
             </div>
             <div className="text-center">
-              <AnimatedCounter end={15} suffix=" min" className="text-3xl md:text-4xl font-bold text-amber-600" />
+              <AnimatedCounter end={siteSettings.homepageStats.fromAirport} suffix=" min" className="text-3xl md:text-4xl font-bold text-amber-600" />
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 font-body">From Airport</p>
             </div>
           </div>

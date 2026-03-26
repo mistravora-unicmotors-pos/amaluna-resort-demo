@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Save, FileText, Shield, Scale, Ban, HelpCircle, Info, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Save, FileText, Shield, Scale, Ban, HelpCircle, Info, Plus, Trash2, ChevronDown, ChevronUp, BarChart3 } from 'lucide-react';
+import { getSiteSettings, saveSiteSettings, SiteSettings } from '../../services/siteSettingsService';
 
 interface FAQItem {
   id: string;
@@ -9,7 +10,8 @@ interface FAQItem {
 
 export default function AdminContent() {
   const [saved, setSaved] = useState(false);
-  const [activeSection, setActiveSection] = useState<string | null>('privacy');
+  const [activeSection, setActiveSection] = useState<string | null>('homepage-stats');
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>(getSiteSettings());
 
   const [faqs, setFaqs] = useState<FAQItem[]>([
     { id: '1', question: 'What are the check-in and check-out times?', answer: 'Check-in is at 2:00 PM and check-out is at 11:00 AM.' },
@@ -17,10 +19,22 @@ export default function AdminContent() {
     { id: '3', question: 'Do you have a swimming pool?', answer: 'Yes, we have a large resort-style swimming pool with loungers and poolside service.' },
   ]);
 
+  useEffect(() => {
+    setSiteSettings(getSiteSettings());
+  }, []);
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    saveSiteSettings(siteSettings);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+  };
+
+  const updateHomepageStats = (field: keyof SiteSettings['homepageStats'], value: number) => {
+    setSiteSettings(prev => ({
+      ...prev,
+      homepageStats: { ...prev.homepageStats, [field]: value }
+    }));
   };
 
   const addFAQ = () => {
@@ -41,6 +55,7 @@ export default function AdminContent() {
   };
 
   const sections = [
+    { id: 'homepage-stats', label: 'Homepage Statistics', icon: BarChart3 },
     { id: 'privacy', label: 'Privacy Policy', icon: Shield },
     { id: 'terms', label: 'Terms & Conditions', icon: Scale },
     { id: 'booking', label: 'Booking Terms', icon: FileText },
@@ -61,6 +76,74 @@ export default function AdminContent() {
         <p className="text-gray-400 text-sm">
           Manage important legal content and information displayed on your website. All content here will be stored in the database and can be updated at any time.
         </p>
+      </div>
+
+      {/* Homepage Statistics */}
+      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+        <button
+          type="button"
+          onClick={() => toggleSection('homepage-stats')}
+          className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <BarChart3 className="h-5 w-5 text-amber-400" />
+            <span className="text-white font-heading font-bold">Homepage Statistics</span>
+          </div>
+          {activeSection === 'homepage-stats' ? (
+            <ChevronUp className="h-5 w-5 text-gray-400" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-400" />
+          )}
+        </button>
+        {activeSection === 'homepage-stats' && (
+          <div className="px-6 pb-6 border-t border-gray-700 pt-4">
+            <p className="text-gray-500 text-sm mb-4">These values are displayed on the homepage counter section.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Happy Guests</label>
+                <input
+                  type="number"
+                  value={siteSettings.homepageStats.happyGuests}
+                  onChange={(e) => updateHomepageStats('happyGuests', parseInt(e.target.value) || 0)}
+                  min="0"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Room Categories</label>
+                <input
+                  type="number"
+                  value={siteSettings.homepageStats.roomCategories}
+                  onChange={(e) => updateHomepageStats('roomCategories', parseInt(e.target.value) || 0)}
+                  min="1"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Guest Rating (out of 5)</label>
+                <input
+                  type="number"
+                  value={siteSettings.homepageStats.guestRating}
+                  onChange={(e) => updateHomepageStats('guestRating', parseFloat(e.target.value) || 0)}
+                  step="0.1"
+                  min="1"
+                  max="5"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">From Airport (minutes)</label>
+                <input
+                  type="number"
+                  value={siteSettings.homepageStats.fromAirport}
+                  onChange={(e) => updateHomepageStats('fromAirport', parseInt(e.target.value) || 0)}
+                  min="1"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Privacy Policy */}
