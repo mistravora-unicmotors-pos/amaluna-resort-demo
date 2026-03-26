@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, UserPlus, Mail, Phone, MapPin, Download } from 'lucide-react';
+import { Search, UserPlus, Mail, Phone, MapPin, Download, X } from 'lucide-react';
 
 interface Guest {
   id: string;
@@ -24,6 +24,8 @@ const sampleGuests: Guest[] = [
 
 export default function AdminGuests() {
   const [search, setSearch] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newGuest, setNewGuest] = useState({ firstName: '', lastName: '', email: '', phone: '', country: '', vip: false });
 
   const filtered = sampleGuests.filter(g =>
     g.name.toLowerCase().includes(search.toLowerCase()) || g.email.toLowerCase().includes(search.toLowerCase())
@@ -62,7 +64,10 @@ export default function AdminGuests() {
           >
             <Download className="h-4 w-4" /> Export CSV
           </button>
-          <button className="flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors">
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors"
+          >
             <UserPlus className="h-4 w-4" /> Add Guest
           </button>
         </div>
@@ -115,6 +120,92 @@ export default function AdminGuests() {
           <div className="py-12 text-center text-gray-500 text-sm">No guests found.</div>
         )}
       </div>
+
+      {/* Add Guest Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-800 rounded-xl border border-gray-700 w-full max-w-md">
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <h3 className="text-white font-semibold">Add New Guest</h3>
+              <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-white">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-4 space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">First Name</label>
+                  <input
+                    type="text"
+                    value={newGuest.firstName}
+                    onChange={e => setNewGuest(p => ({ ...p, firstName: e.target.value }))}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Last Name</label>
+                  <input
+                    type="text"
+                    value={newGuest.lastName}
+                    onChange={e => setNewGuest(p => ({ ...p, lastName: e.target.value }))}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Email</label>
+                <input
+                  type="email"
+                  value={newGuest.email}
+                  onChange={e => setNewGuest(p => ({ ...p, email: e.target.value }))}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Phone</label>
+                <input
+                  type="tel"
+                  value={newGuest.phone}
+                  onChange={e => setNewGuest(p => ({ ...p, phone: e.target.value }))}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Country</label>
+                <input
+                  type="text"
+                  value={newGuest.country}
+                  onChange={e => setNewGuest(p => ({ ...p, country: e.target.value }))}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                />
+              </div>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={newGuest.vip}
+                  onChange={e => setNewGuest(p => ({ ...p, vip: e.target.checked }))}
+                  className="w-4 h-4 rounded border-gray-600 text-amber-500 focus:ring-amber-500 bg-gray-700"
+                />
+                <span className="text-sm text-gray-300">VIP Guest</span>
+              </label>
+            </div>
+            <div className="flex justify-end gap-2 p-4 border-t border-gray-700">
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                Add Guest
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

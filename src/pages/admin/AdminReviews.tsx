@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Star, ThumbsUp, ThumbsDown, MessageSquare } from 'lucide-react';
+import { Star, ThumbsUp, ThumbsDown, MessageSquare, X } from 'lucide-react';
 
 interface Review {
   id: string;
@@ -28,8 +28,31 @@ const statusColors: Record<string, string> = {
 };
 
 export default function AdminReviews() {
-  const [reviews] = useState(sampleReviews);
+  const [reviews, setReviews] = useState(sampleReviews);
+  const [replyModal, setReplyModal] = useState<Review | null>(null);
+  const [replyText, setReplyText] = useState('');
   const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
+
+  const handleApprove = (id: string) => {
+    setReviews(prev => prev.map(r => r.id === id ? { ...r, status: 'Published' as const } : r));
+  };
+
+  const handleHide = (id: string) => {
+    setReviews(prev => prev.map(r => r.id === id ? { ...r, status: 'Hidden' as const } : r));
+  };
+
+  const openReplyModal = (review: Review) => {
+    setReplyModal(review);
+    setReplyText(review.response || '');
+  };
+
+  const saveReply = () => {
+    if (replyModal) {
+      setReviews(prev => prev.map(r => r.id === replyModal.id ? { ...r, response: replyText } : r));
+      setReplyModal(null);
+      setReplyText('');
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -96,19 +119,58 @@ export default function AdminReviews() {
             )}
 
             <div className="flex items-center gap-2 pt-2 border-t border-gray-700">
-              <button className="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
-                <MessageSquare className="h-3.5 w-3.5" /> Reply
+              <button onClick={() => openReplyModal(review)} className="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
+                <MessageSquare className="h-3.5 w-3.5" /> {review.response ? 'Edit Reply' : 'Reply'}
               </button>
-              <button className="text-gray-400 hover:text-emerald-400 p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
+              <button onClick={() => handleApprove(review.id)} className="text-gray-400 hover:text-emerald-400 p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
                 <ThumbsUp className="h-3.5 w-3.5" /> Approve
               </button>
-              <button className="text-gray-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
+              <button onClick={() => handleHide(review.id)} className="text-gray-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
                 <ThumbsDown className="h-3.5 w-3.5" /> Hide
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Reply Modal */}
+      {replyModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-800 rounded-xl border border-gray-700 w-full max-w-lg">
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <h3 className="text-white font-semibold">Reply to Review</h3>
+              <button onClick={() => setReplyModal(null)} className="text-gray-400 hover:text-white"><X className="h-5 w-5" /></button>
+            </div>
+            <div className="p-4">
+              <div className="bg-gray-700/30 rounded-lg p-3 mb-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-white font-medium text-sm">{replyModal.guest}</span>
+                  <div className="flex gap-0.5">
+                    {[1, 2, 3, 4, 5].map(s => (
+                      <Star key={s} className={`h-3 w-3 ${s <= replyModal.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-600'}`} />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-300 text-sm">{replyModal.comment}</p>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Your Response</label>
+                <textarea
+                  rows={4}
+                  value={replyText}
+                  onChange={e => setReplyText(e.target.value)}
+                  placeholder="Thank you for your feedback..."
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 p-4 border-t border-gray-700">
+              <button onClick={() => setReplyModal(null)} className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
+              <button onClick={saveReply} className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-colors">Save Reply</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

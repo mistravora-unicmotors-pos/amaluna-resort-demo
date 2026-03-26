@@ -85,6 +85,38 @@ export default {
           '0%, 60%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
           '30%': { opacity: '1', transform: 'scale(1)' },
         },
+        'spin-slow': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        'wiggle': {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        'ping-slow': {
+          '0%': { transform: 'scale(1)', opacity: '1' },
+          '75%, 100%': { transform: 'scale(1.5)', opacity: '0' },
+        },
+        'slide-in-right': {
+          '0%': { opacity: '0', transform: 'translateX(20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        'slide-in-left': {
+          '0%': { opacity: '0', transform: 'translateX(-20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        'zoom-in': {
+          '0%': { opacity: '0', transform: 'scale(0.8)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        'flip-in': {
+          '0%': { opacity: '0', transform: 'perspective(400px) rotateY(90deg)' },
+          '100%': { opacity: '1', transform: 'perspective(400px) rotateY(0)' },
+        },
+        'blur-reveal': {
+          '0%': { opacity: '0', filter: 'blur(12px)' },
+          '100%': { opacity: '1', filter: 'blur(0)' },
+        },
       },
       animation: {
         'slide-up': 'slide-up 0.5s ease-out forwards',
@@ -97,6 +129,14 @@ export default {
         'heart-pop': 'heart-pop 0.4s ease-out',
         'count-up': 'count-up 0.6s ease-out forwards',
         'typing-dot': 'typing-dot 1.4s ease-in-out infinite',
+        'spin-slow': 'spin-slow 8s linear infinite',
+        'wiggle': 'wiggle 0.5s ease-in-out',
+        'ping-slow': 'ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'slide-in-right': 'slide-in-right 0.5s ease-out forwards',
+        'slide-in-left': 'slide-in-left 0.5s ease-out forwards',
+        'zoom-in': 'zoom-in 0.4s ease-out forwards',
+        'flip-in': 'flip-in 0.6s ease-out forwards',
+        'blur-reveal': 'blur-reveal 0.6s ease-out forwards',
       },
       boxShadow: {
         luxury: '0 4px 20px rgba(0, 0, 0, 0.08)',

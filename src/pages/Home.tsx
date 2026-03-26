@@ -116,26 +116,26 @@ const Home = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
+            <button
               onClick={() => {
                 const enquiryBtn = document.querySelector('#enquiry-btn') as HTMLButtonElement;
                 if (enquiryBtn) enquiryBtn.click();
               }}
-              className="btn-primary text-lg px-10 py-4"
+              className="btn-primary text-lg px-10 py-4 hover-shine btn-ripple hover:scale-105 active:scale-95 transition-transform duration-200"
             >
               Enquire Now
             </button>
-            <a 
+            <a
               href="tel:+94770557257"
-              className="border-2 border-white/80 text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 backdrop-blur-sm"
+              className="border-2 border-white/80 text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95"
             >
               Call Now
             </a>
-            <a 
+            <a
               href="https://wa.me/94770557257?text=Hello%20Amaluna%2C%20I%27d%20like%20to%20enquire"
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-green-400/80 text-green-400 hover:bg-green-500 hover:text-white hover:border-green-500 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 backdrop-blur-sm"
+              className="border-2 border-green-400/80 text-green-400 hover:bg-green-500 hover:text-white hover:border-green-500 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95"
             >
               WhatsApp
             </a>
@@ -171,13 +171,13 @@ const Home = () => {
                 delay={index * 100}
                 direction="up"
               >
-                <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 hover:-translate-y-1 group">
+                <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-500 hover:-translate-y-2 group border-glow">
                 <div className="flex justify-center mb-5">
-                  <div className="p-3 bg-amber-50 dark:bg-amber-900/30 rounded-xl group-hover:bg-amber-100 dark:group-hover:bg-amber-900/50 transition-colors">
+                  <div className="p-3 bg-amber-50 dark:bg-amber-900/30 rounded-xl group-hover:bg-amber-100 dark:group-hover:bg-amber-900/50 transition-all duration-300 group-hover:scale-110">
                     {usp.icon}
                   </div>
                 </div>
-                <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-3">
+                <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                   {usp.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 font-body">
@@ -229,18 +229,18 @@ const Home = () => {
               >
                 <Link
                   to={highlight.link}
-                  className="group block bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-lg transition-all duration-300 overflow-hidden hover:-translate-y-2"
+                  className="group block bg-white dark:bg-gray-800 rounded-2xl shadow-luxury hover:shadow-luxury-xl transition-all duration-500 overflow-hidden hover:-translate-y-3 border-glow"
                 >
                 <div className="aspect-w-16 aspect-h-12 relative overflow-hidden">
                   <OptimizedImage
                     src={highlight.image}
                     alt={highlight.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
                     width={400}
                     height={192}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="text-white">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                    <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                       {highlight.icon}
                     </div>
                   </div>
@@ -305,8 +305,8 @@ const Home = () => {
                 { icon: Clock, label: '24/7 Support' },
                 { icon: Star, label: 'Best Price' },
               ].map((badge, i) => (
-                <div key={i} className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                  <badge.icon className="h-5 w-5 text-amber-500" />
+                <div key={i} className="flex items-center gap-2 text-gray-500 dark:text-gray-400 group cursor-default transition-all duration-300 hover:text-amber-600 dark:hover:text-amber-400">
+                  <badge.icon className="h-5 w-5 text-amber-500 transition-transform duration-300 group-hover:scale-110" />
                   <span className="text-sm font-medium">{badge.label}</span>
                 </div>
               ))}
@@ -319,37 +319,37 @@ const Home = () => {
       <ScrollReveal>
         <section className="py-20">
         <div className="container-luxury">
-          <div className="bg-gradient-dark rounded-3xl overflow-hidden shadow-luxury-xl">
+          <div className="bg-gradient-dark rounded-3xl overflow-hidden shadow-luxury-xl group">
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <div className="p-8 lg:p-12 text-white flex flex-col justify-center">
                 <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
-                  Find Us in <span className="text-gradient-gold">Negombo</span>
+                  Find Us in <span className="text-gradient-animated">Negombo</span>
                 </h2>
                 <p className="text-xl text-white/90 mb-8 font-body">
                   Just 15 minutes from Bandaranaike International Airport and moments from Negombo's beautiful beaches.
                 </p>
                 <div className="space-y-4 mb-8">
-                  <div className="flex items-center">
-                    <MapPin className="h-5 w-5 text-amber-500 mr-3" />
+                  <div className="flex items-center group/item">
+                    <MapPin className="h-5 w-5 text-amber-500 mr-3 transition-transform duration-300 group-hover/item:scale-110" />
                     <span className="text-white/80">276, Pamunugama Road, Kepungoda</span>
                   </div>
-                  <div className="flex items-center">
-                    <Car className="h-5 w-5 text-amber-500 mr-3" />
+                  <div className="flex items-center group/item">
+                    <Car className="h-5 w-5 text-amber-500 mr-3 transition-transform duration-300 group-hover/item:scale-110" />
                     <span className="text-white/80">15 minutes from airport</span>
                   </div>
                 </div>
-                <Link 
+                <Link
                   to="/location"
-                  className="inline-block btn-primary w-fit"
+                  className="inline-block btn-primary w-fit hover-shine hover:scale-105 active:scale-95 transition-transform duration-200"
                 >
                   View Location
                 </Link>
               </div>
-              <div className="h-64 lg:h-full min-h-[300px]">
+              <div className="h-64 lg:h-full min-h-[300px] overflow-hidden">
                 <OptimizedImage
                   src="https://images.pexels.com/photos/1031641/pexels-photo-1031641.jpeg"
                   alt="Negombo lagoon"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   width={600}
                   height={400}
                 />

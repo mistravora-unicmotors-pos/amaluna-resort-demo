@@ -3,6 +3,7 @@ import { X, ChevronLeft, ChevronRight, Camera, Heart } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import OptimizedImage from '../components/OptimizedImage';
 import SectionHeader from '../components/SectionHeader';
+import { incrementPhotoLike, decrementPhotoLike } from '../services/galleryService';
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -20,8 +21,17 @@ const Gallery = () => {
   const toggleLike = (id: number, e: React.MouseEvent) => {
     e.stopPropagation();
     setLikes(prev => {
-      const updated = { ...prev, [id]: !prev[id] };
+      const wasLiked = prev[id];
+      const updated = { ...prev, [id]: !wasLiked };
       localStorage.setItem('gallery-likes', JSON.stringify(updated));
+
+      // Track aggregated like count for admin
+      if (wasLiked) {
+        decrementPhotoLike(id);
+      } else {
+        incrementPhotoLike(id);
+      }
+
       return updated;
     });
   };

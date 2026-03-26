@@ -50,13 +50,13 @@ const Footer = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address"
                 required
-                className="flex-1 md:w-72 px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all duration-200 font-body text-sm"
+                className="flex-1 md:w-72 px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all duration-200 font-body text-sm focus-animated"
               />
               <button
                 type="submit"
-                className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-gold flex items-center justify-center gap-2 whitespace-nowrap hover:scale-105"
+                className={`bg-amber-600 hover:bg-amber-700 text-white px-5 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-gold flex items-center justify-center gap-2 whitespace-nowrap hover:scale-105 active:scale-95 hover-shine btn-ripple ${subscribed ? 'bg-green-600 hover:bg-green-600' : ''}`}
               >
-                <Send className="h-4 w-4" />
+                <Send className={`h-4 w-4 transition-transform duration-300 ${subscribed ? 'rotate-45' : ''}`} />
                 {subscribed ? 'Subscribed!' : 'Subscribe'}
               </button>
             </form>
@@ -94,16 +94,16 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-heading font-semibold mb-5">Contact</h3>
             <div className="space-y-3">
-              <div className="flex items-start">
-                <MapPin className="h-5 w-5 text-amber-500 mt-0.5 mr-3 flex-shrink-0" />
+              <div className="flex items-start group">
+                <MapPin className="h-5 w-5 text-amber-500 mt-0.5 mr-3 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
                 <p className="text-gray-400 text-sm font-body">
                   276, Pamunugama Road<br />
                   Kepungoda, 11370<br />
                   Negombo, Sri Lanka
                 </p>
               </div>
-              <div className="flex items-center">
-                <Phone className="h-5 w-5 text-amber-500 mr-3" />
+              <div className="flex items-center group">
+                <Phone className="h-5 w-5 text-amber-500 mr-3 transition-transform duration-300 group-hover:scale-110 group-hover:animate-wiggle" />
                 <a
                   href="tel:+94770557257"
                   className="text-gray-400 hover:text-amber-500 transition-colors duration-200 text-sm font-body"
@@ -111,8 +111,8 @@ const Footer = () => {
                   077 055 7257
                 </a>
               </div>
-              <div className="flex items-center">
-                <Mail className="h-5 w-5 text-amber-500 mr-3" />
+              <div className="flex items-center group">
+                <Mail className="h-5 w-5 text-amber-500 mr-3 transition-transform duration-300 group-hover:scale-110" />
                 <a
                   href="mailto:reservations@amalunaresorts.com"
                   className="text-gray-400 hover:text-amber-500 transition-colors duration-200 text-sm font-body"
@@ -131,8 +131,9 @@ const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-gray-400 hover:text-amber-500 transition-colors duration-200 text-sm font-body hover:translate-x-1 inline-block"
+                    className="text-gray-400 hover:text-amber-500 transition-all duration-200 text-sm font-body inline-flex items-center group"
                   >
+                    <span className="w-0 h-0.5 bg-amber-500 mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200" />
                     {link.name}
                   </Link>
                 </li>

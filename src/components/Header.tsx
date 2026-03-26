@@ -49,45 +49,55 @@ const Header = () => {
     }`}>
       {/* Scroll Progress Bar */}
       <div
-        className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-amber-500 to-amber-600 transition-all duration-150 z-50"
+        className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 transition-all duration-150 z-50"
         style={{ width: `${scrollProgress}%` }}
       />
+      {/* Glow effect on progress bar */}
+      {scrollProgress > 0 && (
+        <div
+          className="absolute top-0 h-[2px] bg-amber-400/50 blur-sm transition-all duration-150 z-40"
+          style={{ width: `${scrollProgress}%`, left: 0 }}
+        />
+      )}
 
       <div className="container-luxury">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" className="flex-shrink-0 group">
             <img
               src="/android-chrome-192x192.png"
               alt="Amaluna Resorts"
-              className="h-8 sm:h-12 w-auto"
+              className="h-8 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 
           {/* Desktop Navigation */}
           <nav aria-label="Main navigation" className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {navigation.map((item) => (
+            {navigation.map((item, index) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-medium font-body transition-colors duration-200 hover:text-amber-600 dark:hover:text-amber-400 relative ${
+                className={`text-sm font-medium font-body transition-all duration-200 hover:text-amber-600 dark:hover:text-amber-400 relative group ${
                   isActive(item.href)
                     ? 'text-amber-600 dark:text-amber-400'
                     : 'text-gray-700 dark:text-gray-300'
                 }`}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 {item.name}
-                {isActive(item.href) && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-600 dark:bg-amber-400 rounded-full" />
-                )}
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full transition-all duration-300 ${
+                  isActive(item.href)
+                    ? 'w-full'
+                    : 'w-0 group-hover:w-full'
+                }`} />
               </Link>
             ))}
             <ThemeToggle />
             <Link
               to="/login"
-              className="ml-2 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 hover:bg-amber-100 dark:hover:bg-amber-900/50 px-4 py-2 rounded-full transition-colors duration-200"
+              className="ml-2 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 hover:bg-amber-100 dark:hover:bg-amber-900/50 px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 active:scale-95 group"
             >
-              <LogIn className="h-4 w-4" />
+              <LogIn className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               Login
             </Link>
           </nav>
@@ -96,11 +106,14 @@ const Header = () => {
           <div className="lg:hidden flex items-center gap-1">
             <ThemeToggle />
             <button
-              className="p-2 rounded-xl text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="p-2 rounded-xl text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200 active:scale-95"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <div className="relative w-6 h-6">
+                <Menu className={`h-6 w-6 absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'}`} />
+                <X className={`h-6 w-6 absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`} />
+              </div>
             </button>
           </div>
         </div>
