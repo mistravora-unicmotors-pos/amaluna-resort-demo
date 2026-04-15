@@ -585,11 +585,14 @@ html.dark .skeleton {
   background-position: 0 0;
 }
 /* Google Translate Widget overrides */
-.goog-te-banner-frame.skiptranslate, .goog-te-gadget-icon {
+.goog-te-banner-frame.skiptranslate {
   display: none !important;
 }
-body {
-  top: 0px !important;
+.goog-te-gadget-icon {
+  display: none !important;
+}
+.goog-te-bottom-frame {
+  display: none !important;
 }
 .goog-tooltip {
   display: none !important;
@@ -604,4 +607,13 @@ body {
 }
 #goog-gt-tt {
   display: none !important; 
+}
+/* Reset body styles that Google Translate may inject */
+body {
+  top: 0px !important;
+  margin-top: 0 !important;
+}
+/* Hide Google Translate bar completely */
+.skiptranslate {
+  display: none !important;
 }
