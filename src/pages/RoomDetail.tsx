@@ -6,11 +6,16 @@ import OptimizedImage from '../components/OptimizedImage';
 import ScrollReveal from '../components/ScrollReveal';
 import FAQAccordion from '../components/FAQAccordion';
 import { getRoomById } from '../services/bookingService';
+import { getSiteSettings } from '../services/siteSettingsService';
 
 const RoomDetail = () => {
   const { roomId } = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const { roomsDefault, roomsById } = getSiteSettings().faqs;
+  const selectedRoomFaqs = roomId ? roomsById?.[roomId] ?? [] : [];
+  const roomsFaqCombined =
+    Array.isArray(selectedRoomFaqs) && selectedRoomFaqs.length ? [...selectedRoomFaqs, ...roomsDefault] : roomsDefault;
 
   // Get room data from centralized service
   const serviceRoom = getRoomById(roomId || '');
@@ -59,7 +64,7 @@ const RoomDetail = () => {
         occupancy: serviceRoom.occupancy,
         price: serviceRoom.price,
         policies: extras?.policies || [],
-        faqs: extras?.faqs || [],
+        faqs: extras?.faqs?.length ? [...extras.faqs, ...roomsFaqCombined] : roomsFaqCombined,
       }
     : null;
 

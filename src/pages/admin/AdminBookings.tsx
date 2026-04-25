@@ -45,19 +45,19 @@ const sampleBookings: Booking[] = [
 // Status colour maps
 // ---------------------------------------------------------------------------
 const statusColors: Record<string, string> = {
-  Confirmed: 'bg-emerald-500/20 text-emerald-400',
-  Pending: 'bg-amber-500/20 text-amber-400',
-  'Checked In': 'bg-blue-500/20 text-blue-400',
-  'Checked Out': 'bg-gray-500/20 text-gray-400',
-  Cancelled: 'bg-red-500/20 text-red-400',
+  Confirmed: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+  Pending: 'bg-amber-500/20 text-amber-600 dark:text-amber-400',
+  'Checked In': 'bg-blue-500/20 text-blue-600 dark:text-blue-400',
+  'Checked Out': 'bg-gray-500/20 text-gray-600 dark:text-gray-400',
+  Cancelled: 'bg-red-500/20 text-red-600 dark:text-red-400',
 };
 
 const paymentColors: Record<string, string> = {
-  Received: 'bg-emerald-500/20 text-emerald-400',
-  Pending: 'bg-amber-500/20 text-amber-400',
-  Partial: 'bg-blue-500/20 text-blue-400',
-  Overdue: 'bg-red-500/20 text-red-400',
-  Refunded: 'bg-purple-500/20 text-purple-400',
+  Received: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+  Pending: 'bg-amber-500/20 text-amber-600 dark:text-amber-400',
+  Partial: 'bg-blue-500/20 text-blue-600 dark:text-blue-400',
+  Overdue: 'bg-red-500/20 text-red-600 dark:text-red-400',
+  Refunded: 'bg-purple-500/20 text-purple-600 dark:text-purple-400',
 };
 
 const fmt = (n: number) => `LKR ${n.toLocaleString()}`;
@@ -113,28 +113,28 @@ export default function AdminBookings() {
     <div className="space-y-4">
       {/* ── Summary Cards ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-blue-500/20"><CalendarCheck className="h-5 w-5 text-blue-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{bookings.length}</p><p className="text-xs text-gray-400">Total Bookings</p></div>
+            <div className="p-2.5 rounded-lg bg-blue-500/20"><CalendarCheck className="h-5 w-5 text-blue-600 dark:text-blue-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{bookings.length}</p><p className="text-xs text-gray-500 dark:text-gray-400">Total Bookings</p></div>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-emerald-500/20"><DollarSign className="h-5 w-5 text-emerald-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{fmt(totalRevenue)}</p><p className="text-xs text-gray-400">Total Revenue</p></div>
+            <div className="p-2.5 rounded-lg bg-emerald-500/20"><DollarSign className="h-5 w-5 text-emerald-600 dark:text-emerald-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{fmt(totalRevenue)}</p><p className="text-xs text-gray-500 dark:text-gray-400">Total Revenue</p></div>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-amber-500/20"><CreditCard className="h-5 w-5 text-amber-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{fmt(totalAdvanceReceived)}</p><p className="text-xs text-gray-400">Advance Collected</p></div>
+            <div className="p-2.5 rounded-lg bg-amber-500/20"><CreditCard className="h-5 w-5 text-amber-600 dark:text-amber-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{fmt(totalAdvanceReceived)}</p><p className="text-xs text-gray-500 dark:text-gray-400">Advance Collected</p></div>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-red-500/20"><AlertCircle className="h-5 w-5 text-red-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{pendingPayments}</p><p className="text-xs text-gray-400">Payments Due</p></div>
+            <div className="p-2.5 rounded-lg bg-red-500/20"><AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{pendingPayments}</p><p className="text-xs text-gray-500 dark:text-gray-400">Payments Due</p></div>
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function AdminBookings() {
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-            <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by name, ref, email, phone…" className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" />
+            <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by name, ref, email, phone…" className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" />
           </div>
           <button onClick={exportCSV} className="px-3 py-2 rounded-lg text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1.5 transition-colors">
             <Download className="h-3.5 w-3.5" /> Export CSV
@@ -155,7 +155,7 @@ export default function AdminBookings() {
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-xs text-gray-500 mr-1">Booking:</span>
           {['All', 'Confirmed', 'Pending', 'Checked In', 'Checked Out', 'Cancelled'].map(s => (
-            <button key={s} onClick={() => setStatusFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${statusFilter === s ? 'bg-amber-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-white border border-gray-700'}`}>{s}</button>
+            <button key={s} onClick={() => setStatusFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${statusFilter === s ? 'bg-amber-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-gray-700'}`}>{s}</button>
           ))}
         </div>
 
@@ -163,16 +163,16 @@ export default function AdminBookings() {
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-xs text-gray-500 mr-1">Payment:</span>
           {['All', 'Received', 'Pending', 'Partial', 'Overdue', 'Refunded'].map(s => (
-            <button key={s} onClick={() => setPaymentFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${paymentFilter === s ? 'bg-amber-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-white border border-gray-700'}`}>{s}</button>
+            <button key={s} onClick={() => setPaymentFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${paymentFilter === s ? 'bg-amber-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-gray-700'}`}>{s}</button>
           ))}
         </div>
       </div>
 
       {/* ── Table ── */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-x-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-x-auto">
         <table className="w-full text-sm min-w-[1000px]">
           <thead>
-            <tr className="text-gray-400 border-b border-gray-700">
+            <tr className="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
               <th className="text-left px-4 py-3 font-medium">Ref</th>
               <th className="text-left px-4 py-3 font-medium">Guest</th>
               <th className="text-left px-4 py-3 font-medium">Room</th>
@@ -186,26 +186,26 @@ export default function AdminBookings() {
               <th className="text-center px-4 py-3 font-medium">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700">
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {filtered.map(b => (
-              <tr key={b.id} className="hover:bg-gray-700/30 transition-colors">
-                <td className="px-4 py-3 text-amber-400 font-mono text-xs">{b.id}</td>
+              <tr key={b.id} className="hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
+                <td className="px-4 py-3 text-amber-600 dark:text-amber-400 font-mono text-xs">{b.id}</td>
                 <td className="px-4 py-3">
-                  <p className="text-white">{b.guest}</p>
+                  <p className="text-gray-900 dark:text-white">{b.guest}</p>
                   <p className="text-gray-500 text-xs">{b.email}</p>
                 </td>
-                <td className="px-4 py-3 text-gray-300">{b.room}</td>
-                <td className="px-4 py-3 text-gray-300">{b.checkIn}</td>
-                <td className="px-4 py-3 text-gray-300">{b.checkOut}</td>
-                <td className="px-4 py-3 text-gray-300 text-center">{b.nights}</td>
-                <td className="px-4 py-3 text-white font-medium text-right">{fmt(b.total)}</td>
-                <td className="px-4 py-3 text-gray-300 text-right">{fmt(b.advanceAmount)}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{b.room}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{b.checkIn}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{b.checkOut}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-300 text-center">{b.nights}</td>
+                <td className="px-4 py-3 text-gray-900 dark:text-white font-medium text-right">{fmt(b.total)}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-300 text-right">{fmt(b.advanceAmount)}</td>
                 <td className="px-4 py-3"><span className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${statusColors[b.status]}`}>{b.status}</span></td>
                 <td className="px-4 py-3"><span className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${paymentColors[b.paymentStatus]}`}>{b.paymentStatus}</span></td>
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-center gap-1.5">
-                    <button onClick={() => setViewingBooking(b)} className="p-1.5 rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-colors" aria-label={`View booking ${b.id}`}><Eye className="h-3.5 w-3.5" /></button>
-                    <button onClick={() => setEditingBooking(b)} className="p-1.5 rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-colors" aria-label={`Edit booking ${b.id}`}><Edit3 className="h-3.5 w-3.5" /></button>
+                    <button onClick={() => setViewingBooking(b)} className="p-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors" aria-label={`View booking ${b.id}`}><Eye className="h-3.5 w-3.5" /></button>
+                    <button onClick={() => setEditingBooking(b)} className="p-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors" aria-label={`Edit booking ${b.id}`}><Edit3 className="h-3.5 w-3.5" /></button>
                   </div>
                 </td>
               </tr>
@@ -215,48 +215,48 @@ export default function AdminBookings() {
         {filtered.length === 0 && <div className="py-12 text-center text-gray-500 text-sm">No bookings match your filters.</div>}
       </div>
 
-      <p className="text-xs text-gray-600 text-right">{filtered.length} of {bookings.length} bookings shown</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 text-right">{filtered.length} of {bookings.length} bookings shown</p>
 
       {/* ── View Booking Detail Modal ── */}
       {viewingBooking && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-800 rounded-2xl max-w-lg w-full border border-gray-700 shadow-xl max-h-[90vh] overflow-y-auto">
-            <div className="p-5 border-b border-gray-700 flex justify-between items-center sticky top-0 bg-gray-800 rounded-t-2xl z-10">
-              <h3 className="text-lg font-bold text-white">Booking {viewingBooking.id}</h3>
-              <button onClick={() => setViewingBooking(null)} className="text-gray-400 hover:text-white"><X className="h-5 w-5" /></button>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full border border-gray-200 dark:border-gray-700 shadow-xl max-h-[90vh] overflow-y-auto">
+            <div className="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center sticky top-0 bg-white dark:bg-gray-800 rounded-t-2xl z-10">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Booking {viewingBooking.id}</h3>
+              <button onClick={() => setViewingBooking(null)} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"><X className="h-5 w-5" /></button>
             </div>
             <div className="p-5 space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div><p className="text-xs text-gray-500 mb-0.5">Guest</p><p className="text-white text-sm">{viewingBooking.guest}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Country</p><p className="text-white text-sm">{viewingBooking.country}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Email</p><p className="text-white text-sm break-all">{viewingBooking.email}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Phone</p><p className="text-white text-sm">{viewingBooking.phone}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">ID / Passport</p><p className="text-white text-sm">{viewingBooking.idPassport || '—'}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Arrival Time</p><p className="text-white text-sm">{viewingBooking.arrivalTime || '—'}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Guest</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.guest}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Country</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.country}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Email</p><p className="text-gray-900 dark:text-white text-sm break-all">{viewingBooking.email}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Phone</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.phone}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">ID / Passport</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.idPassport || '—'}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Arrival Time</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.arrivalTime || '—'}</p></div>
               </div>
 
-              <div className="border-t border-gray-700 pt-4 grid grid-cols-2 gap-4">
-                <div><p className="text-xs text-gray-500 mb-0.5">Room</p><p className="text-white text-sm">{viewingBooking.room}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Dates</p><p className="text-white text-sm">{viewingBooking.checkIn} → {viewingBooking.checkOut}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Nights</p><p className="text-white text-sm">{viewingBooking.nights}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Booked On</p><p className="text-white text-sm">{new Date(viewingBooking.createdAt).toLocaleDateString()}</p></div>
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4 grid grid-cols-2 gap-4">
+                <div><p className="text-xs text-gray-500 mb-0.5">Room</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.room}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Dates</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.checkIn} → {viewingBooking.checkOut}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Nights</p><p className="text-gray-900 dark:text-white text-sm">{viewingBooking.nights}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Booked On</p><p className="text-gray-900 dark:text-white text-sm">{new Date(viewingBooking.createdAt).toLocaleDateString()}</p></div>
               </div>
 
-              <div className="border-t border-gray-700 pt-4 grid grid-cols-2 gap-4">
-                <div><p className="text-xs text-gray-500 mb-0.5">Total</p><p className="text-white text-sm font-bold">{fmt(viewingBooking.total)}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Advance (30%)</p><p className="text-amber-400 text-sm font-bold">{fmt(viewingBooking.advanceAmount)}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Balance Due</p><p className="text-white text-sm">{fmt(viewingBooking.total - viewingBooking.advanceAmount)}</p></div>
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4 grid grid-cols-2 gap-4">
+                <div><p className="text-xs text-gray-500 mb-0.5">Total</p><p className="text-gray-900 dark:text-white text-sm font-bold">{fmt(viewingBooking.total)}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Advance (30%)</p><p className="text-amber-600 dark:text-amber-400 text-sm font-bold">{fmt(viewingBooking.advanceAmount)}</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Balance Due</p><p className="text-gray-900 dark:text-white text-sm">{fmt(viewingBooking.total - viewingBooking.advanceAmount)}</p></div>
               </div>
 
-              <div className="border-t border-gray-700 pt-4 flex gap-3">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4 flex gap-3">
                 <div><p className="text-xs text-gray-500 mb-1">Booking Status</p><span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[viewingBooking.status]}`}>{viewingBooking.status}</span></div>
                 <div><p className="text-xs text-gray-500 mb-1">Payment Status</p><span className={`px-2.5 py-1 rounded-full text-xs font-medium ${paymentColors[viewingBooking.paymentStatus]}`}>{viewingBooking.paymentStatus}</span></div>
               </div>
 
               {viewingBooking.specialRequests && (
-                <div className="border-t border-gray-700 pt-4">
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                   <p className="text-xs text-gray-500 mb-1">Special Requests</p>
-                  <p className="text-gray-300 text-sm bg-gray-700/50 rounded-lg p-3">{viewingBooking.specialRequests}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm bg-gray-100 dark:bg-gray-700/50 rounded-lg p-3">{viewingBooking.specialRequests}</p>
                 </div>
               )}
             </div>
@@ -267,36 +267,36 @@ export default function AdminBookings() {
       {/* ── Edit Booking Modal ── */}
       {editingBooking && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-800 rounded-2xl max-w-md w-full border border-gray-700 shadow-xl max-h-[90vh] overflow-y-auto">
-            <div className="p-5 border-b border-gray-700 flex justify-between items-center sticky top-0 bg-gray-800 rounded-t-2xl z-10">
-              <h3 className="text-lg font-bold text-white">Edit {editingBooking.id}</h3>
-              <button onClick={() => setEditingBooking(null)} className="text-gray-400 hover:text-white"><X className="h-5 w-5" /></button>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full border border-gray-200 dark:border-gray-700 shadow-xl max-h-[90vh] overflow-y-auto">
+            <div className="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center sticky top-0 bg-white dark:bg-gray-800 rounded-t-2xl z-10">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Edit {editingBooking.id}</h3>
+              <button onClick={() => setEditingBooking(null)} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"><X className="h-5 w-5" /></button>
             </div>
             <div className="p-5 space-y-5">
               {/* Summary */}
-              <div className="bg-gray-700/40 rounded-xl p-4 space-y-1 text-sm">
-                <p className="text-white font-medium">{editingBooking.guest} · {editingBooking.country}</p>
-                <p className="text-gray-400">{editingBooking.room} · {editingBooking.checkIn} → {editingBooking.checkOut} ({editingBooking.nights}N)</p>
-                <p className="text-gray-400">{editingBooking.email} · {editingBooking.phone}</p>
-                <p className="text-amber-400 font-medium">{fmt(editingBooking.total)} total · {fmt(editingBooking.advanceAmount)} advance</p>
+              <div className="bg-gray-100 dark:bg-gray-700/40 rounded-xl p-4 space-y-1 text-sm">
+                <p className="text-gray-900 dark:text-white font-medium">{editingBooking.guest} · {editingBooking.country}</p>
+                <p className="text-gray-500 dark:text-gray-400">{editingBooking.room} · {editingBooking.checkIn} → {editingBooking.checkOut} ({editingBooking.nights}N)</p>
+                <p className="text-gray-500 dark:text-gray-400">{editingBooking.email} · {editingBooking.phone}</p>
+                <p className="text-amber-600 dark:text-amber-400 font-medium">{fmt(editingBooking.total)} total · {fmt(editingBooking.advanceAmount)} advance</p>
               </div>
 
               {/* Booking Status */}
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Booking Status</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-2">Booking Status</label>
                 <div className="grid grid-cols-2 gap-2">
                   {(['Confirmed', 'Pending', 'Checked In', 'Checked Out', 'Cancelled'] as BookingStatus[]).map(s => (
-                    <button key={s} onClick={() => { handleStatusChange(editingBooking.id, s); setEditingBooking({ ...editingBooking, status: s }); }} className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${editingBooking.status === s ? 'bg-amber-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600'}`}>{s}</button>
+                    <button key={s} onClick={() => { handleStatusChange(editingBooking.id, s); setEditingBooking({ ...editingBooking, status: s }); }} className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${editingBooking.status === s ? 'bg-amber-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600'}`}>{s}</button>
                   ))}
                 </div>
               </div>
 
               {/* Payment Status */}
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Payment Status</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-2">Payment Status</label>
                 <div className="grid grid-cols-2 gap-2">
                   {(['Pending', 'Received', 'Partial', 'Overdue', 'Refunded'] as PaymentStatus[]).map(s => (
-                    <button key={s} onClick={() => { handlePaymentChange(editingBooking.id, s); setEditingBooking({ ...editingBooking, paymentStatus: s }); }} className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${editingBooking.paymentStatus === s ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600'}`}>{s}</button>
+                    <button key={s} onClick={() => { handlePaymentChange(editingBooking.id, s); setEditingBooking({ ...editingBooking, paymentStatus: s }); }} className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${editingBooking.paymentStatus === s ? 'bg-emerald-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600'}`}>{s}</button>
                   ))}
                 </div>
               </div>

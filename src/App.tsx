@@ -101,7 +101,7 @@ function App() {
               {/* Main site routes */}
               <Route path="*" element={
                 <PageMetaProvider>
-                <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+                <div className="min-h-screen pt-16 sm:pt-20 bg-white dark:bg-gray-900 transition-colors duration-300">
                   <ScrollToTop />
                   <Header />
                   <main className="pb-20">

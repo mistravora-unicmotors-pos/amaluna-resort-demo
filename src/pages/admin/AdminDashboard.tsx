@@ -17,9 +17,9 @@ const recentBookings = [
 ];
 
 const statusColors: Record<string, string> = {
-  Confirmed: 'bg-emerald-500/20 text-emerald-400',
-  Pending: 'bg-amber-500/20 text-amber-400',
-  Cancelled: 'bg-red-500/20 text-red-400',
+  Confirmed: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+  Pending: 'bg-amber-500/20 text-amber-600 dark:text-amber-400',
+  Cancelled: 'bg-red-500/20 text-red-600 dark:text-red-400',
 };
 
 export default function AdminDashboard() {
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {stats.map(stat => (
-          <div key={stat.label} className="bg-gray-800 rounded-xl p-5 border border-gray-700">
+          <div key={stat.label} className="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-3">
               <div className={`p-2.5 rounded-lg ${stat.color}`}>
                 <stat.icon className="h-5 w-5" />
@@ -38,52 +38,52 @@ export default function AdminDashboard() {
                 {stat.up ? <ArrowUpRight className="h-3 w-3 ml-0.5" /> : <ArrowDownRight className="h-3 w-3 ml-0.5" />}
               </span>
             </div>
-            <p className="text-2xl font-bold text-white">{stat.value}</p>
-            <p className="text-sm text-gray-400 mt-1">{stat.label}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{stat.label}</p>
           </div>
         ))}
       </div>
 
       {/* Quick Stats Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="bg-gray-800 rounded-xl p-5 border border-gray-700 flex items-center gap-4">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 flex items-center gap-4">
           <div className="p-3 rounded-lg bg-blue-500/20">
-            <TrendingUp className="h-6 w-6 text-blue-400" />
+            <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <p className="text-sm text-gray-400">Avg. Daily Rate</p>
-            <p className="text-xl font-bold text-white">LKR 18,500</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Avg. Daily Rate</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-white">LKR 18,500</p>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-5 border border-gray-700 flex items-center gap-4">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 flex items-center gap-4">
           <div className="p-3 rounded-lg bg-emerald-500/20">
-            <Users className="h-6 w-6 text-emerald-400" />
+            <Users className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div>
-            <p className="text-sm text-gray-400">Total Guests (Month)</p>
-            <p className="text-xl font-bold text-white">312</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Total Guests (Month)</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-white">312</p>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-5 border border-gray-700 flex items-center gap-4">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 flex items-center gap-4">
           <div className="p-3 rounded-lg bg-amber-500/20">
-            <Star className="h-6 w-6 text-amber-400" />
+            <Star className="h-6 w-6 text-amber-600 dark:text-amber-400" />
           </div>
           <div>
-            <p className="text-sm text-gray-400">Avg. Review Score</p>
-            <p className="text-xl font-bold text-white">4.8 / 5</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Avg. Review Score</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-white">4.8 / 5</p>
           </div>
         </div>
       </div>
 
       {/* Recent Bookings Table */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700">
-        <div className="px-5 py-4 border-b border-gray-700">
-          <h2 className="text-white font-heading font-bold">Recent Bookings</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-gray-900 dark:text-white font-heading font-bold">Recent Bookings</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm min-w-[600px]">
             <thead>
-              <tr className="text-gray-400 border-b border-gray-700">
+              <tr className="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
                 <th className="text-left px-5 py-3 font-medium">ID</th>
                 <th className="text-left px-5 py-3 font-medium">Guest</th>
                 <th className="text-left px-5 py-3 font-medium">Room</th>
@@ -91,13 +91,13 @@ export default function AdminDashboard() {
                 <th className="text-left px-5 py-3 font-medium">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-700">
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
               {recentBookings.map(b => (
-                <tr key={b.id} className="hover:bg-gray-700/30 transition-colors">
-                  <td className="px-5 py-3 text-gray-300 font-mono text-xs">{b.id}</td>
-                  <td className="px-5 py-3 text-white">{b.guest}</td>
-                  <td className="px-5 py-3 text-gray-300">{b.room}</td>
-                  <td className="px-5 py-3 text-gray-300">{b.checkIn}</td>
+                <tr key={b.id} className="hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
+                  <td className="px-5 py-3 text-gray-600 dark:text-gray-300 font-mono text-xs">{b.id}</td>
+                  <td className="px-5 py-3 text-gray-900 dark:text-white">{b.guest}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-gray-300">{b.room}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-gray-300">{b.checkIn}</td>
                   <td className="px-5 py-3">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[b.status]}`}>
                       {b.status}
@@ -111,9 +111,9 @@ export default function AdminDashboard() {
       </div>
 
       {/* eZee PMS Integration Notice */}
-      <div className="bg-gray-800/50 rounded-xl border border-dashed border-gray-600 p-6 text-center">
-        <p className="text-gray-400 text-sm">
-          📡 This dashboard will connect to <span className="text-amber-400 font-semibold">eZee PMS</span> for live data.
+      <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl border border-dashed border-gray-300 dark:border-gray-600 p-6 text-center">
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
+          📡 This dashboard will connect to <span className="text-amber-600 dark:text-amber-400 font-semibold">eZee PMS</span> for live data.
           Currently showing sample data.
         </p>
       </div>

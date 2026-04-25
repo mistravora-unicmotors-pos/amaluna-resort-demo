@@ -83,11 +83,11 @@ const sampleTransactions: PointTransaction[] = [
 // Helpers
 // ---------------------------------------------------------------------------
 const txColors: Record<string, string> = {
-  Earned: 'bg-emerald-500/20 text-emerald-400',
-  Redeemed: 'bg-blue-500/20 text-blue-400',
-  Expired: 'bg-red-500/20 text-red-400',
-  Bonus: 'bg-purple-500/20 text-purple-400',
-  Adjusted: 'bg-gray-500/20 text-gray-400',
+  Earned: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+  Redeemed: 'bg-blue-500/20 text-blue-600 dark:text-blue-400',
+  Expired: 'bg-red-500/20 text-red-600 dark:text-red-400',
+  Bonus: 'bg-purple-500/20 text-purple-600 dark:text-purple-400',
+  Adjusted: 'bg-gray-500/20 text-gray-600 dark:text-gray-400',
 };
 
 const txSign: Record<string, string> = {
@@ -159,36 +159,36 @@ export default function AdminRewards() {
     <div className="space-y-4">
       {/* ── Summary Cards ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-blue-500/20"><Users className="h-5 w-5 text-blue-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{totalMembers}</p><p className="text-xs text-gray-400">Total Members</p></div>
+            <div className="p-2.5 rounded-lg bg-blue-500/20"><Users className="h-5 w-5 text-blue-600 dark:text-blue-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{totalMembers}</p><p className="text-xs text-gray-500 dark:text-gray-400">Total Members</p></div>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-amber-500/20"><Star className="h-5 w-5 text-amber-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{totalPointsCirculating.toLocaleString()}</p><p className="text-xs text-gray-400">Points in Circulation</p></div>
+            <div className="p-2.5 rounded-lg bg-amber-500/20"><Star className="h-5 w-5 text-amber-600 dark:text-amber-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{totalPointsCirculating.toLocaleString()}</p><p className="text-xs text-gray-500 dark:text-gray-400">Points in Circulation</p></div>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-emerald-500/20"><TrendingUp className="h-5 w-5 text-emerald-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{avgPoints.toLocaleString()}</p><p className="text-xs text-gray-400">Avg Points / Member</p></div>
+            <div className="p-2.5 rounded-lg bg-emerald-500/20"><TrendingUp className="h-5 w-5 text-emerald-600 dark:text-emerald-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{avgPoints.toLocaleString()}</p><p className="text-xs text-gray-500 dark:text-gray-400">Avg Points / Member</p></div>
           </div>
         </div>
-        <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-purple-500/20"><Gift className="h-5 w-5 text-purple-400" /></div>
-            <div><p className="text-2xl font-bold text-white">{members.filter(m => m.tier === 'Gold' || m.tier === 'Platinum').length}</p><p className="text-xs text-gray-400">Gold+ Members</p></div>
+            <div className="p-2.5 rounded-lg bg-purple-500/20"><Gift className="h-5 w-5 text-purple-600 dark:text-purple-400" /></div>
+            <div><p className="text-2xl font-bold text-gray-900 dark:text-white">{members.filter(m => m.tier === 'Gold' || m.tier === 'Platinum').length}</p><p className="text-xs text-gray-500 dark:text-gray-400">Gold+ Members</p></div>
           </div>
         </div>
       </div>
 
       {/* ── Tab Switch ── */}
-      <div className="flex gap-2 border-b border-gray-700 pb-0">
+      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700 pb-0">
         {(['members', 'transactions', 'rules'] as const).map(t => (
-          <button key={t} onClick={() => setTab(t)} className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px capitalize ${tab === t ? 'border-amber-500 text-amber-400' : 'border-transparent text-gray-400 hover:text-white'}`}>{t}</button>
+          <button key={t} onClick={() => setTab(t)} className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px capitalize ${tab === t ? 'border-amber-500 text-amber-600 dark:text-amber-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>{t}</button>
         ))}
       </div>
 
@@ -198,7 +198,7 @@ export default function AdminRewards() {
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-              <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search members…" className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" />
+              <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search members…" className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" />
             </div>
             <button onClick={exportCSV} className="px-3 py-2 rounded-lg text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1.5 transition-colors"><Download className="h-3.5 w-3.5" /> Export CSV</button>
           </div>
@@ -206,14 +206,14 @@ export default function AdminRewards() {
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-xs text-gray-500 mr-1">Tier:</span>
             {['All', 'Bronze', 'Silver', 'Gold', 'Platinum'].map(s => (
-              <button key={s} onClick={() => setTierFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${tierFilter === s ? 'bg-amber-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-white border border-gray-700'}`}>{s}</button>
+              <button key={s} onClick={() => setTierFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${tierFilter === s ? 'bg-amber-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-gray-700'}`}>{s}</button>
             ))}
           </div>
 
-          <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-x-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-x-auto">
             <table className="w-full text-sm min-w-[800px]">
               <thead>
-                <tr className="text-gray-400 border-b border-gray-700">
+                <tr className="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
                   <th className="text-left px-4 py-3 font-medium">Member</th>
                   <th className="text-left px-4 py-3 font-medium">Tier</th>
                   <th className="text-right px-4 py-3 font-medium">Available</th>
@@ -223,22 +223,22 @@ export default function AdminRewards() {
                   <th className="text-center px-4 py-3 font-medium">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-700">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredMembers.map(m => (
-                  <tr key={m.id} className="hover:bg-gray-700/30 transition-colors">
+                  <tr key={m.id} className="hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors">
                     <td className="px-4 py-3">
-                      <p className="text-white">{m.name}</p>
+                      <p className="text-gray-900 dark:text-white">{m.name}</p>
                       <p className="text-gray-500 text-xs">{m.email}</p>
                     </td>
                     <td className="px-4 py-3"><span className={`px-2.5 py-1 rounded-full text-xs font-medium ${tierConfig[m.tier].bg} ${tierConfig[m.tier].color}`}>{m.tier}</span></td>
-                    <td className="px-4 py-3 text-amber-400 font-medium text-right">{m.availablePoints.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-gray-300 text-right">{m.lifetimePoints.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-gray-300 text-center">{m.totalStays}</td>
-                    <td className="px-4 py-3 text-gray-300">{m.joinedAt}</td>
+                    <td className="px-4 py-3 text-amber-600 dark:text-amber-400 font-medium text-right">{m.availablePoints.toLocaleString()}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300 text-right">{m.lifetimePoints.toLocaleString()}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300 text-center">{m.totalStays}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{m.joinedAt}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-center gap-1.5">
-                        <button onClick={() => setViewingMember(m)} className="p-1.5 rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-colors"><Eye className="h-3.5 w-3.5" /></button>
-                        <button onClick={() => setAdjustingMember(m)} className="p-1.5 rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-colors"><Edit3 className="h-3.5 w-3.5" /></button>
+                        <button onClick={() => setViewingMember(m)} className="p-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"><Eye className="h-3.5 w-3.5" /></button>
+                        <button onClick={() => setAdjustingMember(m)} className="p-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"><Edit3 className="h-3.5 w-3.5" /></button>
                       </div>
                     </td>
                   </tr>

@@ -4,8 +4,10 @@ import ScrollReveal from '../components/ScrollReveal';
 import SectionHeader from '../components/SectionHeader';
 import OptimizedImage from '../components/OptimizedImage';
 import FAQAccordion from '../components/FAQAccordion';
+import { getSiteSettings } from '../services/siteSettingsService';
 
 const Events = () => {
+  const faqs = getSiteSettings().faqs.events;
   const eventTypes = [
     {
       title: 'Garden Celebrations',
@@ -267,12 +269,7 @@ const Events = () => {
         <div className="mb-20">
           <SectionHeader title="Frequently Asked Questions" />
           <div className="max-w-3xl mx-auto mt-10">
-            <FAQAccordion items={[
-              { question: 'How far in advance should I book?', answer: 'We recommend booking at least 6-8 weeks in advance for weekends and special dates. For larger events, 2-3 months advance booking ensures the best availability.' },
-              { question: 'Can you accommodate dietary restrictions?', answer: 'Absolutely. Our chefs can prepare vegetarian, vegan, gluten-free, and other special dietary requirements with advance notice.' },
-              { question: 'Do you provide decorations?', answer: 'Yes, we offer decoration services including tropical flowers, linens, lighting, and themed setups. We can also work with your preferred decorators.' },
-              { question: 'Is there parking available for guests?', answer: 'Yes, we provide complimentary parking for event guests. Our parking area can accommodate cars and small buses.' }
-            ]} />
+            <FAQAccordion items={faqs.map(f => ({ question: f.question, answer: f.answer }))} />
           </div>
         </div>
 

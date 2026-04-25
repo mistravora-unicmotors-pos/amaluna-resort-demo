@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Globe, Phone, MapPin, Clock, Palette, BarChart3, Video, Star } from 'lucide-react';
+import { Save, Globe, Phone, MapPin, Clock, Palette } from 'lucide-react';
 import { getSiteSettings, saveSiteSettings, SiteSettings } from '../../services/siteSettingsService';
 
 export default function AdminSettings() {
@@ -18,27 +18,6 @@ export default function AdminSettings() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     }
-  };
-
-  const updateHomepageStats = (field: keyof SiteSettings['homepageStats'], value: number) => {
-    setSiteSettings(prev => ({
-      ...prev,
-      homepageStats: { ...prev.homepageStats, [field]: value }
-    }));
-  };
-
-  const updateRatings = (field: keyof SiteSettings['ratings'], value: number) => {
-    setSiteSettings(prev => ({
-      ...prev,
-      ratings: { ...prev.ratings, [field]: value }
-    }));
-  };
-
-  const updateVideo = (field: keyof SiteSettings['video'], value: string) => {
-    setSiteSettings(prev => ({
-      ...prev,
-      video: { ...prev.video, [field]: value }
-    }));
   };
 
   const updateSocial = (field: keyof SiteSettings['social'], value: string) => {
@@ -63,7 +42,7 @@ export default function AdminSettings() {
       <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-700 pb-2">
         {[
           { id: 'general', label: 'General', icon: Globe },
-          { id: 'content', label: 'Site Content', icon: BarChart3 },
+          { id: 'content', label: 'Site Content', icon: Globe },
           { id: 'integration', label: 'Integrations', icon: Palette },
         ].map(tab => (
           <button
@@ -129,114 +108,6 @@ export default function AdminSettings() {
 
         {activeTab === 'content' && (
           <>
-            {/* Homepage Stats */}
-            <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 sm:p-6">
-              <h2 className="text-white font-heading font-bold mb-4 flex items-center gap-2"><BarChart3 className="h-5 w-5 text-amber-400" /> Homepage Statistics</h2>
-              <p className="text-gray-500 text-sm mb-4">These values are displayed on the homepage counter section.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>Happy Guests</label>
-                  <input
-                    type="number"
-                    value={siteSettings.homepageStats.happyGuests}
-                    onChange={(e) => updateHomepageStats('happyGuests', parseInt(e.target.value) || 0)}
-                    min="0"
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className={labelClass}>Room Categories</label>
-                  <input
-                    type="number"
-                    value={siteSettings.homepageStats.roomCategories}
-                    onChange={(e) => updateHomepageStats('roomCategories', parseInt(e.target.value) || 0)}
-                    min="1"
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className={labelClass}>Guest Rating (out of 5)</label>
-                  <input
-                    type="number"
-                    value={siteSettings.homepageStats.guestRating}
-                    onChange={(e) => updateHomepageStats('guestRating', parseFloat(e.target.value) || 0)}
-                    step="0.1"
-                    min="1"
-                    max="5"
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className={labelClass}>From Airport (minutes)</label>
-                  <input
-                    type="number"
-                    value={siteSettings.homepageStats.fromAirport}
-                    onChange={(e) => updateHomepageStats('fromAirport', parseInt(e.target.value) || 0)}
-                    min="1"
-                    className={inputClass}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Rating & Reviews */}
-            <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 sm:p-6">
-              <h2 className="text-white font-heading font-bold mb-4 flex items-center gap-2"><Star className="h-5 w-5 text-amber-400" /> Ratings Display</h2>
-              <p className="text-gray-500 text-sm mb-4">Configure ratings shown in JSON-LD schema and throughout the site.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>Star Rating (1-5)</label>
-                  <input
-                    type="number"
-                    value={siteSettings.ratings.starRating}
-                    onChange={(e) => updateRatings('starRating', parseFloat(e.target.value) || 0)}
-                    step="0.1"
-                    min="1"
-                    max="5"
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className={labelClass}>Total Reviews Count</label>
-                  <input
-                    type="number"
-                    value={siteSettings.ratings.totalReviews}
-                    onChange={(e) => updateRatings('totalReviews', parseInt(e.target.value) || 0)}
-                    min="0"
-                    className={inputClass}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Video Settings */}
-            <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 sm:p-6">
-              <h2 className="text-white font-heading font-bold mb-4 flex items-center gap-2"><Video className="h-5 w-5 text-amber-400" /> Video Content</h2>
-              <p className="text-gray-500 text-sm mb-4">YouTube video displayed on the homepage.</p>
-              <div className="space-y-4">
-                <div>
-                  <label className={labelClass}>YouTube Video ID</label>
-                  <input
-                    type="text"
-                    value={siteSettings.video.youtubeId}
-                    onChange={(e) => updateVideo('youtubeId', e.target.value)}
-                    placeholder="Enter YouTube video ID"
-                    className={inputClass}
-                  />
-                  <p className="text-gray-600 text-xs mt-1">Just the ID, not the full URL. E.g., for https://youtube.com/watch?v=1J5fGcvRBzI, enter: 1J5fGcvRBzI</p>
-                </div>
-                <div>
-                  <label className={labelClass}>Video Title</label>
-                  <input
-                    type="text"
-                    value={siteSettings.video.videoTitle}
-                    onChange={(e) => updateVideo('videoTitle', e.target.value)}
-                    className={inputClass}
-                  />
-                </div>
-              </div>
-            </div>
-
             {/* Social Proof */}
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 sm:p-6">
               <h2 className="text-white font-heading font-bold mb-4 flex items-center gap-2"><Globe className="h-5 w-5 text-amber-400" /> Social & SEO</h2>
@@ -291,7 +162,7 @@ export default function AdminSettings() {
 
             {/* Analytics */}
             <div className="bg-gray-800/50 rounded-xl border border-dashed border-gray-600 p-4 sm:p-6">
-              <h2 className="text-white font-heading font-bold mb-2 flex items-center gap-2"><BarChart3 className="h-5 w-5 text-amber-400" /> Google Analytics</h2>
+              <h2 className="text-white font-heading font-bold mb-2 flex items-center gap-2"><Palette className="h-5 w-5 text-amber-400" /> Google Analytics</h2>
               <p className="text-gray-500 text-sm mb-4">Track website visitors and conversions.</p>
               <div className="space-y-4">
                 <div><label className={labelClass}>GA4 Measurement ID</label><input placeholder="G-XXXXXXXXXX" className={inputClass} /></div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Save, FileText, Shield, Scale, Ban, HelpCircle, Info, Plus, Trash2, ChevronDown, ChevronUp, BarChart3 } from 'lucide-react';
 import { getSiteSettings, saveSiteSettings, SiteSettings } from '../../services/siteSettingsService';
+import { rooms } from '../../services/bookingService';
 
 interface FAQItem {
   id: string;
@@ -12,12 +13,9 @@ export default function AdminContent() {
   const [saved, setSaved] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>('homepage-stats');
   const [siteSettings, setSiteSettings] = useState<SiteSettings>(getSiteSettings());
-
-  const [faqs, setFaqs] = useState<FAQItem[]>([
-    { id: '1', question: 'What are the check-in and check-out times?', answer: 'Check-in is at 2:00 PM and check-out is at 11:00 AM.' },
-    { id: '2', question: 'Is airport transfer available?', answer: 'Yes, we offer airport transfers for an additional fee. Please contact us to arrange.' },
-    { id: '3', question: 'Do you have a swimming pool?', answer: 'Yes, we have a large resort-style swimming pool with loungers and poolside service.' },
-  ]);
+  const [activeFaqSection, setActiveFaqSection] = useState<'pool' | 'events' | 'dining' | 'rooms'>('pool');
+  const [roomsFaqMode, setRoomsFaqMode] = useState<'default' | 'specific'>('default');
+  const [selectedRoomId, setSelectedRoomId] = useState<string>(rooms[0]?.id ?? '');
 
   useEffect(() => {
     setSiteSettings(getSiteSettings());
@@ -37,17 +35,67 @@ export default function AdminContent() {
     }));
   };
 
+  const getActiveFaqs = (): FAQItem[] => {
+    if (activeFaqSection !== 'rooms') return (siteSettings.faqs?.[activeFaqSection] as FAQItem[]) ?? [];
+
+    if (roomsFaqMode === 'default') return (siteSettings.faqs?.roomsDefault as FAQItem[]) ?? [];
+
+    if (!selectedRoomId) return [];
+    return (siteSettings.faqs?.roomsById?.[selectedRoomId] as FAQItem[]) ?? [];
+  };
+
+  const setActiveFaqs = (nextFaqs: FAQItem[]) => {
+    setSiteSettings(prev => ({
+      ...prev,
+      faqs: {
+        ...prev.faqs,
+        ...(activeFaqSection !== 'rooms'
+          ? { [activeFaqSection]: nextFaqs }
+          : roomsFaqMode === 'default'
+            ? { roomsDefault: nextFaqs }
+            : {
+                roomsById: {
+                  ...prev.faqs.roomsById,
+                  [selectedRoomId]: nextFaqs,
+                },
+              }),
+      },
+    }));
+  };
+
   const addFAQ = () => {
-    const newId = Date.now().toString();
-    setFaqs([...faqs, { id: newId, question: '', answer: '' }]);
+    const newId =
+      activeFaqSection === 'rooms' && roomsFaqMode === 'specific' && selectedRoomId
+        ? `room-${selectedRoomId}-${Date.now()}`
+        : `${activeFaqSection}-${Date.now()}`;
+    setActiveFaqs([...getActiveFaqs(), { id: newId, question: '', answer: '' }]);
   };
 
   const removeFAQ = (id: string) => {
-    setFaqs(faqs.filter(faq => faq.id !== id));
+    setActiveFaqs(getActiveFaqs().filter(faq => faq.id !== id));
   };
 
   const updateFAQ = (id: string, field: 'question' | 'answer', value: string) => {
-    setFaqs(faqs.map(faq => faq.id === id ? { ...faq, [field]: value } : faq));
+    setActiveFaqs(getActiveFaqs().map(faq => (faq.id === id ? { ...faq, [field]: value } : faq)));
+  };
+
+  const copyRoomsDefaultToSelectedRoom = () => {
+    if (!selectedRoomId) return;
+    const source = (siteSettings.faqs.roomsDefault ?? []) as FAQItem[];
+    const copied = source.map((f) => ({
+      ...f,
+      id: `room-${selectedRoomId}-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    }));
+    setSiteSettings(prev => ({
+      ...prev,
+      faqs: {
+        ...prev.faqs,
+        roomsById: {
+          ...prev.faqs.roomsById,
+          [selectedRoomId]: copied,
+        },
+      },
+    }));
   };
 
   const toggleSection = (section: string) => {
@@ -67,60 +115,60 @@ export default function AdminContent() {
   return (
     <form onSubmit={handleSave} className="space-y-4 max-w-4xl">
       {saved && (
-        <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 px-4 py-3 rounded-lg text-sm">
           Content saved successfully!
         </div>
       )}
 
-      <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 mb-6">
-        <p className="text-gray-400 text-sm">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-6">
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
           Manage important legal content and information displayed on your website. All content here will be stored in the database and can be updated at any time.
         </p>
       </div>
 
       {/* Homepage Statistics */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
         <button
           type="button"
           onClick={() => toggleSection('homepage-stats')}
-          className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+          className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
         >
           <div className="flex items-center gap-3">
-            <BarChart3 className="h-5 w-5 text-amber-400" />
-            <span className="text-white font-heading font-bold">Homepage Statistics</span>
+            <BarChart3 className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            <span className="text-gray-900 dark:text-white font-heading font-bold">Homepage Statistics</span>
           </div>
           {activeSection === 'homepage-stats' ? (
-            <ChevronUp className="h-5 w-5 text-gray-400" />
+            <ChevronUp className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-gray-400" />
+            <ChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           )}
         </button>
         {activeSection === 'homepage-stats' && (
-          <div className="px-6 pb-6 border-t border-gray-700 pt-4">
+          <div className="px-6 pb-6 border-t border-gray-200 dark:border-gray-700 pt-4">
             <p className="text-gray-500 text-sm mb-4">These values are displayed on the homepage counter section.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-1">Happy Guests</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Happy Guests</label>
                 <input
                   type="number"
                   value={siteSettings.homepageStats.happyGuests}
                   onChange={(e) => updateHomepageStats('happyGuests', parseInt(e.target.value) || 0)}
                   min="0"
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                  className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-1">Room Categories</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Room Categories</label>
                 <input
                   type="number"
                   value={siteSettings.homepageStats.roomCategories}
                   onChange={(e) => updateHomepageStats('roomCategories', parseInt(e.target.value) || 0)}
                   min="1"
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                  className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-1">Guest Rating (out of 5)</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Guest Rating (out of 5)</label>
                 <input
                   type="number"
                   value={siteSettings.homepageStats.guestRating}
@@ -128,17 +176,17 @@ export default function AdminContent() {
                   step="0.1"
                   min="1"
                   max="5"
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                  className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-1">From Airport (minutes)</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">From Airport (minutes)</label>
                 <input
                   type="number"
                   value={siteSettings.homepageStats.fromAirport}
                   onChange={(e) => updateHomepageStats('fromAirport', parseInt(e.target.value) || 0)}
                   min="1"
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                  className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
                 />
               </div>
             </div>
@@ -147,24 +195,24 @@ export default function AdminContent() {
       </div>
 
       {/* Privacy Policy */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
         <button
           type="button"
           onClick={() => toggleSection('privacy')}
-          className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+          className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
         >
           <div className="flex items-center gap-3">
-            <Shield className="h-5 w-5 text-amber-400" />
-            <span className="text-white font-heading font-bold">Privacy Policy</span>
+            <Shield className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            <span className="text-gray-900 dark:text-white font-heading font-bold">Privacy Policy</span>
           </div>
           {activeSection === 'privacy' ? (
-            <ChevronUp className="h-5 w-5 text-gray-400" />
+            <ChevronUp className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-gray-400" />
+            <ChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           )}
         </button>
         {activeSection === 'privacy' && (
-          <div className="px-6 pb-6 border-t border-gray-700 pt-4">
+          <div className="px-6 pb-6 border-t border-gray-200 dark:border-gray-700 pt-4">
             <p className="text-gray-500 text-sm mb-3">Define how you collect, use, and protect guest data.</p>
             <textarea
               rows={12}
@@ -406,7 +454,7 @@ Strategically located just 15 minutes from Bandaranaike International Airport, w
           <div className="flex items-center gap-3">
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-white font-heading font-bold">FAQ</span>
-            <span className="text-xs bg-gray-700 text-gray-400 px-2 py-0.5 rounded-full">{faqs.length} items</span>
+            <span className="text-xs bg-gray-700 text-gray-400 px-2 py-0.5 rounded-full">{getActiveFaqs().length} items</span>
           </div>
           {activeSection === 'faq' ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
@@ -418,8 +466,85 @@ Strategically located just 15 minutes from Bandaranaike International Airport, w
           <div className="px-6 pb-6 border-t border-gray-700 pt-4">
             <p className="text-gray-500 text-sm mb-4">Manage frequently asked questions displayed on your website.</p>
 
+            <div className="flex flex-wrap gap-2 mb-4">
+              {(
+                [
+                  { id: 'pool', label: 'Pool' },
+                  { id: 'events', label: 'Events' },
+                  { id: 'dining', label: 'Dining' },
+                  { id: 'rooms', label: 'Rooms' },
+                ] as const
+              ).map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveFaqSection(tab.id)}
+                  className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors border ${
+                    activeFaqSection === tab.id
+                      ? 'bg-amber-600 text-white border-amber-500'
+                      : 'bg-gray-700/40 text-gray-300 border-gray-600 hover:bg-gray-700/70 hover:text-white'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {activeFaqSection === 'rooms' && (
+              <div className="flex flex-col lg:flex-row lg:items-center gap-3 mb-4">
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setRoomsFaqMode('default')}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors border ${
+                      roomsFaqMode === 'default'
+                        ? 'bg-amber-600 text-white border-amber-500'
+                        : 'bg-gray-700/40 text-gray-300 border-gray-600 hover:bg-gray-700/70 hover:text-white'
+                    }`}
+                  >
+                    Default
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRoomsFaqMode('specific')}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors border ${
+                      roomsFaqMode === 'specific'
+                        ? 'bg-amber-600 text-white border-amber-500'
+                        : 'bg-gray-700/40 text-gray-300 border-gray-600 hover:bg-gray-700/70 hover:text-white'
+                    }`}
+                  >
+                    Specific Room
+                  </button>
+                </div>
+
+                {roomsFaqMode === 'specific' && (
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 flex-1">
+                    <select
+                      value={selectedRoomId}
+                      onChange={(e) => setSelectedRoomId(e.target.value)}
+                      className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                    >
+                      {rooms.map((r) => (
+                        <option key={r.id} value={r.id}>
+                          {r.name} ({r.id})
+                        </option>
+                      ))}
+                    </select>
+
+                    <button
+                      type="button"
+                      onClick={copyRoomsDefaultToSelectedRoom}
+                      className="px-3 py-2.5 rounded-lg text-xs font-medium transition-colors border bg-gray-700/40 text-gray-300 border-gray-600 hover:bg-gray-700/70 hover:text-white"
+                    >
+                      Copy default into this room
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="space-y-4">
-              {faqs.map((faq, index) => (
+              {getActiveFaqs().map((faq, index) => (
                 <div key={faq.id} className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
                   <div className="flex items-start justify-between gap-4 mb-3">
                     <span className="text-amber-400 text-sm font-medium">Q{index + 1}</span>

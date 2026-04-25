@@ -22,9 +22,9 @@ const sampleReviews: Review[] = [
 ];
 
 const statusColors: Record<string, string> = {
-  Published: 'bg-emerald-500/20 text-emerald-400',
-  Pending: 'bg-amber-500/20 text-amber-400',
-  Hidden: 'bg-gray-500/20 text-gray-400',
+  Published: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+  Pending: 'bg-amber-500/20 text-amber-600 dark:text-amber-400',
+  Hidden: 'bg-gray-500/20 text-gray-600 dark:text-gray-400',
 };
 
 export default function AdminReviews() {
@@ -58,25 +58,25 @@ export default function AdminReviews() {
     <div className="space-y-4">
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 text-center">
-          <p className="text-3xl font-bold text-amber-400">{avgRating}</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400">{avgRating}</p>
           <div className="flex justify-center gap-0.5 my-1">
             {[1, 2, 3, 4, 5].map(s => (
-              <Star key={s} className={`h-4 w-4 ${s <= Math.round(Number(avgRating)) ? 'text-amber-400 fill-amber-400' : 'text-gray-600'}`} />
+              <Star key={s} className={`h-4 w-4 ${s <= Math.round(Number(avgRating)) ? 'text-amber-600 dark:text-amber-400 fill-amber-600 dark:fill-amber-400' : 'text-gray-300 dark:text-gray-600'}`} />
             ))}
           </div>
           <p className="text-xs text-gray-500">Average Rating</p>
         </div>
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 text-center">
-          <p className="text-3xl font-bold text-white">{reviews.length}</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">{reviews.length}</p>
           <p className="text-xs text-gray-500 mt-2">Total Reviews</p>
         </div>
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 text-center">
-          <p className="text-3xl font-bold text-emerald-400">{reviews.filter(r => r.response).length}</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+          <p className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{reviews.filter(r => r.response).length}</p>
           <p className="text-xs text-gray-500 mt-2">Responded</p>
         </div>
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 text-center">
-          <p className="text-3xl font-bold text-amber-400">{reviews.filter(r => r.status === 'Pending').length}</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400">{reviews.filter(r => r.status === 'Pending').length}</p>
           <p className="text-xs text-gray-500 mt-2">Pending</p>
         </div>
       </div>
@@ -84,48 +84,48 @@ export default function AdminReviews() {
       {/* Reviews List */}
       <div className="space-y-3">
         {reviews.map(review => (
-          <div key={review.id} className="bg-gray-800 rounded-xl border border-gray-700 p-5">
+          <div key={review.id} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
             <div className="flex items-start justify-between mb-3">
               <div>
                 <div className="flex items-center gap-3 mb-1">
-                  <h3 className="text-white font-semibold">{review.title}</h3>
+                  <h3 className="text-gray-900 dark:text-white font-semibold">{review.title}</h3>
                   <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColors[review.status]}`}>
                     {review.status}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm flex-wrap">
-                  <span className="text-gray-400">{review.guest}</span>
-                  <span className="text-gray-600">·</span>
+                  <span className="text-gray-500 dark:text-gray-400">{review.guest}</span>
+                  <span className="text-gray-300 dark:text-gray-600">·</span>
                   <div className="flex gap-0.5">
                     {[1, 2, 3, 4, 5].map(s => (
-                      <Star key={s} className={`h-3.5 w-3.5 ${s <= review.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-600'}`} />
+                      <Star key={s} className={`h-3.5 w-3.5 ${s <= review.rating ? 'text-amber-600 dark:text-amber-400 fill-amber-600 dark:fill-amber-400' : 'text-gray-300 dark:text-gray-600'}`} />
                     ))}
                   </div>
-                  <span className="text-gray-600">·</span>
+                  <span className="text-gray-300 dark:text-gray-600">·</span>
                   <span className="text-gray-500 text-xs">{review.source}</span>
-                  <span className="text-gray-600">·</span>
+                  <span className="text-gray-300 dark:text-gray-600">·</span>
                   <span className="text-gray-500 text-xs">{review.date}</span>
                 </div>
               </div>
             </div>
 
-            <p className="text-gray-300 text-sm mb-3">{review.comment}</p>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{review.comment}</p>
 
             {review.response && (
-              <div className="bg-gray-700/30 rounded-lg p-3 mb-3 border-l-2 border-amber-500">
-                <p className="text-xs text-amber-400 font-medium mb-1">Management Response</p>
-                <p className="text-gray-300 text-sm">{review.response}</p>
+              <div className="bg-gray-100 dark:bg-gray-700/30 rounded-lg p-3 mb-3 border-l-2 border-amber-500">
+                <p className="text-xs text-amber-600 dark:text-amber-400 font-medium mb-1">Management Response</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">{review.response}</p>
               </div>
             )}
 
-            <div className="flex items-center gap-2 pt-2 border-t border-gray-700">
-              <button onClick={() => openReplyModal(review)} className="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
+            <div className="flex items-center gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+              <button onClick={() => openReplyModal(review)} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
                 <MessageSquare className="h-3.5 w-3.5" /> {review.response ? 'Edit Reply' : 'Reply'}
               </button>
-              <button onClick={() => handleApprove(review.id)} className="text-gray-400 hover:text-emerald-400 p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
+              <button onClick={() => handleApprove(review.id)} className="text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
                 <ThumbsUp className="h-3.5 w-3.5" /> Approve
               </button>
-              <button onClick={() => handleHide(review.id)} className="text-gray-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
+              <button onClick={() => handleHide(review.id)} className="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-xs flex items-center gap-1">
                 <ThumbsDown className="h-3.5 w-3.5" /> Hide
               </button>
             </div>
@@ -136,36 +136,36 @@ export default function AdminReviews() {
       {/* Reply Modal */}
       {replyModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-800 rounded-xl border border-gray-700 w-full max-w-lg">
-            <div className="flex items-center justify-between p-4 border-b border-gray-700">
-              <h3 className="text-white font-semibold">Reply to Review</h3>
-              <button onClick={() => setReplyModal(null)} className="text-gray-400 hover:text-white"><X className="h-5 w-5" /></button>
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 w-full max-w-lg">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-gray-900 dark:text-white font-semibold">Reply to Review</h3>
+              <button onClick={() => setReplyModal(null)} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"><X className="h-5 w-5" /></button>
             </div>
             <div className="p-4">
-              <div className="bg-gray-700/30 rounded-lg p-3 mb-4">
+              <div className="bg-gray-100 dark:bg-gray-700/30 rounded-lg p-3 mb-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-white font-medium text-sm">{replyModal.guest}</span>
+                  <span className="text-gray-900 dark:text-white font-medium text-sm">{replyModal.guest}</span>
                   <div className="flex gap-0.5">
                     {[1, 2, 3, 4, 5].map(s => (
-                      <Star key={s} className={`h-3 w-3 ${s <= replyModal.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-600'}`} />
+                      <Star key={s} className={`h-3 w-3 ${s <= replyModal.rating ? 'text-amber-600 dark:text-amber-400 fill-amber-600 dark:fill-amber-400' : 'text-gray-300 dark:text-gray-600'}`} />
                     ))}
                   </div>
                 </div>
-                <p className="text-gray-300 text-sm">{replyModal.comment}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">{replyModal.comment}</p>
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-1">Your Response</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Your Response</label>
                 <textarea
                   rows={4}
                   value={replyText}
                   onChange={e => setReplyText(e.target.value)}
                   placeholder="Thank you for your feedback..."
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                  className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none resize-none"
                 />
               </div>
             </div>
-            <div className="flex justify-end gap-2 p-4 border-t border-gray-700">
-              <button onClick={() => setReplyModal(null)} className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
+            <div className="flex justify-end gap-2 p-4 border-t border-gray-200 dark:border-gray-700">
+              <button onClick={() => setReplyModal(null)} className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Cancel</button>
               <button onClick={saveReply} className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-colors">Save Reply</button>
             </div>
           </div>

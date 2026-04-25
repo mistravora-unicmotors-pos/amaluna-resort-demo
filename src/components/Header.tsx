@@ -43,7 +43,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 bg-white dark:bg-gray-900 ${
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-white dark:bg-gray-900 ${
       scrolled
         ? 'shadow-luxury backdrop-blur-md dark:shadow-gray-950/50'
         : 'shadow-sm dark:shadow-gray-800/30'

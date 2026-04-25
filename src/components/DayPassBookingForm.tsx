@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import { Calendar, Users, Clock, CreditCard, ArrowRight } from 'lucide-react';
-
-const packages = [
-  { id: 'adult', name: 'Adult Day Pass', price: 'LKR 3,500', desc: 'Pool access + welcome drink + lunch' },
-  { id: 'child', name: 'Child Day Pass (5-12)', price: 'LKR 2,000', desc: 'Pool access + soft drink + kids menu' },
-  { id: 'family', name: 'Family Package', price: 'LKR 10,000', desc: '2 adults + 2 children, all inclusive' },
-  { id: 'vip', name: 'VIP Cabana', price: 'LKR 8,500', desc: 'Private cabana + premium drinks + platter' },
-];
+import React, { useMemo, useState } from 'react';
+import { Users, Clock, CreditCard, ArrowRight, Minus, Plus } from 'lucide-react';
+import {
+  computeDayoutTotal,
+  dayoutPackages,
+  FREE_CHILD_AGE,
+  resolveDayoutPrices,
+  type DayoutPackageId,
+} from '../services/dayoutPricingService';
 
 const DayPassBookingForm = () => {
   const [formData, setFormData] = useState({
     date: '',
-    selectedPackage: 'adult',
-    guests: 1,
+    selectedPackage: 'day-out' as DayoutPackageId,
+    adults: 1,
+    children: 0,
+    infantsFree: 0,
     name: '',
     email: '',
     phone: '',
@@ -27,7 +29,31 @@ const DayPassBookingForm = () => {
     setSubmitted(true);
   };
 
-  const selectedPkg = packages.find(p => p.id === formData.selectedPackage)!;
+  const pricingDateStr = useMemo(
+    () => formData.date || new Date().toISOString().split('T')[0],
+    [formData.date],
+  );
+
+  const selectedPkg = dayoutPackages.find((p) => p.id === formData.selectedPackage)!;
+
+  const total = useMemo(() => {
+    return computeDayoutTotal({
+      packageId: formData.selectedPackage,
+      dateStr: formData.date || undefined,
+      adults: formData.adults,
+      childrenTotal: formData.children,
+      infantsFree: formData.infantsFree,
+    });
+  }, [formData.adults, formData.children, formData.infantsFree, formData.date, formData.selectedPackage]);
+
+  const setAdults = (next: number) => setFormData((p) => ({ ...p, adults: Math.max(1, Math.trunc(next)) }));
+  const setChildrenTotal = (next: number) =>
+    setFormData((p) => {
+      const children = Math.max(0, Math.trunc(next));
+      return { ...p, children, infantsFree: Math.min(p.infantsFree, children) };
+    });
+  const setInfantsFree = (next: number) =>
+    setFormData((p) => ({ ...p, infantsFree: Math.max(0, Math.min(Math.trunc(next), p.children)) }));
 
   if (submitted) {
     return (
@@ -38,7 +64,9 @@ const DayPassBookingForm = () => {
           </svg>
         </div>
         <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">Booking Request Sent!</h3>
-        <p className="text-gray-600 dark:text-gray-400 mb-4">We'll confirm your {selectedPkg.name} within 2 hours via email.</p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">
+          We'll confirm your {selectedPkg.name} within 2 hours via email. Estimated total: LKR {total.total.toLocaleString()}.
+        </p>
         <button onClick={() => setSubmitted(false)} className="btn-outline text-sm">Book Another</button>
       </div>
     );
@@ -47,7 +75,7 @@ const DayPassBookingForm = () => {
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-2xl shadow-luxury p-6 md:p-8">
       <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-        <Calendar className="h-5 w-5 text-amber-600" /> Book a Day Pass
+        <Clock className="h-5 w-5 text-amber-600" /> Book a Day Pass
       </h3>
 
       {/* Honeypot */}
@@ -66,24 +94,43 @@ const DayPassBookingForm = () => {
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Select Package</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {packages.map(pkg => (
-            <button
-              key={pkg.id}
-              type="button"
-              onClick={() => setFormData(p => ({ ...p, selectedPackage: pkg.id }))}
-              className={`text-left p-4 rounded-xl border-2 transition-all ${
-                formData.selectedPackage === pkg.id
-                  ? 'border-amber-400 dark:border-amber-500 bg-amber-50 dark:bg-amber-900/30 shadow-sm'
-                  : 'border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-semibold text-gray-900 dark:text-white text-sm">{pkg.name}</span>
-                <span className="text-amber-600 dark:text-amber-400 font-bold text-sm">{pkg.price}</span>
-              </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{pkg.desc}</p>
-            </button>
-          ))}
+          {dayoutPackages.map((pkg) => {
+            const { adultPrice, childPrice } = resolveDayoutPrices(pkg.id, pricingDateStr);
+            return (
+              <button
+                key={pkg.id}
+                type="button"
+                onClick={() => setFormData((p) => ({ ...p, selectedPackage: pkg.id }))}
+                className={`text-left p-4 rounded-xl border-2 transition-all ${
+                  formData.selectedPackage === pkg.id
+                    ? 'border-amber-400 dark:border-amber-500 bg-amber-50 dark:bg-amber-900/30 shadow-sm'
+                    : 'border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600'
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-lg" aria-hidden="true">{pkg.icon}</span>
+                      <span className="font-semibold text-gray-900 dark:text-white text-sm">{pkg.name}</span>
+                    </div>
+                    <ul className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
+                      {pkg.perks.map((perk, i) => (
+                        <li key={i}>- {perk}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="mt-3 text-[11px] flex items-center justify-between">
+                  <span className="text-gray-500 dark:text-gray-400">Adult</span>
+                  <span className="font-bold text-amber-600 dark:text-amber-400">LKR {adultPrice.toLocaleString()}</span>
+                </div>
+                <div className="text-[11px] flex items-center justify-between">
+                  <span className="text-gray-500 dark:text-gray-400">Child</span>
+                  <span className="font-bold text-amber-600 dark:text-amber-400">LKR {childPrice.toLocaleString()}</span>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -104,17 +151,86 @@ const DayPassBookingForm = () => {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            <Users className="inline h-4 w-4 mr-1" /> Number of Guests
+            <Users className="inline h-4 w-4 mr-1" /> Guests
           </label>
-          <select
-            value={formData.guests}
-            onChange={e => setFormData(p => ({ ...p, guests: parseInt(e.target.value) }))}
-            className="input-luxury"
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-              <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>
-            ))}
-          </select>
+
+          <div className="space-y-3">
+            {/* Adults */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-700 dark:text-gray-300">Adults</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setAdults(formData.adults - 1)}
+                  className="h-9 w-9 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={formData.adults <= 1}
+                  aria-label="Decrease adults"
+                >
+                  <Minus className="h-4 w-4 mx-auto" />
+                </button>
+                <div className="w-10 text-center font-bold text-gray-900 dark:text-white">{formData.adults}</div>
+                <button
+                  type="button"
+                  onClick={() => setAdults(formData.adults + 1)}
+                  className="h-9 w-9 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  aria-label="Increase adults"
+                >
+                  <Plus className="h-4 w-4 mx-auto" />
+                </button>
+              </div>
+            </div>
+
+            {/* Children */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-700 dark:text-gray-300">Children</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setChildrenTotal(formData.children - 1)}
+                  className="h-9 w-9 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={formData.children <= 0}
+                  aria-label="Decrease children"
+                >
+                  <Minus className="h-4 w-4 mx-auto" />
+                </button>
+                <div className="w-10 text-center font-bold text-gray-900 dark:text-white">{formData.children}</div>
+                <button
+                  type="button"
+                  onClick={() => setChildrenTotal(formData.children + 1)}
+                  className="h-9 w-9 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  aria-label="Increase children"
+                >
+                  <Plus className="h-4 w-4 mx-auto" />
+                </button>
+              </div>
+            </div>
+
+            {/* Infants (Free) */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-700 dark:text-gray-300">Infants (Free, under {FREE_CHILD_AGE})</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setInfantsFree(formData.infantsFree - 1)}
+                  className="h-9 w-9 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={formData.infantsFree <= 0}
+                  aria-label="Decrease free infants"
+                >
+                  <Minus className="h-4 w-4 mx-auto" />
+                </button>
+                <div className="w-10 text-center font-bold text-gray-900 dark:text-white">{formData.infantsFree}</div>
+                <button
+                  type="button"
+                  onClick={() => setInfantsFree(formData.infantsFree + 1)}
+                  className="h-9 w-9 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={formData.infantsFree >= formData.children}
+                  aria-label="Increase free infants"
+                >
+                  <Plus className="h-4 w-4 mx-auto" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -161,7 +277,10 @@ const DayPassBookingForm = () => {
           <p className="text-sm text-gray-500 dark:text-gray-400">Estimated Total</p>
           <p className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-1">
             <CreditCard className="h-5 w-5 text-amber-600" />
-            {selectedPkg.price} × {formData.guests}
+            LKR {total.total.toLocaleString()}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            {total.adults} Adult(s) × LKR {total.adultPrice.toLocaleString()} + {total.childrenPaid} Paying Child(ren) × LKR {total.childPrice.toLocaleString()}
           </p>
         </div>
         <p className="text-xs text-gray-400 dark:text-gray-500">Pay at venue</p>

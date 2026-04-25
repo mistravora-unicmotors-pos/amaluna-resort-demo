@@ -3,8 +3,11 @@ import { Download, Clock, Utensils, Coffee, Leaf, AlertCircle } from 'lucide-rea
 import ScrollReveal from '../components/ScrollReveal';
 import SectionHeader from '../components/SectionHeader';
 import OptimizedImage from '../components/OptimizedImage';
+import FAQAccordion from '../components/FAQAccordion';
+import { getSiteSettings } from '../services/siteSettingsService';
 
 const Dining = () => {
+  const faqs = getSiteSettings().faqs.dining;
   const menuItems = {
     starters: [
       { name: 'Negombo Prawn Cocktail', description: 'Fresh local prawns with spiced cocktail sauce', price: '—' },
@@ -237,6 +240,14 @@ const Dining = () => {
           </div>
         </div>
         </ScrollReveal>
+
+        {/* FAQ */}
+        <div className="mb-12">
+          <SectionHeader title="Frequently Asked Questions" />
+          <div className="max-w-4xl mx-auto mt-10">
+            <FAQAccordion items={faqs.map(f => ({ question: f.question, answer: f.answer }))} />
+          </div>
+        </div>
 
         {/* Call to Action */}
         <ScrollReveal>

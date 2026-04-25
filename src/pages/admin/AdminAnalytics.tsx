@@ -46,47 +46,47 @@ export default function AdminAnalytics() {
       {/* Traffic Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {trafficStats.map(stat => (
-          <div key={stat.label} className="bg-gray-800 rounded-xl p-5 border border-gray-700">
+          <div key={stat.label} className="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-3">
-              <stat.icon className="h-5 w-5 text-gray-400" />
-              <span className={`text-xs font-medium ${stat.up ? 'text-emerald-400' : 'text-red-400'}`}>{stat.change}</span>
+              <stat.icon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+              <span className={`text-xs font-medium ${stat.up ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>{stat.change}</span>
             </div>
-            <p className="text-2xl font-bold text-white">{stat.value}</p>
-            <p className="text-gray-400 text-sm mt-1">{stat.label}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{stat.label}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Top Pages */}
-        <div className="lg:col-span-2 bg-gray-800 rounded-xl border border-gray-700 p-5">
-          <h3 className="text-white font-heading font-bold mb-4">Top Pages</h3>
+        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h3 className="text-gray-900 dark:text-white font-heading font-bold mb-4">Top Pages</h3>
           <div className="space-y-3">
             {topPages.map(p => (
               <div key={p.page} className="flex items-center gap-3">
-                <span className="text-gray-400 text-sm w-28 truncate">{p.label}</span>
-                <div className="flex-1 bg-gray-700 rounded-full h-2.5">
+                <span className="text-gray-500 dark:text-gray-400 text-sm w-28 truncate">{p.label}</span>
+                <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                   <div className="bg-amber-500 h-2.5 rounded-full" style={{ width: `${p.pct}%` }} />
                 </div>
-                <span className="text-white text-sm font-medium w-16 text-right">{p.views.toLocaleString()}</span>
+                <span className="text-gray-900 dark:text-white text-sm font-medium w-16 text-right">{p.views.toLocaleString()}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Device Breakdown */}
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-5">
-          <h3 className="text-white font-heading font-bold mb-4">Devices</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h3 className="text-gray-900 dark:text-white font-heading font-bold mb-4">Devices</h3>
           <div className="space-y-4">
             {devices.map(d => (
               <div key={d.label} className="flex items-center gap-3">
-                <d.icon className="h-5 w-5 text-gray-400" />
+                <d.icon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                 <div className="flex-1">
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-300">{d.label}</span>
-                    <span className="text-white font-medium">{d.pct}%</span>
+                    <span className="text-gray-600 dark:text-gray-300">{d.label}</span>
+                    <span className="text-gray-900 dark:text-white font-medium">{d.pct}%</span>
                   </div>
-                  <div className="bg-gray-700 rounded-full h-2">
+                  <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                     <div className={`${d.color} h-2 rounded-full`} style={{ width: `${d.pct}%` }} />
                   </div>
                 </div>
@@ -98,19 +98,19 @@ export default function AdminAnalytics() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Traffic Sources */}
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-5">
-          <h3 className="text-white font-heading font-bold mb-4 flex items-center gap-2">
-            <Globe className="h-5 w-5 text-gray-400" /> Traffic Sources
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h3 className="text-gray-900 dark:text-white font-heading font-bold mb-4 flex items-center gap-2">
+            <Globe className="h-5 w-5 text-gray-500 dark:text-gray-400" /> Traffic Sources
           </h3>
           <div className="space-y-3">
             {trafficSources.map(s => (
               <div key={s.source} className="flex items-center justify-between">
-                <span className="text-gray-300 text-sm">{s.source}</span>
+                <span className="text-gray-600 dark:text-gray-300 text-sm">{s.source}</span>
                 <div className="flex items-center gap-3">
-                  <div className="w-24 bg-gray-700 rounded-full h-2">
+                  <div className="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                     <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${s.pct}%` }} />
                   </div>
-                  <span className="text-white text-sm font-medium w-12 text-right">{s.pct}%</span>
+                  <span className="text-gray-900 dark:text-white text-sm font-medium w-12 text-right">{s.pct}%</span>
                 </div>
               </div>
             ))}
@@ -118,16 +118,16 @@ export default function AdminAnalytics() {
         </div>
 
         {/* Booking Conversion Funnel */}
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-5">
-          <h3 className="text-white font-heading font-bold mb-4">Booking Funnel</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <h3 className="text-gray-900 dark:text-white font-heading font-bold mb-4">Booking Funnel</h3>
           <div className="space-y-3">
             {conversionFunnel.map((step) => (
               <div key={step.step} className="relative">
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-300">{step.step}</span>
-                  <span className="text-white font-medium">{step.value.toLocaleString()}</span>
+                  <span className="text-gray-600 dark:text-gray-300">{step.step}</span>
+                  <span className="text-gray-900 dark:text-white font-medium">{step.value.toLocaleString()}</span>
                 </div>
-                <div className="bg-gray-700 rounded-full h-3">
+                <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                   <div
                     className="bg-gradient-to-r from-amber-500 to-amber-600 h-3 rounded-full transition-all"
                     style={{ width: `${step.pct}%` }}
@@ -140,10 +140,10 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Google Analytics Notice */}
-      <div className="bg-gray-800 rounded-xl border border-dashed border-gray-600 p-6 text-center">
-        <TrendingUp className="h-10 w-10 text-gray-500 mx-auto mb-3" />
-        <h3 className="text-white font-heading font-bold mb-1">Google Analytics Integration</h3>
-        <p className="text-gray-400 text-sm max-w-md mx-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-600 p-6 text-center">
+        <TrendingUp className="h-10 w-10 text-gray-400 dark:text-gray-500 mx-auto mb-3" />
+        <h3 className="text-gray-900 dark:text-white font-heading font-bold mb-1">Google Analytics Integration</h3>
+        <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto">
           Connect your Google Analytics 4 property to view real-time visitor data, acquisition reports, and behaviour flow directly in this dashboard.
         </p>
         <button className="mt-4 px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm font-medium transition-colors">

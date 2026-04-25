@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import { Search, Download, Edit3, X, Eye, Plus, Waves, Users, DollarSign, Ticket } from 'lucide-react';
+import { Search, Download, Edit3, X, Eye, Plus, Users, DollarSign, Ticket, Settings } from 'lucide-react';
+import {
+  computeDayoutTotal,
+  defaultDayoutPricingRules,
+  dayoutPackages,
+  type DayoutPackageId,
+  type DayoutPricingRules,
+} from '../../services/dayoutPricingService';
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-type TicketType = 'Pool Access' | 'Day-Out Package' | 'Pool + Lunch' | 'Pool + Dinner';
+type TicketType = 'Day-Out Package' | 'Pool Only';
 type TicketStatus = 'Confirmed' | 'Pending' | 'Used' | 'Cancelled' | 'Expired';
 
 interface PoolTicket {
@@ -16,42 +23,52 @@ interface PoolTicket {
   date: string;
   adults: number;
   children: number;
+  infantsFree: number;
   total: number;
   status: TicketStatus;
   notes: string;
   createdAt: string;
 }
 
-interface PricingTier {
+interface PricingTierCard {
   label: string;
   description: string;
   adultPrice: number;
   childPrice: number;
+  weekendAdultPrice: number;
+  weekendChildPrice: number;
   icon: string;
 }
 
 // ---------------------------------------------------------------------------
-// Pricing config — editable in a future settings integration
-// ---------------------------------------------------------------------------
-const pricingTiers: PricingTier[] = [
-  { label: 'Pool Access', description: 'Swimming pool entry (10am – 6pm)', adultPrice: 2500, childPrice: 1500, icon: '🏊' },
-  { label: 'Day-Out Package', description: 'Pool + sun lounger + welcome drink', adultPrice: 4500, childPrice: 2500, icon: '☀️' },
-  { label: 'Pool + Lunch', description: 'Pool access with buffet lunch', adultPrice: 5500, childPrice: 3000, icon: '🍽️' },
-  { label: 'Pool + Dinner', description: 'Pool access with set dinner', adultPrice: 6500, childPrice: 3500, icon: '🌙' },
-];
-
-// ---------------------------------------------------------------------------
 // Sample data
 // ---------------------------------------------------------------------------
-const sampleTickets: PoolTicket[] = [
-  { id: 'PT-001', guest: 'Nimal Perera', email: 'nimal@example.com', phone: '+94 77 123 4567', type: 'Day-Out Package', date: '2026-03-15', adults: 2, children: 1, total: 11500, status: 'Confirmed', notes: '', createdAt: '2026-03-14T08:30:00Z' },
-  { id: 'PT-002', guest: 'Lisa Anderson', email: 'lisa@example.com', phone: '+44 7700 900002', type: 'Pool Access', date: '2026-03-15', adults: 4, children: 0, total: 10000, status: 'Pending', notes: 'Arriving late morning', createdAt: '2026-03-14T10:15:00Z' },
-  { id: 'PT-003', guest: 'Kamal Silva', email: 'kamal@example.com', phone: '+94 71 234 5678', type: 'Pool + Lunch', date: '2026-03-16', adults: 2, children: 2, total: 17000, status: 'Confirmed', notes: 'Vegetarian meals required', createdAt: '2026-03-13T16:45:00Z' },
-  { id: 'PT-004', guest: 'Thomas Müller', email: 'thomas@example.com', phone: '+49 170 0000002', type: 'Pool + Dinner', date: '2026-03-14', adults: 2, children: 0, total: 13000, status: 'Used', notes: '', createdAt: '2026-03-12T09:00:00Z' },
-  { id: 'PT-005', guest: 'Ruwani Fernando', email: 'ruwani@example.com', phone: '+94 76 321 7654', type: 'Pool Access', date: '2026-03-12', adults: 3, children: 2, total: 10500, status: 'Used', notes: 'Birthday celebration', createdAt: '2026-03-11T11:20:00Z' },
-  { id: 'PT-006', guest: 'James Wright', email: 'james@example.com', phone: '+1 555-0202', type: 'Day-Out Package', date: '2026-03-17', adults: 1, children: 0, total: 4500, status: 'Cancelled', notes: 'Weather concerns', createdAt: '2026-03-14T14:10:00Z' },
-  { id: 'PT-007', guest: 'Priya Sharma', email: 'priya@example.com', phone: '+91 98765 43211', type: 'Pool + Lunch', date: '2026-03-10', adults: 2, children: 1, total: 14000, status: 'Expired', notes: 'No-show', createdAt: '2026-03-08T07:45:00Z' },
+const ticketTypeToPackageId: Record<TicketType, DayoutPackageId> = {
+  'Day-Out Package': 'day-out',
+  'Pool Only': 'pool-only',
+};
+
+const sampleTicketsSeed: Array<Omit<PoolTicket, 'total'>> = [
+  { id: 'PT-001', guest: 'Nimal Perera', email: 'nimal@example.com', phone: '+94 77 123 4567', type: 'Day-Out Package', date: '2026-03-15', adults: 2, children: 1, infantsFree: 0, status: 'Confirmed', notes: '', createdAt: '2026-03-14T08:30:00Z' },
+  { id: 'PT-002', guest: 'Lisa Anderson', email: 'lisa@example.com', phone: '+44 7700 900002', type: 'Pool Only', date: '2026-03-15', adults: 4, children: 0, infantsFree: 0, status: 'Pending', notes: 'Arriving late morning', createdAt: '2026-03-14T10:15:00Z' },
+  { id: 'PT-003', guest: 'Kamal Silva', email: 'kamal@example.com', phone: '+94 71 234 5678', type: 'Day-Out Package', date: '2026-03-16', adults: 2, children: 2, infantsFree: 1, status: 'Confirmed', notes: 'Vegetarian meals required', createdAt: '2026-03-13T16:45:00Z' },
+  { id: 'PT-004', guest: 'Thomas Müller', email: 'thomas@example.com', phone: '+49 170 0000002', type: 'Day-Out Package', date: '2026-03-14', adults: 2, children: 0, infantsFree: 0, status: 'Used', notes: '', createdAt: '2026-03-12T09:00:00Z' },
+  { id: 'PT-005', guest: 'Ruwani Fernando', email: 'ruwani@example.com', phone: '+94 76 321 7654', type: 'Pool Only', date: '2026-03-12', adults: 3, children: 2, infantsFree: 0, status: 'Used', notes: 'Birthday celebration', createdAt: '2026-03-11T11:20:00Z' },
+  { id: 'PT-006', guest: 'James Wright', email: 'james@example.com', phone: '+1 555-0202', type: 'Day-Out Package', date: '2026-03-17', adults: 1, children: 0, infantsFree: 0, status: 'Cancelled', notes: 'Weather concerns', createdAt: '2026-03-14T14:10:00Z' },
+  { id: 'PT-007', guest: 'Priya Sharma', email: 'priya@example.com', phone: '+91 98765 43211', type: 'Day-Out Package', date: '2026-03-10', adults: 2, children: 1, infantsFree: 1, status: 'Expired', notes: 'No-show', createdAt: '2026-03-08T07:45:00Z' },
 ];
+
+const sampleTickets: PoolTicket[] = sampleTicketsSeed.map((t) => {
+  const { total } = computeDayoutTotal({
+    packageId: ticketTypeToPackageId[t.type],
+    dateStr: t.date,
+    adults: t.adults,
+    childrenTotal: t.children,
+    infantsFree: t.infantsFree,
+  });
+
+  return { ...t, total };
+});
 
 // ---------------------------------------------------------------------------
 // Status colours
@@ -65,11 +82,17 @@ const statusColors: Record<string, string> = {
 };
 
 const fmt = (n: number) => `LKR ${n.toLocaleString()}`;
+const clampPrice = (n: number) => Math.max(0, Math.trunc(n || 0));
+const clampAge = (n: number) => Math.max(0, Math.min(17, Math.trunc(n || 0)));
 
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 export default function AdminPoolTickets() {
+  const [pricingRules, setPricingRules] = useState<DayoutPricingRules>(defaultDayoutPricingRules);
+  const [showPricingModal, setShowPricingModal] = useState(false);
+  const [pricingDraft, setPricingDraft] = useState<DayoutPricingRules>(defaultDayoutPricingRules);
+
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [typeFilter, setTypeFilter] = useState('All');
@@ -77,7 +100,38 @@ export default function AdminPoolTickets() {
   const [viewingTicket, setViewingTicket] = useState<PoolTicket | null>(null);
   const [editingTicket, setEditingTicket] = useState<PoolTicket | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newTicket, setNewTicket] = useState({ guest: '', email: '', phone: '', type: 'Pool Access' as TicketType, date: '', adults: 1, children: 0, notes: '' });
+  const [newTicket, setNewTicket] = useState({
+    guest: '',
+    email: '',
+    phone: '',
+    type: 'Pool Only' as TicketType,
+    date: '',
+    adults: 1,
+    children: 0,
+    infantsFree: 0,
+    notes: '',
+  });
+
+  const pricingTiers: PricingTierCard[] = [
+    {
+      label: 'Pool Only',
+      description: 'Swimming pool entry',
+      adultPrice: pricingRules['pool-only'].weekday.adult,
+      childPrice: pricingRules['pool-only'].weekday.child,
+      weekendAdultPrice: pricingRules['pool-only'].weekend.adult,
+      weekendChildPrice: pricingRules['pool-only'].weekend.child,
+      icon: dayoutPackages.find((p) => p.id === 'pool-only')?.icon ?? '🏊',
+    },
+    {
+      label: 'Day-Out Package',
+      description: 'Pool + lunch + welcome drink + evening tea',
+      adultPrice: pricingRules['day-out'].weekday.adult,
+      childPrice: pricingRules['day-out'].weekday.child,
+      weekendAdultPrice: pricingRules['day-out'].weekend.adult,
+      weekendChildPrice: pricingRules['day-out'].weekend.child,
+      icon: dayoutPackages.find((p) => p.id === 'day-out')?.icon ?? '☀️',
+    },
+  ];
 
   // Derived stats
   const todayStr = new Date().toISOString().split('T')[0];
@@ -99,8 +153,14 @@ export default function AdminPoolTickets() {
   };
 
   const handleAddTicket = () => {
-    const tier = pricingTiers.find(p => p.label === newTicket.type)!;
-    const total = (newTicket.adults * tier.adultPrice) + (newTicket.children * tier.childPrice);
+    const { total } = computeDayoutTotal({
+      packageId: ticketTypeToPackageId[newTicket.type],
+      dateStr: newTicket.date || undefined,
+      adults: newTicket.adults,
+      childrenTotal: newTicket.children,
+      infantsFree: newTicket.infantsFree,
+      pricingRules,
+    });
     const ticket: PoolTicket = {
       id: `PT-${String(tickets.length + 1).padStart(3, '0')}`,
       guest: newTicket.guest,
@@ -110,6 +170,7 @@ export default function AdminPoolTickets() {
       date: newTicket.date,
       adults: newTicket.adults,
       children: newTicket.children,
+      infantsFree: newTicket.infantsFree,
       total,
       status: 'Confirmed',
       notes: newTicket.notes,
@@ -117,12 +178,12 @@ export default function AdminPoolTickets() {
     };
     setTickets(prev => [ticket, ...prev]);
     setShowAddModal(false);
-    setNewTicket({ guest: '', email: '', phone: '', type: 'Pool Access', date: '', adults: 1, children: 0, notes: '' });
+    setNewTicket({ guest: '', email: '', phone: '', type: 'Pool Only', date: '', adults: 1, children: 0, infantsFree: 0, notes: '' });
   };
 
   const exportCSV = () => {
-    const headers = ['Ticket ID', 'Guest', 'Email', 'Phone', 'Type', 'Date', 'Adults', 'Children', 'Total (LKR)', 'Status', 'Notes', 'Created'];
-    const rows = filtered.map(t => [t.id, t.guest, t.email, t.phone, t.type, t.date, t.adults, t.children, t.total, t.status, t.notes, t.createdAt]);
+    const headers = ['Ticket ID', 'Guest', 'Email', 'Phone', 'Type', 'Date', 'Adults', 'Children', 'Infants (Free)', 'Total (LKR)', 'Status', 'Notes', 'Created'];
+    const rows = filtered.map(t => [t.id, t.guest, t.email, t.phone, t.type, t.date, t.adults, t.children, t.infantsFree, t.total, t.status, t.notes, t.createdAt]);
     const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
@@ -133,18 +194,59 @@ export default function AdminPoolTickets() {
     URL.revokeObjectURL(url);
   };
 
+  const openPricingEditor = () => {
+    setPricingDraft(pricingRules);
+    setShowPricingModal(true);
+  };
+
+  const savePricingRules = () => {
+    setPricingRules(pricingDraft);
+    setShowPricingModal(false);
+  };
+
   return (
     <div className="space-y-4">
+      {/* ── Pricing & Rules ── */}
+      <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+        <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+          <div>
+            <p className="text-white font-semibold text-sm">Pricing & Rules</p>
+            <p className="text-xs text-gray-400 mt-1">
+              Configure weekday/weekend prices and free infant max age (UI only).
+            </p>
+          </div>
+          <button
+            onClick={openPricingEditor}
+            className="px-3 py-2 rounded-lg text-xs font-medium bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-1.5 transition-colors"
+          >
+            <Settings className="h-3.5 w-3.5" />
+            Edit Pricing
+          </button>
+        </div>
+
+        <div className="mt-3 text-xs text-gray-300">
+          Free infant max age: <span className="text-amber-400 font-semibold">{pricingRules.freeInfantMaxAge}</span>
+        </div>
+      </div>
+
       {/* ── Pricing Tiers ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {pricingTiers.map(tier => (
           <div key={tier.label} className="bg-gray-800 rounded-xl p-4 border border-gray-700">
             <p className="text-lg mb-1">{tier.icon}</p>
             <p className="text-white font-semibold text-sm">{tier.label}</p>
             <p className="text-gray-500 text-xs mb-2">{tier.description}</p>
-            <div className="flex gap-3 text-xs">
-              <span className="text-amber-400">Adult: {fmt(tier.adultPrice)}</span>
-              <span className="text-gray-400">Child: {fmt(tier.childPrice)}</span>
+            <div className="space-y-1 text-xs">
+              <p className="text-gray-400">Weekday</p>
+              <div className="flex gap-3 text-xs">
+                <span className="text-amber-400">Adult: {fmt(tier.adultPrice)}</span>
+                <span className="text-gray-400">Child: {fmt(tier.childPrice)}</span>
+              </div>
+              <p className="text-gray-400 mt-2">Weekend</p>
+              <div className="flex gap-3 text-xs">
+                <span className="text-amber-400">Adult: {fmt(tier.weekendAdultPrice)}</span>
+                <span className="text-gray-400">Child: {fmt(tier.weekendChildPrice)}</span>
+              </div>
             </div>
           </div>
         ))}
@@ -194,7 +296,7 @@ export default function AdminPoolTickets() {
 
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-xs text-gray-500 mr-1">Type:</span>
-          {['All', 'Pool Access', 'Day-Out Package', 'Pool + Lunch', 'Pool + Dinner'].map(s => (
+          {['All', 'Pool Only', 'Day-Out Package'].map(s => (
             <button key={s} onClick={() => setTypeFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${typeFilter === s ? 'bg-amber-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-white border border-gray-700'}`}>{s}</button>
           ))}
         </div>
@@ -211,6 +313,7 @@ export default function AdminPoolTickets() {
               <th className="text-left px-4 py-3 font-medium">Date</th>
               <th className="text-center px-4 py-3 font-medium">Adults</th>
               <th className="text-center px-4 py-3 font-medium">Children</th>
+              <th className="text-center px-4 py-3 font-medium">Infants (Free)</th>
               <th className="text-right px-4 py-3 font-medium">Total</th>
               <th className="text-left px-4 py-3 font-medium">Status</th>
               <th className="text-center px-4 py-3 font-medium">Actions</th>
@@ -228,6 +331,7 @@ export default function AdminPoolTickets() {
                 <td className="px-4 py-3 text-gray-300">{t.date}</td>
                 <td className="px-4 py-3 text-gray-300 text-center">{t.adults}</td>
                 <td className="px-4 py-3 text-gray-300 text-center">{t.children}</td>
+                <td className="px-4 py-3 text-gray-300 text-center">{t.infantsFree}</td>
                 <td className="px-4 py-3 text-white font-medium text-right">{fmt(t.total)}</td>
                 <td className="px-4 py-3"><span className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${statusColors[t.status]}`}>{t.status}</span></td>
                 <td className="px-4 py-3">
@@ -245,6 +349,216 @@ export default function AdminPoolTickets() {
 
       <p className="text-xs text-gray-600 text-right">{filtered.length} of {tickets.length} tickets shown</p>
 
+      {/* ── Pricing Rules Modal ── */}
+      {showPricingModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-800 rounded-2xl max-w-2xl w-full border border-gray-700 shadow-xl max-h-[90vh] overflow-y-auto">
+            <div className="p-5 border-b border-gray-700 flex justify-between items-center sticky top-0 bg-gray-800 rounded-t-2xl z-10">
+              <h3 className="text-lg font-bold text-white">Edit Pricing & Rules</h3>
+              <button onClick={() => setShowPricingModal(false)} className="text-gray-400 hover:text-white">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gray-700/40 rounded-xl p-4 space-y-3">
+                  <p className="text-white font-semibold text-sm">Pool Only</p>
+                  <p className="text-xs text-gray-400">Weekday</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Adult</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['pool-only'].weekday.adult}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'pool-only': {
+                              ...p['pool-only'],
+                              weekday: { ...p['pool-only'].weekday, adult: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Child</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['pool-only'].weekday.child}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'pool-only': {
+                              ...p['pool-only'],
+                              weekday: { ...p['pool-only'].weekday, child: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-gray-400 mt-2">Weekend</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Adult</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['pool-only'].weekend.adult}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'pool-only': {
+                              ...p['pool-only'],
+                              weekend: { ...p['pool-only'].weekend, adult: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Child</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['pool-only'].weekend.child}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'pool-only': {
+                              ...p['pool-only'],
+                              weekend: { ...p['pool-only'].weekend, child: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-700/40 rounded-xl p-4 space-y-3">
+                  <p className="text-white font-semibold text-sm">Day-Out Package</p>
+                  <p className="text-xs text-gray-400">Weekday</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Adult</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['day-out'].weekday.adult}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'day-out': {
+                              ...p['day-out'],
+                              weekday: { ...p['day-out'].weekday, adult: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Child</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['day-out'].weekday.child}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'day-out': {
+                              ...p['day-out'],
+                              weekday: { ...p['day-out'].weekday, child: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-gray-400 mt-2">Weekend</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Adult</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['day-out'].weekend.adult}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'day-out': {
+                              ...p['day-out'],
+                              weekend: { ...p['day-out'].weekend, adult: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Child</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={pricingDraft['day-out'].weekend.child}
+                        onChange={(e) =>
+                          setPricingDraft((p) => ({
+                            ...p,
+                            'day-out': {
+                              ...p['day-out'],
+                              weekend: { ...p['day-out'].weekend, child: clampPrice(parseInt(e.target.value) || 0) },
+                            },
+                          }))
+                        }
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-700/40 rounded-xl p-4">
+                <label className="block text-xs text-gray-400 mb-1">Child free_infant_max_age</label>
+                <input
+                  type="number"
+                  min={0}
+                  max={17}
+                  value={pricingDraft.freeInfantMaxAge}
+                  onChange={(e) =>
+                    setPricingDraft((p) => ({
+                      ...p,
+                      freeInfantMaxAge: clampAge(parseInt(e.target.value) || 0),
+                    }))
+                  }
+                  className="w-full md:w-56 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <button onClick={() => setShowPricingModal(false)} className="px-3 py-2 rounded-lg text-xs font-medium bg-gray-700 text-gray-200 hover:bg-gray-600 transition-colors">
+                  Cancel
+                </button>
+                <button onClick={savePricingRules} className="px-3 py-2 rounded-lg text-xs font-medium bg-amber-600 hover:bg-amber-700 text-white transition-colors">
+                  Save Rules
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── View Ticket Modal ── */}
       {viewingTicket && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -260,7 +574,7 @@ export default function AdminPoolTickets() {
                 <div><p className="text-xs text-gray-500 mb-0.5">Phone</p><p className="text-white text-sm">{viewingTicket.phone}</p></div>
                 <div><p className="text-xs text-gray-500 mb-0.5">Type</p><p className="text-white text-sm">{viewingTicket.type}</p></div>
                 <div><p className="text-xs text-gray-500 mb-0.5">Date</p><p className="text-white text-sm">{viewingTicket.date}</p></div>
-                <div><p className="text-xs text-gray-500 mb-0.5">Guests</p><p className="text-white text-sm">{viewingTicket.adults} Adults, {viewingTicket.children} Children</p></div>
+                <div><p className="text-xs text-gray-500 mb-0.5">Guests</p><p className="text-white text-sm">{viewingTicket.adults} Adults, {viewingTicket.children} Children ({viewingTicket.infantsFree} free infants)</p></div>
               </div>
               <div className="border-t border-gray-700 pt-4 flex justify-between items-center">
                 <div><p className="text-xs text-gray-500 mb-0.5">Total</p><p className="text-amber-400 text-sm font-bold">{fmt(viewingTicket.total)}</p></div>
@@ -285,7 +599,7 @@ export default function AdminPoolTickets() {
             <div className="p-5 space-y-5">
               <div className="bg-gray-700/40 rounded-xl p-4 space-y-1 text-sm">
                 <p className="text-white font-medium">{editingTicket.guest}</p>
-                <p className="text-gray-400">{editingTicket.type} · {editingTicket.date} · {editingTicket.adults}A {editingTicket.children}C</p>
+                <p className="text-gray-400">{editingTicket.type} · {editingTicket.date} · {editingTicket.adults}A {editingTicket.children}C (+{editingTicket.infantsFree} free infants)</p>
                 <p className="text-amber-400 font-medium">{fmt(editingTicket.total)}</p>
               </div>
               <div>
@@ -343,7 +657,38 @@ export default function AdminPoolTickets() {
                 </div>
                 <div>
                   <label className="block text-xs text-gray-400 mb-1">Children</label>
-                  <input type="number" min={0} max={20} value={newTicket.children} onChange={e => setNewTicket(p => ({ ...p, children: parseInt(e.target.value) || 0 }))} className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none" />
+                  <input
+                    type="number"
+                    min={0}
+                    max={20}
+                    value={newTicket.children}
+                    onChange={(e) =>
+                      setNewTicket((p) => {
+                        const children = parseInt(e.target.value) || 0;
+                        return { ...p, children, infantsFree: Math.min(p.infantsFree, children) };
+                      })
+                    }
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">Infants (Free, under {pricingRules.freeInfantMaxAge})</label>
+                  <input
+                    type="number"
+                    min={0}
+                    max={20}
+                    value={newTicket.infantsFree}
+                    onChange={(e) =>
+                      setNewTicket((p) => {
+                        const infantsFree = parseInt(e.target.value) || 0;
+                        return { ...p, infantsFree: Math.min(infantsFree, p.children) };
+                      })
+                    }
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                  />
                 </div>
               </div>
               <div>
@@ -352,8 +697,14 @@ export default function AdminPoolTickets() {
               </div>
               {/* Live Price Preview */}
               {(() => {
-                const tier = pricingTiers.find(p => p.label === newTicket.type);
-                const total = tier ? (newTicket.adults * tier.adultPrice) + (newTicket.children * tier.childPrice) : 0;
+                const { total } = computeDayoutTotal({
+                  packageId: ticketTypeToPackageId[newTicket.type],
+                  dateStr: newTicket.date || undefined,
+                  adults: newTicket.adults,
+                  childrenTotal: newTicket.children,
+                  infantsFree: newTicket.infantsFree,
+                  pricingRules,
+                });
                 return (
                   <div className="bg-gray-700/40 rounded-lg p-3 text-sm">
                     <p className="text-gray-400">Estimated Total: <span className="text-amber-400 font-bold">{fmt(total)}</span></p>

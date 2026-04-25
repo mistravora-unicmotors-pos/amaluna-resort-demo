@@ -5,64 +5,11 @@ import SectionHeader from '../components/SectionHeader';
 import OptimizedImage from '../components/OptimizedImage';
 import FAQAccordion from '../components/FAQAccordion';
 import DayPassBookingForm from '../components/DayPassBookingForm';
+import { getSiteSettings } from '../services/siteSettingsService';
+import { dayoutPackages } from '../services/dayoutPricingService';
 
 const Pool = () => {
-  const dayPassPackages = [
-    {
-      name: 'Weekday Day-Pass',
-      period: 'Monday - Thursday',
-      inclusions: [
-        'Pool access 9:00 AM - 6:00 PM',
-        'Complimentary pool towel',
-        'Lounge chair access',
-        'Shower facilities',
-        'Welcome drink on arrival'
-      ],
-      price: '—',
-      highlight: false
-    },
-    {
-      name: 'Weekend Day-Pass',
-      period: 'Friday - Sunday & Public Holidays',
-      inclusions: [
-        'Pool access 9:00 AM - 7:00 PM',
-        'Complimentary pool towel',
-        'Premium lounge chair access',
-        'Shower facilities',
-        'Welcome drink on arrival',
-        '10% discount on food & beverages'
-      ],
-      price: '—',
-      highlight: true
-    }
-  ];
-
-  const faqs = [
-    {
-      question: 'What are the pool operating hours?',
-      answer: 'Our pool is open daily from 6:00 AM to 10:00 PM for resort guests. Day-pass visitors can enjoy pool access during their specified time slots.'
-    },
-    {
-      question: 'Is there a children\'s area?',
-      answer: 'Yes, we have a shallow section of the pool that\'s perfect for children. Children must be supervised by adults at all times.'
-    },
-    {
-      question: 'Are lockers available?',
-      answer: 'Yes, secure lockers are available for day-pass guests to store personal belongings. Keys are provided at check-in.'
-    },
-    {
-      question: 'Can I bring my own food and drinks?',
-      answer: 'Outside food and beverages are not permitted. However, our poolside bar and restaurant offer a wide selection of refreshments and meals.'
-    },
-    {
-      question: 'Do I need to book in advance?',
-      answer: 'We recommend booking day-passes in advance, especially during weekends and holidays, to guarantee availability.'
-    },
-    {
-      question: 'What should I bring?',
-      answer: 'Just bring swimwear, sunscreen, and a valid ID. We provide towels, lounge chairs, and shower facilities.'
-    }
-  ];
+  const faqs = getSiteSettings().faqs.pool;
 
   return (
     <div>
@@ -128,42 +75,44 @@ const Pool = () => {
               <DayPassBookingForm />
             </ScrollReveal>
             <ScrollReveal direction="right">
-              <div className="space-y-6">
-                {dayPassPackages.map((package_, index) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {dayoutPackages.map((package_) => (
                   <div
-                    key={index}
+                    key={package_.id}
                     className={`rounded-2xl p-8 ${
-                      package_.highlight
+                      package_.id === 'day-out'
                         ? 'bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-gray-800 dark:to-gray-800 border-2 border-amber-300 dark:border-amber-600 relative shadow-gold'
                         : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-luxury'
                     } hover:shadow-luxury-lg transition-shadow duration-300`}
               >
-                {package_.highlight && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-amber-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
+                    {package_.id === 'day-out' && (
+                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span className="bg-amber-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                          Most Popular
+                        </span>
+                      </div>
+                    )}
                 
                 <div className="text-center mb-6">
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{package_.name}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{package_.period}</p>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Adult: LKR {package_.baseAdultPrice.toLocaleString()} · Child: LKR {package_.baseChildPrice.toLocaleString()}
+                  </div>
                 </div>
 
                 <div className="space-y-3 mb-8">
                   <h4 className="font-semibold text-gray-900 dark:text-white">Package Includes:</h4>
-                  {package_.inclusions.map((inclusion, idx) => (
+                  {package_.perks.map((perk, idx) => (
                     <div key={idx} className="flex items-start">
                       <div className="w-2 h-2 bg-amber-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-600 dark:text-gray-400">{inclusion}</span>
+                      <span className="text-gray-600 dark:text-gray-400">{perk}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="text-center mb-6">
-                  <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                    {package_.price} <span className="text-lg font-normal text-gray-600 dark:text-gray-400">per person</span>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    Prices may vary by date (computed in the booking form).
                   </div>
                 </div>
 
@@ -173,7 +122,7 @@ const Pool = () => {
                     if (enquiryBtn) enquiryBtn.click();
                   }}
                   className={`w-full py-3 px-4 rounded-full font-semibold transition-all duration-200 ${
-                    package_.highlight
+                    package_.id === 'day-out'
                       ? 'btn-primary'
                       : 'btn-outline'
                   }`}
@@ -181,7 +130,7 @@ const Pool = () => {
                   Enquire Now
                 </button>
               </div>
-            ))}
+                ))}
               </div>
             </ScrollReveal>
           </div>
